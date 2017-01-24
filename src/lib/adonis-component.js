@@ -88,7 +88,9 @@ export function create (target, styles, variations = {}) {
       // remove the prop from the props we pass to our target element
       availableVariations.forEach((variation) => {
         if (typeof elementProps[variation] !== 'undefined') {
-          styles.push(aphroStyles[variation])
+          if (elementProps[variation]) {
+            styles.push(aphroStyles[variation])
+          }
           delete elementProps[variation]
         }
       })
