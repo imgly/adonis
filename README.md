@@ -3,7 +3,7 @@
 Adonis combines the best of [Aphrodite](https://github.com/Khan/aphrodite) and
 [styled-components](https://github.com/styled-components/styled-components): Named DOM elements,
 stylable via object literals with support for inheritance, overriding and theming while staying
-lightweight (20 KB / 7.0 KB gzipped)
+lightweight (28 KB / 7.6 KB gzipped)
 
 # Installation
 

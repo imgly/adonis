@@ -1,15 +1,16 @@
 {
   "name": "adonis",
   "version": "0.0.1",
-  "description": "<3 aphrodite",
+  "description": "The best of aphrodite and styled-components combined",
   "main": "build/adonis.js",
   "scripts": {
     "build": "rimraf build && webpack",
+    "build:publish": "rimraf build && webpack && MINIFY=true webpack",
     "build:watch": "rimraf build && WATCH=true webpack",
     "prestart": "npm run build",
     "start": "node bin/main.js",
     "test": "mocha test",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build:publish"
   },
   "repository": {
     "type": "git",

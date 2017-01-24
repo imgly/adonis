@@ -1,4 +1,6 @@
 var path = require('path')
+var webpack = require('webpack')
+var MINIFY = process.env.MINIFY
 
 module.exports = {
 
@@ -9,13 +11,9 @@ module.exports = {
     index: './src/index.js'
   },
 
-  target: 'async-node',
-
-  devtool: 'source-map',
-
   output: {
     path: './build',
-    filename: 'adonis.js',
+    filename: MINIFY ? 'adonis.min.js' : 'adonis.js',
     library: 'adonis',
     libraryTarget: 'umd'
   },
@@ -40,6 +38,11 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel'
     }]
-  }
+  },
 
+  plugins: MINIFY ? [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false }
+    })
+  ] : []
 }
