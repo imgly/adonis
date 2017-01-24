@@ -1,0 +1,54 @@
+{
+  "name": "adonis",
+  "version": "0.0.1",
+  "description": "<3 aphrodite",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf build && webpack",
+    "build:watch": "rimraf build && WATCH=true webpack",
+    "prestart": "npm run build",
+    "start": "node bin/main.js",
+    "test": "mocha test",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/imgly/adonis.git"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "it",
+      "before",
+      "beforeEach",
+      "after",
+      "afterEach"
+    ]
+  },
+  "keywords": [
+    "aphrodite",
+    "react",
+    "css",
+    "css-in-js",
+    "cssinjs"
+  ],
+  "author": "Sascha Gehlich <sascha.gehlich@photoeditorsdk.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imgly/adonis/issues"
+  },
+  "homepage": "https://github.com/imgly/adonis#readme",
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.22.0",
+    "mocha": "^2.4.5",
+    "react": "^15.4.2",
+    "rimraf": "^2.5.1",
+    "webpack": "^1.12.12"
+  },
+  "dependencies": {
+    "aphrodite": "^1.1.0"
+  }
+}
