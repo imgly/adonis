@@ -119,6 +119,20 @@ const Button = adonis.div(
 <Button primary /> // This would be styled with `background: blue`
 ```
 
+## Re-usable base styles
+
+You can specify "base" styles that can be re-used in any other component:
+
+```js
+const primaryBackgroundColor = adonis.css({
+  backgroundColor: 'blue'
+})
+
+const Button = adonis(primaryBackgroundColor).button({
+  color: 'white'
+})
+```
+
 ## Theming
 
 Similarly to `styled-components`, you can wrap your React application in a `ThemeProvider` and

@@ -99,6 +99,24 @@ describe('adonis', () => {
     })
   })
 
+  describe('base styles without tag name', () => {
+    it('should combine the two classes', () => {
+      const PrimaryBackgroundColor = adonis.css({
+        backgroundColor: 'blue'
+      })
+
+      const Button = adonis(PrimaryBackgroundColor).button({
+        cursor: 'pointer'
+      })
+
+      const content = <Button />
+      const { html, css } = render(content)
+
+      html.should.equal(`<button class="baseStyles_1b2uzpk-o_O-button_ro0g1e"></button>`)
+      css.content.should.equal(`.baseStyles_1b2uzpk-o_O-button_ro0g1e{background-color:blue;cursor:pointer;}`)
+    })
+  })
+
   describe('theming', () => {
     describe('when wrapping a component in a ThemeProvider', () => {
       it('styles should have access to the theme', () => {
