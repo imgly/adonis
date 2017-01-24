@@ -13,7 +13,6 @@ export function create (target, styles, variations = {}) {
   const isComponent = !isAdonisComponent && Component.isPrototypeOf(target)
 
   const styleName = Utils.generateStyleNameForTarget(target)
-
   const stylesObject = {
     [styleName]: styles
   }
@@ -37,6 +36,12 @@ export function create (target, styles, variations = {}) {
   const ParentComponent = isComponent ? target : BaseAdonisComponent
 
   class AdonisComponent extends ParentComponent {
+    /**
+     * Walks through the given styles object. If it finds a function instead of a string / number,
+     * it calls the function and passes the theme and puts the resulting value at the same position
+     * @param  {Object} stylesObject
+     * @return {Object}
+     */
     _processStylesObject (stylesObject) {
       const processObject = (obj) => {
         let newObject = {}

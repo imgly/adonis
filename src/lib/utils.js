@@ -1,4 +1,9 @@
 const Utils = {
+  /**
+   * Generates a random string
+   * @param  {Number} length = 10
+   * @return {String}
+   */
   generateClassName (length = 10) {
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
     let className = ''
@@ -8,6 +13,11 @@ const Utils = {
     return className
   },
 
+  /**
+   * Generates a name for the given target (tag name, class name or random string)
+   * @param  {Object} target
+   * @return {String}
+   */
   generateStyleNameForTarget (target) {
     if (typeof target === 'string') {
       return target
@@ -16,6 +26,11 @@ const Utils = {
     }
   },
 
+  /**
+   * Checks if the given object has any functions deep inside of it
+   * @param  {Object} obj
+   * @return {Boolean}
+   */
   objectHasFunctions (obj) {
     for (let prop in obj) {
       const value = obj[prop]

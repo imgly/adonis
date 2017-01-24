@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 
-// const CHANNEL = '💪'
-
 export default class ThemeProvider extends Component {
   getChildContext () {
     let context = {}
