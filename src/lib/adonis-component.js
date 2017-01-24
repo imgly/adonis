@@ -53,6 +53,8 @@ export function create (target, styles, variations = {}) {
             newObject[prop] = processObject(value)
           } else if (valueType === 'function') {
             newObject[prop] = value(this.context.theme)
+          } else {
+            newObject[prop] = value
           }
         }
 

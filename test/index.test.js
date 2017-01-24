@@ -114,14 +114,15 @@ describe('adonis', () => {
         const App = withTheme(AppComponent)
 
         const Button = adonis.div({
-          backgroundColor: theme => theme.buttonBackgroundColor
+          backgroundColor: theme => theme.buttonBackgroundColor,
+          color: 'blue'
         })
 
         const content = <ThemeProvider theme={theme}><App /></ThemeProvider>
         const { html, css } = render(content)
 
-        html.should.equal(`<div class="div_fus06d"></div>`)
-        css.content.should.equal(`.div_fus06d{background-color:grey;}`)
+        html.should.equal(`<div class="div_12v0gjx"></div>`)
+        css.content.should.equal(`.div_12v0gjx{background-color:grey;color:blue;}`)
       })
     })
   })
