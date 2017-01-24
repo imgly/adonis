@@ -45,7 +45,9 @@
     "babel-preset-react": "^6.22.0",
     "mocha": "^2.4.5",
     "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "rimraf": "^2.5.1",
+    "should": "^11.1.2",
     "webpack": "^1.12.12"
   },
   "dependencies": {
