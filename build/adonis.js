@@ -1,51 +1,51 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("React"), require("domain"));
+		module.exports = factory(require("React"));
 	else if(typeof define === 'function' && define.amd)
-		define(["React", "domain"], factory);
+		define(["React"], factory);
 	else if(typeof exports === 'object')
-		exports["adonis"] = factory(require("React"), require("domain"));
+		exports["adonis"] = factory(require("React"));
 	else
-		root["adonis"] = factory(root["React"], root["domain"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_31__) {
+		root["adonis"] = factory(root["React"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_4__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -55,28 +55,28 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.withTheme = exports.ThemeProvider = exports.css = exports.StyleSheet = exports.StyleSheetServer = undefined;
-	
+
 	var _adonis = __webpack_require__(1);
-	
+
 	var _adonis2 = _interopRequireDefault(_adonis);
-	
-	var _themeProvider = __webpack_require__(33);
-	
+
+	var _themeProvider = __webpack_require__(32);
+
 	var _themeProvider2 = _interopRequireDefault(_themeProvider);
-	
-	var _withTheme = __webpack_require__(34);
-	
+
+	var _withTheme = __webpack_require__(33);
+
 	var _withTheme2 = _interopRequireDefault(_withTheme);
-	
+
 	var _noImportant = __webpack_require__(5);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	exports.default = _adonis2.default;
 	exports.StyleSheetServer = _noImportant.StyleSheetServer;
 	exports.StyleSheet = _noImportant.StyleSheet;
@@ -89,28 +89,28 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var _domElements = __webpack_require__(2);
-	
+
 	var _domElements2 = _interopRequireDefault(_domElements);
-	
+
 	var _adonisComponent = __webpack_require__(3);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	module.exports = function () {
 	  var adonis = function adonis(base) {
 	    return function (styles, variations) {
 	      return (0, _adonisComponent.create)(base, styles, variations);
 	    };
 	  };
-	
+
 	  _domElements2.default.forEach(function (tagName) {
 	    adonis[tagName] = function (styles, variations) {
 	      return (0, _adonisComponent.create)(tagName, styles, variations);
 	    };
 	  });
-	
+
 	  return adonis;
 	}();
 
@@ -119,7 +119,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -130,99 +130,105 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
+
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	exports.create = create;
-	
+
 	var _react = __webpack_require__(4);
-	
+
 	var _react2 = _interopRequireDefault(_react);
-	
+
 	var _noImportant = __webpack_require__(5);
-	
-	var _utils = __webpack_require__(32);
-	
+
+	var _utils = __webpack_require__(31);
+
 	var _utils2 = _interopRequireDefault(_utils);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	var BaseAdonisComponent = function (_Component) {
 	  _inherits(BaseAdonisComponent, _Component);
-	
+
 	  function BaseAdonisComponent() {
 	    _classCallCheck(this, BaseAdonisComponent);
-	
+
 	    return _possibleConstructorReturn(this, (BaseAdonisComponent.__proto__ || Object.getPrototypeOf(BaseAdonisComponent)).apply(this, arguments));
 	  }
-	
+
 	  return BaseAdonisComponent;
 	}(_react.Component);
-	
+
 	BaseAdonisComponent.contextTypes = {
 	  theme: _react.PropTypes.object
 	};
-	
+
 	function create(target, styles) {
 	  var variations = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-	
+
 	  var isTag = typeof target === 'string';
 	  var isAdonisComponent = BaseAdonisComponent.isPrototypeOf(target);
 	  var isComponent = !isAdonisComponent && _react.Component.isPrototypeOf(target);
-	
+
 	  var styleName = _utils2.default.generateStyleNameForTarget(target);
-	
 	  var stylesObject = _defineProperty({}, styleName, styles);
-	
+
 	  // Attach variation styles to styles object
 	  var availableVariations = Object.keys(variations);
 	  availableVariations.forEach(function (variation) {
 	    stylesObject[variation] = variations[variation];
 	  });
-	
+
 	  // In case we have any asynchronous style definitions (i.e. styles that need the theme passed
 	  // to the component, which is only available after the component has been instantiated),
 	  // we need to create the stylesheet on render.
 	  var injectOnRender = _utils2.default.objectHasFunctions(stylesObject);
-	
+
 	  var aphroStyles = void 0;
 	  if (!injectOnRender) {
 	    aphroStyles = _noImportant.StyleSheet.create(stylesObject);
 	  }
-	
+
 	  var ParentComponent = isComponent ? target : BaseAdonisComponent;
-	
+
 	  var AdonisComponent = function (_ParentComponent) {
 	    _inherits(AdonisComponent, _ParentComponent);
-	
+
 	    function AdonisComponent() {
 	      _classCallCheck(this, AdonisComponent);
-	
+
 	      return _possibleConstructorReturn(this, (AdonisComponent.__proto__ || Object.getPrototypeOf(AdonisComponent)).apply(this, arguments));
 	    }
-	
+
 	    _createClass(AdonisComponent, [{
 	      key: '_processStylesObject',
+
+	      /**
+	       * Walks through the given styles object. If it finds a function instead of a string / number,
+	       * it calls the function and passes the theme and puts the resulting value at the same position
+	       * @param  {Object} stylesObject
+	       * @return {Object}
+	       */
 	      value: function _processStylesObject(stylesObject) {
 	        var _this3 = this;
-	
+
 	        var processObject = function processObject(obj) {
 	          var newObject = {};
-	
+
 	          for (var prop in obj) {
 	            var value = obj[prop];
 	            var valueType = typeof value === 'undefined' ? 'undefined' : _typeof(value);
@@ -232,7 +238,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              newObject[prop] = value(_this3.context.theme);
 	            }
 	          }
-	
+
 	          return newObject;
 	        };
 	        return processObject(stylesObject);
@@ -241,29 +247,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	      key: 'render',
 	      value: function render() {
 	        var _this4 = this;
-	
+
 	        if (injectOnRender) {
 	          aphroStyles = _noImportant.StyleSheet.create(this._processStylesObject(stylesObject));
 	        }
-	
+
 	        var _props = this.props,
 	            children = _props.children,
 	            innerRef = _props.innerRef;
-	
+
 	        var elementProps = {};
-	
+
 	        // Clone props
 	        Object.keys(this.props).forEach(function (prop) {
 	          elementProps[prop] = _this4.props[prop];
 	        });
-	
+
 	        // We are passing overriding styles using the `styles` property. Make sure we're generating
 	        // a class name using both the target's and the target's prop styles.
 	        var styles = [aphroStyles[styleName]];
 	        if (this.props.styles) {
 	          styles = styles.concat(this.props.styles);
 	        }
-	
+
 	        // If an available variation is passed in as a property, we add the styles to the class and
 	        // remove the prop from the props we pass to our target element
 	        availableVariations.forEach(function (variation) {
@@ -272,7 +278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            delete elementProps[variation];
 	          }
 	        });
-	
+
 	        // Generate className
 	        elementProps.className = _noImportant.css.apply(null, styles);
 	        elementProps.styles = styles;
@@ -281,24 +287,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        } else {
 	          elementProps.ref = innerRef;
 	        }
-	
+
 	        // We don't want to pass invalid props to tags
 	        if (isTag) {
 	          delete elementProps.styles;
 	          delete elementProps.innerRef;
 	        }
-	
+
 	        return _react2.default.createElement(target, elementProps, children);
 	      }
 	    }]);
-	
+
 	    return AdonisComponent;
 	  }(ParentComponent);
-	
+
 	  AdonisComponent.contextTypes = ParentComponent.contextTypes;
 	  AdonisComponent.target = target;
 	  AdonisComponent.styles = styles;
-	
+
 	  return AdonisComponent;
 	}
 
@@ -323,19 +329,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	// except that styles injected do not automatically have !important
 	// appended to them.
 	'use strict';
-	
+
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
+
 	var _generate = __webpack_require__(7);
-	
+
 	var _exports2 = __webpack_require__(27);
-	
+
 	var _exports3 = _interopRequireDefault(_exports2);
-	
+
 	var useImportant = false; // Don't add !important to style definitions
 	exports['default'] = (0, _exports3['default'])(useImportant, _generate.defaultSelectorHandlers);
 	module.exports = exports['default'];
@@ -345,21 +351,21 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-	
+
 	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
+
 	var _inlineStylePrefixerStatic = __webpack_require__(8);
-	
+
 	var _inlineStylePrefixerStatic2 = _interopRequireDefault(_inlineStylePrefixerStatic);
-	
+
 	var _util = __webpack_require__(26);
-	
+
 	/**
 	 * `selectorHandlers` are functions which handle special selectors which act
 	 * differently than normal style definitions. These functions look at the
@@ -416,7 +422,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return generateSubtreeStyles(baseSelector + selector);
 	},
-	
+
 	// Handle media queries (or font-faces)
 	function mediaQueries(selector, baseSelector, generateSubtreeStyles) {
 	    if (selector[0] !== "@") {
@@ -426,7 +432,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var generated = generateSubtreeStyles(baseSelector);
 	    return selector + '{' + generated + '}';
 	}];
-	
+
 	exports.defaultSelectorHandlers = defaultSelectorHandlers;
 	/**
 	 * Generate CSS for a selector and some styles.
@@ -480,12 +486,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var selectorHandlers = arguments.length <= 2 || arguments[2] === undefined ? [] : arguments[2];
 	    var stringHandlers = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
 	    var useImportant = arguments.length <= 4 || arguments[4] === undefined ? true : arguments[4];
-	
+
 	    var merged = styleTypes.reduce(_util.recursiveMerge);
-	
+
 	    var plainDeclarations = {};
 	    var generatedStyles = "";
-	
+
 	    Object.keys(merged).forEach(function (key) {
 	        // For each key, see if one of the selector handlers will handle these
 	        // styles.
@@ -506,10 +512,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            plainDeclarations[key] = merged[key];
 	        }
 	    });
-	
+
 	    return generateCSSRuleset(selector, plainDeclarations, stringHandlers, useImportant, selectorHandlers) + generatedStyles;
 	};
-	
+
 	exports.generateCSS = generateCSS;
 	/**
 	 * Helper method of generateCSSRuleset to facilitate custom handling of certain
@@ -519,7 +525,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var runStringHandlers = function runStringHandlers(declarations, stringHandlers, selectorHandlers) {
 	    var result = {};
-	
+
 	    Object.keys(declarations).forEach(function (key) {
 	        // If a handler exists for this particular key, let it interpret
 	        // that value first before continuing
@@ -534,10 +540,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            result[key] = declarations[key];
 	        }
 	    });
-	
+
 	    return result;
 	};
-	
+
 	/**
 	 * Generate a CSS ruleset with the selector and containing the declarations.
 	 *
@@ -571,23 +577,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var generateCSSRuleset = function generateCSSRuleset(selector, declarations, stringHandlers, useImportant, selectorHandlers) {
 	    var handledDeclarations = runStringHandlers(declarations, stringHandlers, selectorHandlers);
-	
+
 	    var prefixedDeclarations = (0, _inlineStylePrefixerStatic2['default'])(handledDeclarations);
-	
+
 	    var prefixedRules = (0, _util.flatten)((0, _util.objectToPairs)(prefixedDeclarations).map(function (_ref) {
 	        var _ref2 = _slicedToArray(_ref, 2);
-	
+
 	        var key = _ref2[0];
 	        var value = _ref2[1];
-	
+
 	        if (Array.isArray(value)) {
 	            var _ret = (function () {
 	                // inline-style-prefix-all returns an array when there should be
 	                // multiple rules, we will flatten to single rules
-	
+
 	                var prefixedValues = [];
 	                var unprefixedValues = [];
-	
+
 	                value.forEach(function (v) {
 	                    if (v.indexOf('-') === 0) {
 	                        prefixedValues.push(v);
@@ -595,33 +601,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        unprefixedValues.push(v);
 	                    }
 	                });
-	
+
 	                prefixedValues.sort();
 	                unprefixedValues.sort();
-	
+
 	                return {
 	                    v: prefixedValues.concat(unprefixedValues).map(function (v) {
 	                        return [key, v];
 	                    })
 	                };
 	            })();
-	
+
 	            if (typeof _ret === 'object') return _ret.v;
 	        }
 	        return [[key, value]];
 	    }));
-	
+
 	    var rules = prefixedRules.map(function (_ref3) {
 	        var _ref32 = _slicedToArray(_ref3, 2);
-	
+
 	        var key = _ref32[0];
 	        var value = _ref32[1];
-	
+
 	        var stringValue = (0, _util.stringifyValue)(key, value);
 	        var ret = (0, _util.kebabifyStyleName)(key) + ':' + stringValue + ';';
 	        return useImportant === false ? ret : (0, _util.importantify)(ret);
 	    }).join("");
-	
+
 	    if (rules) {
 	        return selector + '{' + rules + '}';
 	    } else {
@@ -642,67 +648,67 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = prefixAll;
-	
+
 	var _prefixProps = __webpack_require__(10);
-	
+
 	var _prefixProps2 = _interopRequireDefault(_prefixProps);
-	
+
 	var _capitalizeString = __webpack_require__(11);
-	
+
 	var _capitalizeString2 = _interopRequireDefault(_capitalizeString);
-	
+
 	var _sortPrefixedStyle = __webpack_require__(12);
-	
+
 	var _sortPrefixedStyle2 = _interopRequireDefault(_sortPrefixedStyle);
-	
+
 	var _position = __webpack_require__(14);
-	
+
 	var _position2 = _interopRequireDefault(_position);
-	
+
 	var _calc = __webpack_require__(15);
-	
+
 	var _calc2 = _interopRequireDefault(_calc);
-	
+
 	var _cursor = __webpack_require__(18);
-	
+
 	var _cursor2 = _interopRequireDefault(_cursor);
-	
+
 	var _flex = __webpack_require__(19);
-	
+
 	var _flex2 = _interopRequireDefault(_flex);
-	
+
 	var _sizing = __webpack_require__(20);
-	
+
 	var _sizing2 = _interopRequireDefault(_sizing);
-	
+
 	var _gradient = __webpack_require__(21);
-	
+
 	var _gradient2 = _interopRequireDefault(_gradient);
-	
+
 	var _transition = __webpack_require__(22);
-	
+
 	var _transition2 = _interopRequireDefault(_transition);
-	
+
 	var _flexboxIE = __webpack_require__(24);
-	
+
 	var _flexboxIE2 = _interopRequireDefault(_flexboxIE);
-	
+
 	var _flexboxOld = __webpack_require__(25);
-	
+
 	var _flexboxOld2 = _interopRequireDefault(_flexboxOld);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	// special flexbox specifications
-	
-	
+
+
 	var plugins = [_position2.default, _calc2.default, _cursor2.default, _sizing2.default, _gradient2.default, _transition2.default, _flexboxIE2.default, _flexboxOld2.default, _flex2.default];
-	
+
 	/**
 	 * Returns a prefixed version of the style object using all vendor prefixes
 	 * @param {Object} styles - Style object that gets prefixed properties added
@@ -724,7 +730,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    }
 	  });
-	
+
 	  Object.keys(styles).forEach(function (property) {
 	    [].concat(styles[property]).forEach(function (value, index) {
 	      // resolve every special plugins
@@ -733,13 +739,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    });
 	  });
-	
+
 	  return (0, _sortPrefixedStyle2.default)(styles);
 	}
-	
+
 	function assignStyles(base) {
 	  var extend = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
+
 	  Object.keys(extend).forEach(function (property) {
 	    var baseValue = base[property];
 	    if (Array.isArray(baseValue)) {
@@ -762,7 +768,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -774,16 +780,16 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	// helper to capitalize strings
-	
+
 	exports.default = function (str) {
 	  return str.charAt(0).toUpperCase() + str.slice(1);
 	};
-	
+
 	module.exports = exports["default"];
 
 /***/ },
@@ -791,18 +797,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = sortPrefixedStyle;
-	
+
 	var _isPrefixedProperty = __webpack_require__(13);
-	
+
 	var _isPrefixedProperty2 = _interopRequireDefault(_isPrefixedProperty);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function sortPrefixedStyle(style) {
 	  return Object.keys(style).sort(function (left, right) {
 	    if ((0, _isPrefixedProperty2.default)(left) && !(0, _isPrefixedProperty2.default)(right)) {
@@ -823,15 +829,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
+
 	exports.default = function (property) {
 	  return property.match(/^(Webkit|Moz|O|ms)/) !== null;
 	};
-	
+
 	module.exports = exports["default"];
 
 /***/ },
@@ -839,7 +845,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -856,22 +862,22 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = calc;
-	
+
 	var _joinPrefixedValue = __webpack_require__(16);
-	
+
 	var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
-	
+
 	var _isPrefixedValue = __webpack_require__(17);
-	
+
 	var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function calc(property, value) {
 	  if (typeof value === 'string' && !(0, _isPrefixedValue2.default)(value) && value.indexOf('calc(') > -1) {
 	    return (0, _joinPrefixedValue2.default)(property, value, function (prefix, value) {
@@ -886,15 +892,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
+
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
+
 	// returns a style object with a single concated prefixed value string
-	
+
 	exports.default = function (property, value) {
 	  var replacer = arguments.length <= 2 || arguments[2] === undefined ? function (prefix, value) {
 	    return prefix + value;
@@ -903,7 +909,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return replacer(prefix, value);
 	  }));
 	};
-	
+
 	module.exports = exports['default'];
 
 /***/ },
@@ -911,17 +917,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
+
 	exports.default = function (value) {
 	  if (Array.isArray(value)) value = value.join(',');
-	
+
 	  return value.match(/-webkit-|-moz-|-ms-/) !== null;
 	};
-	
+
 	module.exports = exports['default'];
 
 /***/ },
@@ -929,25 +935,25 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = cursor;
-	
+
 	var _joinPrefixedValue = __webpack_require__(16);
-	
+
 	var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	var values = {
 	  'zoom-in': true,
 	  'zoom-out': true,
 	  grab: true,
 	  grabbing: true
 	};
-	
+
 	function cursor(property, value) {
 	  if (property === 'cursor' && values[value]) {
 	    return (0, _joinPrefixedValue2.default)(property, value);
@@ -960,13 +966,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = flex;
 	var values = { flex: true, 'inline-flex': true };
-	
+
 	function flex(property, value) {
 	  if (property === 'display' && values[value]) {
 	    return {
@@ -981,18 +987,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = sizing;
-	
+
 	var _joinPrefixedValue = __webpack_require__(16);
-	
+
 	var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	var properties = {
 	  maxHeight: true,
 	  maxWidth: true,
@@ -1009,7 +1015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'fit-content': true,
 	  'contain-floats': true
 	};
-	
+
 	function sizing(property, value) {
 	  if (properties[property] && values[value]) {
 	    return (0, _joinPrefixedValue2.default)(property, value);
@@ -1022,24 +1028,24 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = gradient;
-	
+
 	var _joinPrefixedValue = __webpack_require__(16);
-	
+
 	var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
-	
+
 	var _isPrefixedValue = __webpack_require__(17);
-	
+
 	var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	var values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/;
-	
+
 	function gradient(property, value) {
 	  if (typeof value === 'string' && !(0, _isPrefixedValue2.default)(value) && value.match(values) !== null) {
 	    return (0, _joinPrefixedValue2.default)(property, value);
@@ -1052,75 +1058,75 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = transition;
-	
+
 	var _hyphenateStyleName = __webpack_require__(23);
-	
+
 	var _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);
-	
+
 	var _capitalizeString = __webpack_require__(11);
-	
+
 	var _capitalizeString2 = _interopRequireDefault(_capitalizeString);
-	
+
 	var _isPrefixedValue = __webpack_require__(17);
-	
+
 	var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-	
+
 	var _prefixProps = __webpack_require__(10);
-	
+
 	var _prefixProps2 = _interopRequireDefault(_prefixProps);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
+
 	var properties = {
 	  transition: true,
 	  transitionProperty: true,
 	  WebkitTransition: true,
 	  WebkitTransitionProperty: true
 	};
-	
+
 	function transition(property, value) {
 	  // also check for already prefixed transitions
 	  if (typeof value === 'string' && properties[property]) {
 	    var _ref2;
-	
+
 	    var outputValue = prefixValue(value);
 	    var webkitOutput = outputValue.split(/,(?![^()]*(?:\([^()]*\))?\))/g).filter(function (value) {
 	      return value.match(/-moz-|-ms-/) === null;
 	    }).join(',');
-	
+
 	    // if the property is already prefixed
 	    if (property.indexOf('Webkit') > -1) {
 	      return _defineProperty({}, property, webkitOutput);
 	    }
-	
+
 	    return _ref2 = {}, _defineProperty(_ref2, 'Webkit' + (0, _capitalizeString2.default)(property), webkitOutput), _defineProperty(_ref2, property, outputValue), _ref2;
 	  }
 	}
-	
+
 	function prefixValue(value) {
 	  if ((0, _isPrefixedValue2.default)(value)) {
 	    return value;
 	  }
-	
+
 	  // only split multi values, not cubic beziers
 	  var multipleValues = value.split(/,(?![^()]*(?:\([^()]*\))?\))/g);
-	
+
 	  // iterate each single value and check for transitioned properties
 	  // that need to be prefixed as well
 	  multipleValues.forEach(function (val, index) {
 	    multipleValues[index] = Object.keys(_prefixProps2.default).reduce(function (out, prefix) {
 	      var dashCasePrefix = '-' + prefix.toLowerCase() + '-';
-	
+
 	      Object.keys(_prefixProps2.default[prefix]).forEach(function (prop) {
 	        var dashCaseProperty = (0, _hyphenateStyleName2.default)(prop);
-	
+
 	        if (val.indexOf(dashCaseProperty) > -1 && dashCaseProperty !== 'order') {
 	          // join all prefixes and create a new value
 	          out = val.replace(dashCaseProperty, dashCasePrefix + dashCaseProperty) + ',' + out;
@@ -1129,7 +1135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return out;
 	    }, val);
 	  });
-	
+
 	  return multipleValues.join(',');
 	}
 	module.exports = exports['default'];
@@ -1139,11 +1145,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var uppercasePattern = /[A-Z]/g;
 	var msPattern = /^ms-/;
 	var cache = {};
-	
+
 	function hyphenateStyleName(string) {
 	    return string in cache
 	    ? cache[string]
@@ -1152,7 +1158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      .toLowerCase()
 	      .replace(msPattern, '-ms-');
 	}
-	
+
 	module.exports = hyphenateStyleName;
 
 
@@ -1161,14 +1167,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = flexboxIE;
-	
+
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
+
 	var alternativeValues = {
 	  'space-around': 'distribute',
 	  'space-between': 'justify',
@@ -1185,7 +1191,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  flexShrink: 'msFlexNegative',
 	  flexBasis: 'msPreferredSize'
 	};
-	
+
 	function flexboxIE(property, value) {
 	  if (alternativeProps[property]) {
 	    return _defineProperty({}, alternativeProps[property], alternativeValues[value] || value);
@@ -1198,14 +1204,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	exports.default = flexboxOld;
-	
+
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
+
 	var alternativeValues = {
 	  'space-around': 'justify',
 	  'space-between': 'justify',
@@ -1214,13 +1220,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  'wrap-reverse': 'multiple',
 	  wrap: 'multiple'
 	};
-	
+
 	var alternativeProps = {
 	  alignItems: 'WebkitBoxAlign',
 	  justifyContent: 'WebkitBoxPack',
 	  flexWrap: 'WebkitBoxLines'
 	};
-	
+
 	function flexboxOld(property, value) {
 	  if (property === 'flexDirection' && typeof value === 'string') {
 	    return {
@@ -1240,40 +1246,40 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	// {K1: V1, K2: V2, ...} -> [[K1, V1], [K2, V2]]
 	'use strict';
-	
+
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-	
+
 	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-	
+
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
+
 	var objectToPairs = function objectToPairs(obj) {
 	    return Object.keys(obj).map(function (key) {
 	        return [key, obj[key]];
 	    });
 	};
-	
+
 	exports.objectToPairs = objectToPairs;
 	// [[K1, V1], [K2, V2]] -> {K1: V1, K2: V2, ...}
 	var pairsToObject = function pairsToObject(pairs) {
 	    var result = {};
 	    pairs.forEach(function (_ref) {
 	        var _ref2 = _slicedToArray(_ref, 2);
-	
+
 	        var key = _ref2[0];
 	        var val = _ref2[1];
-	
+
 	        result[key] = val;
 	    });
 	    return result;
 	};
-	
+
 	var mapObj = function mapObj(obj, fn) {
 	    return pairsToObject(objectToPairs(obj).map(fn));
 	};
-	
+
 	exports.mapObj = mapObj;
 	// Flattens an array one level
 	// [[A], [B, C, [D]]] -> [A, B, C, [D]]
@@ -1282,36 +1288,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return memo.concat(x);
 	    }, []);
 	};
-	
+
 	exports.flatten = flatten;
 	var flattenDeep = function flattenDeep(list) {
 	    return list.reduce(function (memo, x) {
 	        return memo.concat(Array.isArray(x) ? flattenDeep(x) : x);
 	    }, []);
 	};
-	
+
 	exports.flattenDeep = flattenDeep;
 	var UPPERCASE_RE = /([A-Z])/g;
 	var MS_RE = /^ms-/;
-	
+
 	var kebabify = function kebabify(string) {
 	    return string.replace(UPPERCASE_RE, '-$1').toLowerCase();
 	};
 	var kebabifyStyleName = function kebabifyStyleName(string) {
 	    return kebabify(string).replace(MS_RE, '-ms-');
 	};
-	
+
 	exports.kebabifyStyleName = kebabifyStyleName;
 	var recursiveMerge = function recursiveMerge(a, b) {
 	    // TODO(jlfwong): Handle malformed input where a and b are not the same
 	    // type.
-	
+
 	    if (typeof a !== 'object') {
 	        return b;
 	    }
-	
+
 	    var ret = _extends({}, a);
-	
+
 	    Object.keys(b).forEach(function (key) {
 	        if (ret.hasOwnProperty(key)) {
 	            ret[key] = recursiveMerge(a[key], b[key]);
@@ -1319,10 +1325,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            ret[key] = b[key];
 	        }
 	    });
-	
+
 	    return ret;
 	};
-	
+
 	exports.recursiveMerge = recursiveMerge;
 	/**
 	 * CSS properties which accept numbers but are not in units of "px".
@@ -1355,7 +1361,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    widows: true,
 	    zIndex: true,
 	    zoom: true,
-	
+
 	    // SVG-related properties
 	    fillOpacity: true,
 	    floodOpacity: true,
@@ -1366,7 +1372,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    strokeOpacity: true,
 	    strokeWidth: true
 	};
-	
+
 	/**
 	 * Taken from React's CSSProperty.js
 	 *
@@ -1378,14 +1384,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	function prefixKey(prefix, key) {
 	    return prefix + key.charAt(0).toUpperCase() + key.substring(1);
 	}
-	
+
 	/**
 	 * Support style names that may come passed in prefixed by adding permutations
 	 * of vendor prefixes.
 	 * Taken from React's CSSProperty.js
 	 */
 	var prefixes = ['Webkit', 'ms', 'Moz', 'O'];
-	
+
 	// Using Object.keys here, or else the vanilla for-in loop makes IE8 go into an
 	// infinite loop, because it iterates over the newly added props too.
 	// Taken from React's CSSProperty.js
@@ -1394,7 +1400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        isUnitlessNumber[prefixKey(prefix, prop)] = isUnitlessNumber[prop];
 	    });
 	});
-	
+
 	var stringifyValue = function stringifyValue(key, prop) {
 	    if (typeof prop === "number") {
 	        if (isUnitlessNumber[key]) {
@@ -1406,7 +1412,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return prop;
 	    }
 	};
-	
+
 	exports.stringifyValue = stringifyValue;
 	/**
 	 * JS Implementation of MurmurHash2
@@ -1424,20 +1430,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var h = l;
 	    var i = 0;
 	    var k = undefined;
-	
+
 	    while (l >= 4) {
 	        k = str.charCodeAt(i) & 0xff | (str.charCodeAt(++i) & 0xff) << 8 | (str.charCodeAt(++i) & 0xff) << 16 | (str.charCodeAt(++i) & 0xff) << 24;
-	
+
 	        k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
 	        k ^= k >>> 24;
 	        k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-	
+
 	        h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16) ^ k;
-	
+
 	        l -= 4;
 	        ++i;
 	    }
-	
+
 	    /* eslint-disable no-fallthrough */ // forgive existing code
 	    switch (l) {
 	        case 3:
@@ -1449,14 +1455,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
 	    }
 	    /* eslint-enable no-fallthrough */
-	
+
 	    h ^= h >>> 13;
 	    h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
 	    h ^= h >>> 15;
-	
+
 	    return (h >>> 0).toString(36);
 	}
-	
+
 	// Hash a javascript object using JSON.stringify. This is very fast, about 3
 	// microseconds on my computer for a sample object:
 	// http://jsperf.com/test-hashfnv32a-hash/5
@@ -1468,10 +1474,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var hashObject = function hashObject(object) {
 	    return murmurhash2_32_gc(JSON.stringify(object));
 	};
-	
+
 	exports.hashObject = hashObject;
 	var IMPORTANT_RE = /^([^:]+:.*?)( !important)?;$/;
-	
+
 	// Given a single style rule string like "a: b;", adds !important to generate
 	// "a: b !important;".
 	var importantify = function importantify(string) {
@@ -1486,23 +1492,23 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-	
+
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
+
 	var _util = __webpack_require__(26);
-	
+
 	var _inject = __webpack_require__(28);
-	
+
 	var StyleSheet = {
 	    create: function create(sheetDefinition) {
 	        return (0, _util.mapObj)(sheetDefinition, function (_ref) {
 	            var _ref2 = _slicedToArray(_ref, 2);
-	
+
 	            var key = _ref2[0];
 	            var val = _ref2[1];
-	
+
 	            return [key, {
 	                // TODO(emily): Make a 'production' mode which doesn't prepend
 	                // the class name here, to make the generated CSS smaller.
@@ -1511,14 +1517,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }];
 	        });
 	    },
-	
+
 	    rehydrate: function rehydrate() {
 	        var renderedClassNames = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-	
+
 	        (0, _inject.addRenderedClassNames)(renderedClassNames);
 	    }
 	};
-	
+
 	/**
 	 * Utilities for using Aphrodite server-side.
 	 */
@@ -1528,7 +1534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        (0, _inject.startBuffering)();
 	        var html = renderFunc();
 	        var cssContent = (0, _inject.flushToString)();
-	
+
 	        return {
 	            html: html,
 	            css: {
@@ -1538,7 +1544,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	    }
 	};
-	
+
 	/**
 	 * Utilities for using Aphrodite in tests.
 	 *
@@ -1560,7 +1566,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        (0, _inject.reset)();
 	        (0, _inject.startBuffering)();
 	    },
-	
+
 	    /**
 	     * Opposite method of preventStyleInject.
 	     */
@@ -1568,7 +1574,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        (0, _inject.reset)();
 	    }
 	};
-	
+
 	/**
 	 * Generate the Aphrodite API exports, with given `selectorHandlers` and
 	 * `useImportant` state.
@@ -1576,7 +1582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var makeExports = function makeExports(useImportant, selectorHandlers) {
 	    return {
 	        StyleSheet: _extends({}, StyleSheet, {
-	
+
 	            /**
 	             * Returns a version of the exports of Aphrodite (i.e. an object
 	             * with `css` and `StyleSheet` properties) which have some
@@ -1604,24 +1610,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	                .filter(function (handler) {
 	                    return handler;
 	                });
-	
+
 	                return makeExports(useImportant, selectorHandlers.concat(extensionSelectorHandlers));
 	            }
 	        }),
-	
+
 	        StyleSheetServer: StyleSheetServer,
 	        StyleSheetTestUtils: StyleSheetTestUtils,
-	
+
 	        css: function css() {
 	            for (var _len = arguments.length, styleDefinitions = Array(_len), _key = 0; _key < _len; _key++) {
 	                styleDefinitions[_key] = arguments[_key];
 	            }
-	
+
 	            return (0, _inject.injectAndGetClassName)(useImportant, styleDefinitions, selectorHandlers);
 	        }
 	    };
 	};
-	
+
 	module.exports = makeExports;
 
 
@@ -1630,27 +1636,27 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, '__esModule', {
 	    value: true
 	});
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
+
 	var _asap = __webpack_require__(29);
-	
+
 	var _asap2 = _interopRequireDefault(_asap);
-	
+
 	var _generate = __webpack_require__(7);
-	
+
 	var _util = __webpack_require__(26);
-	
+
 	// The current <style> tag we are inserting into, or null if we haven't
 	// inserted anything yet. We could find this each time using
 	// `document.querySelector("style[data-aphrodite"])`, but holding onto it is
 	// faster.
 	var styleTag = null;
-	
+
 	// Inject a string of styles into a <style> tag in the head of the document. This
 	// will automatically create a style tag and then continue to use it for
 	// multiple injections. It will also use a style tag with the `data-aphrodite`
@@ -1660,27 +1666,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (styleTag == null) {
 	        // Try to find a style tag with the `data-aphrodite` attribute first.
 	        styleTag = document.querySelector("style[data-aphrodite]");
-	
+
 	        // If that doesn't work, generate a new style tag.
 	        if (styleTag == null) {
 	            // Taken from
 	            // http://stackoverflow.com/questions/524696/how-to-create-a-style-tag-with-javascript
 	            var head = document.head || document.getElementsByTagName('head')[0];
 	            styleTag = document.createElement('style');
-	
+
 	            styleTag.type = 'text/css';
 	            styleTag.setAttribute("data-aphrodite", "");
 	            head.appendChild(styleTag);
 	        }
 	    }
-	
+
 	    if (styleTag.styleSheet) {
 	        styleTag.styleSheet.cssText += cssContents;
 	    } else {
 	        styleTag.appendChild(document.createTextNode(cssContents));
 	    }
 	};
-	
+
 	// Custom handlers for stringifying CSS values that have side effects
 	// (such as fontFamily, which can cause @font-face rules to be injected)
 	var stringHandlers = {
@@ -1698,7 +1704,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return val;
 	        }
 	    },
-	
+
 	    // With animationName we look for an object that contains keyframes and
 	    // inject them as an `@keyframes` block, returning a uniquely generated
 	    // name. The keyframes object should look like
@@ -1730,7 +1736,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // TODO(emily): this probably makes debugging hard, allow a custom
 	            // name?
 	            var _name = 'keyframe_' + (0, _util.hashObject)(val);
-	
+
 	            // Since keyframes need 3 layers of nesting, we use `generateCSS` to
 	            // build the inner layers and wrap it in `@keyframes` ourselves.
 	            var finalVal = '@keyframes ' + _name + '{';
@@ -1738,28 +1744,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	                finalVal += (0, _generate.generateCSS)(key, [val[key]], selectorHandlers, stringHandlers, false);
 	            });
 	            finalVal += '}';
-	
+
 	            injectGeneratedCSSOnce(_name, finalVal);
-	
+
 	            return _name;
 	        } else {
 	            return val;
 	        }
 	    }
 	};
-	
+
 	// This is a map from Aphrodite's generated class names to `true` (acting as a
 	// set of class names)
 	var alreadyInjected = {};
-	
+
 	// This is the buffer of styles which have not yet been flushed.
 	var injectionBuffer = "";
-	
+
 	// A flag to tell if we are already buffering styles. This could happen either
 	// because we scheduled a flush call already, so newly added styles will
 	// already be flushed, or because we are statically buffering on the server.
 	var isBuffering = false;
-	
+
 	var injectGeneratedCSSOnce = function injectGeneratedCSSOnce(key, generatedCSS) {
 	    if (!alreadyInjected[key]) {
 	        if (!isBuffering) {
@@ -1768,26 +1774,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (typeof document === "undefined") {
 	                throw new Error("Cannot automatically buffer without a document");
 	            }
-	
+
 	            // If we're not already buffering, schedule a call to flush the
 	            // current styles.
 	            isBuffering = true;
 	            (0, _asap2['default'])(flushToStyleTag);
 	        }
-	
+
 	        injectionBuffer += generatedCSS;
 	        alreadyInjected[key] = true;
 	    }
 	};
-	
+
 	var injectStyleOnce = function injectStyleOnce(key, selector, definitions, useImportant, selectorHandlers) {
 	    if (!alreadyInjected[key]) {
 	        var generated = (0, _generate.generateCSS)(selector, definitions, selectorHandlers, stringHandlers, useImportant);
-	
+
 	        injectGeneratedCSSOnce(key, generated);
 	    }
 	};
-	
+
 	exports.injectStyleOnce = injectStyleOnce;
 	var reset = function reset() {
 	    injectionBuffer = "";
@@ -1795,7 +1801,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    isBuffering = false;
 	    styleTag = null;
 	};
-	
+
 	exports.reset = reset;
 	var startBuffering = function startBuffering() {
 	    if (isBuffering) {
@@ -1803,7 +1809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    isBuffering = true;
 	};
-	
+
 	exports.startBuffering = startBuffering;
 	var flushToString = function flushToString() {
 	    isBuffering = false;
@@ -1811,7 +1817,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    injectionBuffer = "";
 	    return ret;
 	};
-	
+
 	exports.flushToString = flushToString;
 	var flushToStyleTag = function flushToStyleTag() {
 	    var cssContent = flushToString();
@@ -1819,19 +1825,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        injectStyleTag(cssContent);
 	    }
 	};
-	
+
 	exports.flushToStyleTag = flushToStyleTag;
 	var getRenderedClassNames = function getRenderedClassNames() {
 	    return Object.keys(alreadyInjected);
 	};
-	
+
 	exports.getRenderedClassNames = getRenderedClassNames;
 	var addRenderedClassNames = function addRenderedClassNames(classNames) {
 	    classNames.forEach(function (className) {
 	        alreadyInjected[className] = true;
 	    });
 	};
-	
+
 	exports.addRenderedClassNames = addRenderedClassNames;
 	/**
 	 * Inject styles associated with the passed style definition objects, and return
@@ -1845,25 +1851,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var injectAndGetClassName = function injectAndGetClassName(useImportant, styleDefinitions, selectorHandlers) {
 	    styleDefinitions = (0, _util.flattenDeep)(styleDefinitions);
-	
+
 	    // Filter out falsy values from the input, to allow for
 	    // `css(a, test && c)`
 	    var validDefinitions = styleDefinitions.filter(function (def) {
 	        return def;
 	    });
-	
+
 	    // Break if there aren't any valid styles.
 	    if (validDefinitions.length === 0) {
 	        return "";
 	    }
-	
+
 	    var className = validDefinitions.map(function (s) {
 	        return s._name;
 	    }).join("-o_O-");
 	    injectStyleOnce(className, '.' + className, validDefinitions.map(function (d) {
 	        return d._definition;
 	    }), useImportant, selectorHandlers);
-	
+
 	    return className;
 	};
 	exports.injectAndGetClassName = injectAndGetClassName;
@@ -1874,17 +1880,27 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
+	// rawAsap provides everything we need except exception management.
 	var rawAsap = __webpack_require__(30);
+	// RawTasks are recycled to reduce GC churn.
 	var freeTasks = [];
-	
+	// We queue errors to ensure they are thrown in right order (FIFO).
+	// Array-as-queue is good enough here, since we are just dealing with exceptions.
+	var pendingErrors = [];
+	var requestErrorThrow = rawAsap.makeRequestCallFromTimer(throwFirstError);
+
+	function throwFirstError() {
+	    if (pendingErrors.length) {
+	        throw pendingErrors.shift();
+	    }
+	}
+
 	/**
-	 * Calls a task as soon as possible after returning, in its own event, with
-	 * priority over IO events. An exception thrown in a task can be handled by
-	 * `process.on("uncaughtException") or `domain.on("error")`, but will otherwise
-	 * crash the process. If the error is handled, all subsequent tasks will
-	 * resume.
-	 *
+	 * Calls a task as soon as possible after returning, in its own event, with priority
+	 * over other events like animation, reflow, and repaint. An error thrown from an
+	 * event will not interrupt, nor even substantially slow down the processing of
+	 * other events, but will be rather postponed to a lower priority event.
 	 * @param {{call}} task A callable object, typically a function that takes no
 	 * arguments.
 	 */
@@ -1897,60 +1913,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	        rawTask = new RawTask();
 	    }
 	    rawTask.task = task;
-	    rawTask.domain = process.domain;
 	    rawAsap(rawTask);
 	}
-	
+
+	// We wrap tasks with recyclable task objects.  A task object implements
+	// `call`, just like a function.
 	function RawTask() {
 	    this.task = null;
-	    this.domain = null;
 	}
-	
+
+	// The sole purpose of wrapping the task is to catch the exception and recycle
+	// the task object after its single use.
 	RawTask.prototype.call = function () {
-	    if (this.domain) {
-	        this.domain.enter();
-	    }
-	    var threw = true;
 	    try {
 	        this.task.call();
-	        threw = false;
-	        // If the task throws an exception (presumably) Node.js restores the
-	        // domain stack for the next event.
-	        if (this.domain) {
-	            this.domain.exit();
+	    } catch (error) {
+	        if (asap.onerror) {
+	            // This hook exists purely for testing purposes.
+	            // Its name will be periodically randomized to break any code that
+	            // depends on its existence.
+	            asap.onerror(error);
+	        } else {
+	            // In a web browser, exceptions are not fatal. However, to avoid
+	            // slowing down the queue of pending tasks, we rethrow the error in a
+	            // lower priority turn.
+	            pendingErrors.push(error);
+	            requestErrorThrow();
 	        }
 	    } finally {
-	        // We use try/finally and a threw flag to avoid messing up stack traces
-	        // when we catch and release errors.
-	        if (threw) {
-	            // In Node.js, uncaught exceptions are considered fatal errors.
-	            // Re-throw them to interrupt flushing!
-	            // Ensure that flushing continues if an uncaught exception is
-	            // suppressed listening process.on("uncaughtException") or
-	            // domain.on("error").
-	            rawAsap.requestFlush();
-	        }
-	        // If the task threw an error, we do not want to exit the domain here.
-	        // Exiting the domain would prevent the domain from catching the error.
 	        this.task = null;
-	        this.domain = null;
-	        freeTasks.push(this);
+	        freeTasks[freeTasks.length] = this;
 	    }
 	};
-	
 
 
 /***/ },
 /* 30 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	"use strict";
-	
-	var domain; // The domain module is executed on demand
-	var hasSetImmediate = typeof setImmediate === "function";
-	
+	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
+
 	// Use the fastest means possible to execute a task in its own turn, with
-	// priority over other events including network IO events in Node.js.
+	// priority over other events including IO, animation, reflow, and redraw
+	// events in browsers.
 	//
 	// An exception thrown by a task will permanently interrupt the processing of
 	// subsequent tasks. The higher level `asap` function ensures that if an
@@ -1964,23 +1969,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	        requestFlush();
 	        flushing = true;
 	    }
-	    // Avoids a function call
+	    // Equivalent to push, but avoids a function call.
 	    queue[queue.length] = task;
 	}
-	
+
 	var queue = [];
 	// Once a flush has been requested, no further calls to `requestFlush` are
 	// necessary until the next `flush` completes.
 	var flushing = false;
+	// `requestFlush` is an implementation-specific method that attempts to kick
+	// off a `flush` event as quickly as possible. `flush` will attempt to exhaust
+	// the event queue before yielding to the browser's own event loop.
+	var requestFlush;
 	// The position of the next task to execute in the task queue. This is
 	// preserved between calls to `flush` so that it can be resumed if
 	// a task throws an exception.
 	var index = 0;
 	// If a task schedules additional tasks recursively, the task queue can grow
-	// unbounded. To prevent memory excaustion, the task queue will periodically
+	// unbounded. To prevent memory exhaustion, the task queue will periodically
 	// truncate already-completed tasks.
 	var capacity = 1024;
-	
+
 	// The flush function processes all tasks that have been scheduled with
 	// `rawAsap` unless and until one of those tasks throws an exception.
 	// If a task throws an exception, `flush` ensures that its state will remain
@@ -2013,62 +2022,182 @@ return /******/ (function(modules) { // webpackBootstrap
 	    index = 0;
 	    flushing = false;
 	}
-	
-	rawAsap.requestFlush = requestFlush;
-	function requestFlush() {
-	    // Ensure flushing is not bound to any domain.
-	    // It is not sufficient to exit the domain, because domains exist on a stack.
-	    // To execute code outside of any domain, the following dance is necessary.
-	    var parentDomain = process.domain;
-	    if (parentDomain) {
-	        if (!domain) {
-	            // Lazy execute the domain module.
-	            // Only employed if the user elects to use domains.
-	            domain = __webpack_require__(31);
-	        }
-	        domain.active = process.domain = null;
-	    }
-	
-	    // `setImmediate` is slower that `process.nextTick`, but `process.nextTick`
-	    // cannot handle recursion.
-	    // `requestFlush` will only be called recursively from `asap.js`, to resume
-	    // flushing after an error is thrown into a domain.
-	    // Conveniently, `setImmediate` was introduced in the same version
-	    // `process.nextTick` started throwing recursion errors.
-	    if (flushing && hasSetImmediate) {
-	        setImmediate(flush);
-	    } else {
-	        process.nextTick(flush);
-	    }
-	
-	    if (parentDomain) {
-	        domain.active = process.domain = parentDomain;
-	    }
+
+	// `requestFlush` is implemented using a strategy based on data collected from
+	// every available SauceLabs Selenium web driver worker at time of writing.
+	// https://docs.google.com/spreadsheets/d/1mG-5UYGup5qxGdEMWkhP6BWCz053NUb2E1QoUTU16uA/edit#gid=783724593
+
+	// Safari 6 and 6.1 for desktop, iPad, and iPhone are the only browsers that
+	// have WebKitMutationObserver but not un-prefixed MutationObserver.
+	// Must use `global` or `self` instead of `window` to work in both frames and web
+	// workers. `global` is a provision of Browserify, Mr, Mrs, or Mop.
+
+	/* globals self */
+	var scope = typeof global !== "undefined" ? global : self;
+	var BrowserMutationObserver = scope.MutationObserver || scope.WebKitMutationObserver;
+
+	// MutationObservers are desirable because they have high priority and work
+	// reliably everywhere they are implemented.
+	// They are implemented in all modern browsers.
+	//
+	// - Android 4-4.3
+	// - Chrome 26-34
+	// - Firefox 14-29
+	// - Internet Explorer 11
+	// - iPad Safari 6-7.1
+	// - iPhone Safari 7-7.1
+	// - Safari 6-7
+	if (typeof BrowserMutationObserver === "function") {
+	    requestFlush = makeRequestCallFromMutationObserver(flush);
+
+	// MessageChannels are desirable because they give direct access to the HTML
+	// task queue, are implemented in Internet Explorer 10, Safari 5.0-1, and Opera
+	// 11-12, and in web workers in many engines.
+	// Although message channels yield to any queued rendering and IO tasks, they
+	// would be better than imposing the 4ms delay of timers.
+	// However, they do not work reliably in Internet Explorer or Safari.
+
+	// Internet Explorer 10 is the only browser that has setImmediate but does
+	// not have MutationObservers.
+	// Although setImmediate yields to the browser's renderer, it would be
+	// preferrable to falling back to setTimeout since it does not have
+	// the minimum 4ms penalty.
+	// Unfortunately there appears to be a bug in Internet Explorer 10 Mobile (and
+	// Desktop to a lesser extent) that renders both setImmediate and
+	// MessageChannel useless for the purposes of ASAP.
+	// https://github.com/kriskowal/q/issues/396
+
+	// Timers are implemented universally.
+	// We fall back to timers in workers in most engines, and in foreground
+	// contexts in the following browsers.
+	// However, note that even this simple case requires nuances to operate in a
+	// broad spectrum of browsers.
+	//
+	// - Firefox 3-13
+	// - Internet Explorer 6-9
+	// - iPad Safari 4.3
+	// - Lynx 2.8.7
+	} else {
+	    requestFlush = makeRequestCallFromTimer(flush);
 	}
 
+	// `requestFlush` requests that the high priority event queue be flushed as
+	// soon as possible.
+	// This is useful to prevent an error thrown in a task from stalling the event
+	// queue if the exception handled by Node.js’s
+	// `process.on("uncaughtException")` or by a domain.
+	rawAsap.requestFlush = requestFlush;
+
+	// To request a high priority event, we induce a mutation observer by toggling
+	// the text of a text node between "1" and "-1".
+	function makeRequestCallFromMutationObserver(callback) {
+	    var toggle = 1;
+	    var observer = new BrowserMutationObserver(callback);
+	    var node = document.createTextNode("");
+	    observer.observe(node, {characterData: true});
+	    return function requestCall() {
+	        toggle = -toggle;
+	        node.data = toggle;
+	    };
+	}
+
+	// The message channel technique was discovered by Malte Ubl and was the
+	// original foundation for this library.
+	// http://www.nonblocking.io/2011/06/windownexttick.html
+
+	// Safari 6.0.5 (at least) intermittently fails to create message ports on a
+	// page's first load. Thankfully, this version of Safari supports
+	// MutationObservers, so we don't need to fall back in that case.
+
+	// function makeRequestCallFromMessageChannel(callback) {
+	//     var channel = new MessageChannel();
+	//     channel.port1.onmessage = callback;
+	//     return function requestCall() {
+	//         channel.port2.postMessage(0);
+	//     };
+	// }
+
+	// For reasons explained above, we are also unable to use `setImmediate`
+	// under any circumstances.
+	// Even if we were, there is another bug in Internet Explorer 10.
+	// It is not sufficient to assign `setImmediate` to `requestFlush` because
+	// `setImmediate` must be called *by name* and therefore must be wrapped in a
+	// closure.
+	// Never forget.
+
+	// function makeRequestCallFromSetImmediate(callback) {
+	//     return function requestCall() {
+	//         setImmediate(callback);
+	//     };
+	// }
+
+	// Safari 6.0 has a problem where timers will get lost while the user is
+	// scrolling. This problem does not impact ASAP because Safari 6.0 supports
+	// mutation observers, so that implementation is used instead.
+	// However, if we ever elect to use timers in Safari, the prevalent work-around
+	// is to add a scroll event listener that calls for a flush.
+
+	// `setTimeout` does not call the passed callback if the delay is less than
+	// approximately 7 in web workers in Firefox 8 through 18, and sometimes not
+	// even then.
+
+	function makeRequestCallFromTimer(callback) {
+	    return function requestCall() {
+	        // We dispatch a timeout with a specified delay of 0 for engines that
+	        // can reliably accommodate that request. This will usually be snapped
+	        // to a 4 milisecond delay, but once we're flushing, there's no delay
+	        // between events.
+	        var timeoutHandle = setTimeout(handleTimer, 0);
+	        // However, since this timer gets frequently dropped in Firefox
+	        // workers, we enlist an interval handle that will try to fire
+	        // an event 20 times per second until it succeeds.
+	        var intervalHandle = setInterval(handleTimer, 50);
+
+	        function handleTimer() {
+	            // Whichever timer succeeds will cancel both timers and
+	            // execute the callback.
+	            clearTimeout(timeoutHandle);
+	            clearInterval(intervalHandle);
+	            callback();
+	        }
+	    };
+	}
+
+	// This is for `asap.js` only.
+	// Its name will be periodically randomized to break any code that depends on
+	// its existence.
+	rawAsap.makeRequestCallFromTimer = makeRequestCallFromTimer;
+
+	// ASAP was originally a nextTick shim included in Q. This was factored out
+	// into this ASAP package. It was later adapted to RSVP which made further
+	// amendments. These decisions, particularly to marginalize MessageChannel and
+	// to capture the MutationObserver implementation in a closure, were integrated
+	// back into ASAP proper.
+	// https://github.com/tildeio/rsvp.js/blob/cddf7232546a9cf858524b75cde6f9edf72620a7/lib/rsvp/asap.js
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 31 */
 /***/ function(module, exports) {
 
-	module.exports = require("domain");
-
-/***/ },
-/* 32 */
-/***/ function(module, exports) {
-
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
+
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
+
 	var Utils = {
+	  /**
+	   * Generates a random string
+	   * @param  {Number} length = 10
+	   * @return {String}
+	   */
 	  generateClassName: function generateClassName() {
 	    var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
-	
+
 	    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 	    var className = '';
 	    for (var i = 0; i < length; i++) {
@@ -2076,6 +2205,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return className;
 	  },
+
+
+	  /**
+	   * Generates a name for the given target (tag name, class name or random string)
+	   * @param  {Object} target
+	   * @return {String}
+	   */
 	  generateStyleNameForTarget: function generateStyleNameForTarget(target) {
 	    if (typeof target === 'string') {
 	      return target;
@@ -2083,6 +2219,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return target.name ? target.name : Utils.generateClassName();
 	    }
 	  },
+
+
+	  /**
+	   * Checks if the given object has any functions deep inside of it
+	   * @param  {Object} obj
+	   * @return {Boolean}
+	   */
 	  objectHasFunctions: function objectHasFunctions(obj) {
 	    for (var prop in obj) {
 	      var value = obj[prop];
@@ -2098,44 +2241,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return false;
 	  }
 	};
-	
+
 	exports.default = Utils;
 
 /***/ },
-/* 33 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	var _react = __webpack_require__(4);
-	
+
 	var _react2 = _interopRequireDefault(_react);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	// const CHANNEL = '💪'
-	
+
 	var ThemeProvider = function (_Component) {
 	  _inherits(ThemeProvider, _Component);
-	
+
 	  function ThemeProvider() {
 	    _classCallCheck(this, ThemeProvider);
-	
+
 	    return _possibleConstructorReturn(this, (ThemeProvider.__proto__ || Object.getPrototypeOf(ThemeProvider)).apply(this, arguments));
 	  }
-	
+
 	  _createClass(ThemeProvider, [{
 	    key: 'getChildContext',
 	    value: function getChildContext() {
@@ -2155,69 +2296,69 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _react2.default.Children.only(this.props.children);
 	    }
 	  }]);
-	
+
 	  return ThemeProvider;
 	}(_react.Component);
-	
+
 	exports.default = ThemeProvider;
-	
-	
+
+
 	ThemeProvider.childContextTypes = {
 	  theme: _react.PropTypes.object.isRequired
 	};
-	
+
 	ThemeProvider.contextTypes = {
 	  theme: _react.PropTypes.object
 	};
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	var _react = __webpack_require__(4);
-	
+
 	var _react2 = _interopRequireDefault(_react);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	exports.default = function (Component) {
 	  var ComponentWithTheme = function (_React$Component) {
 	    _inherits(ComponentWithTheme, _React$Component);
-	
+
 	    function ComponentWithTheme() {
 	      _classCallCheck(this, ComponentWithTheme);
-	
+
 	      return _possibleConstructorReturn(this, (ComponentWithTheme.__proto__ || Object.getPrototypeOf(ComponentWithTheme)).apply(this, arguments));
 	    }
-	
+
 	    _createClass(ComponentWithTheme, [{
 	      key: 'render',
 	      value: function render() {
 	        return _react2.default.createElement(Component, this.props);
 	      }
 	    }]);
-	
+
 	    return ComponentWithTheme;
 	  }(_react2.default.Component);
-	
+
 	  ComponentWithTheme.contextTypes = {
 	    theme: _react2.default.PropTypes.object
 	  };
-	
+
 	  return ComponentWithTheme;
 	};
 
@@ -2225,4 +2366,3 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-//# sourceMappingURL=adonis.js.map
