@@ -14,6 +14,21 @@ const Utils = {
     } else {
       return target.name ? target.name : Utils.generateClassName()
     }
+  },
+
+  objectHasFunctions (obj) {
+    for (let prop in obj) {
+      const value = obj[prop]
+      const valueType = typeof value
+      if (valueType === 'object') {
+        if (Utils.objectHasFunctions(value)) {
+          return true
+        }
+      } else if (valueType === 'function') {
+        return true
+      }
+    }
+    return false
   }
 }
 

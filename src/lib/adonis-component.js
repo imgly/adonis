@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
-import { StyleSheet, css } from 'aphrodite/dist/aphrodite'
+import React, { Component, PropTypes } from 'react'
+import { StyleSheet, css } from 'aphrodite/no-important'
 import Utils from './utils'
 
-// We're using this so we can check if a passed object is a adonis component
 class BaseAdonisComponent extends Component {}
+BaseAdonisComponent.contextTypes = {
+  theme: PropTypes.object
+}
 
 export function create (target, styles, variations = {}) {
   const isTag = typeof target === 'string'
@@ -11,7 +13,6 @@ export function create (target, styles, variations = {}) {
   const isComponent = !isAdonisComponent && Component.isPrototypeOf(target)
 
   const styleName = Utils.generateStyleNameForTarget(target)
-
 
   const stylesObject = {
     [styleName]: styles
@@ -23,10 +24,43 @@ export function create (target, styles, variations = {}) {
     stylesObject[variation] = variations[variation]
   })
 
-  const aphroStyles = StyleSheet.create(stylesObject)
+  // In case we have any asynchronous style definitions (i.e. styles that need the theme passed
+  // to the component, which is only available after the component has been instantiated),
+  // we need to create the stylesheet on render.
+  let injectOnRender = Utils.objectHasFunctions(stylesObject)
 
-  class AdonisComponent extends BaseAdonisComponent {
+  let aphroStyles
+  if (!injectOnRender) {
+    aphroStyles = StyleSheet.create(stylesObject)
+  }
+
+  const ParentComponent = isComponent ? target : BaseAdonisComponent
+
+  class AdonisComponent extends ParentComponent {
+    _processStylesObject (stylesObject) {
+      const processObject = (obj) => {
+        let newObject = {}
+
+        for (let prop in obj) {
+          const value = obj[prop]
+          const valueType = typeof value
+          if (valueType === 'object') {
+            newObject[prop] = processObject(value)
+          } else if (valueType === 'function') {
+            newObject[prop] = value(this.context.theme)
+          }
+        }
+
+        return newObject
+      }
+      return processObject(stylesObject)
+    }
+
     render () {
+      if (injectOnRender) {
+        aphroStyles = StyleSheet.create(this._processStylesObject(stylesObject))
+      }
+
       const { children, innerRef } = this.props
       const elementProps = {}
 
@@ -71,6 +105,7 @@ export function create (target, styles, variations = {}) {
     }
   }
 
+  AdonisComponent.contextTypes = ParentComponent.contextTypes
   AdonisComponent.target = target
   AdonisComponent.styles = styles
 

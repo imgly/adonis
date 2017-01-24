@@ -1,18 +1,7 @@
-import DOMElements from './lib/dom-elements'
-import { create as createAdonisComponent } from './lib/adonis-component'
+import adonis from './adonis'
+import ThemeProvider from './lib/theme-provider'
+import withTheme from './lib/with-theme'
+import { StyleSheetServer, StyleSheet, css } from 'aphrodite/no-important'
 
-module.exports = (() => {
-  let adonis = (base) => {
-    return (styles, variations) => {
-      return createAdonisComponent(base, styles, variations)
-    }
-  }
-
-  DOMElements.forEach((tagName) => {
-    adonis[tagName] = (styles, variations) => {
-      return createAdonisComponent(tagName, styles, variations)
-    }
-  })
-
-  return adonis
-})()
+export default adonis
+export { StyleSheetServer, StyleSheet, css, ThemeProvider, withTheme }
