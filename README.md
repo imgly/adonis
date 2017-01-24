@@ -1,4 +1,4 @@
-# Adonis: Aphrodite's lover
+# :muscle: Adonis: Aphrodite's lover
 
 Adonis combines the best of [Aphrodite](https://github.com/Khan/aphrodite) and
 [styled-components](https://github.com/styled-components/styled-components): Named DOM elements,
@@ -100,15 +100,20 @@ Adonis components can be created from DOM elements, React Components or other Ad
 Adonis adds support for element variations that can be toggled using properties passed to the element:
 
 ```js
-const Button = adonis.div({
-  width: '100px',
-  height: '50px',
-  background: 'grey'
-}, {
-  primary: {
-    background: 'blue'
+const Button = adonis.div(
+  // Base styles
+  {
+    width: '100px',
+    height: '50px',
+    background: 'grey'
+  },
+  // Variation styles
+  {
+    primary: {
+      background: 'blue'
+    }
   }
-})
+)
 
 <Button /> // This would be styled with `background: grey`
 <Button primary /> // This would be styled with `background: blue`
