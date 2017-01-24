@@ -95,6 +95,25 @@ Adonis components can be created from DOM elements, React Components or other Ad
   })
 ```
 
+## Variations and flags
+
+Adonis adds support for element variations that can be toggled using properties passed to the element:
+
+```js
+const Button = adonis.div({
+  width: '100px',
+  height: '50px',
+  background: 'grey'
+}, {
+  primary: {
+    background: 'blue'
+  }
+})
+
+<Button /> // This would be styled with `background: grey`
+<Button primary /> // This would be styled with `background: blue`
+```
+
 ## Theming
 
 Similarly to `styled-components`, you can wrap your React application in a `ThemeProvider` and
