@@ -65,11 +65,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _adonis2 = _interopRequireDefault(_adonis);
 
-	var _themeProvider = __webpack_require__(32);
+	var _themeProvider = __webpack_require__(34);
 
 	var _themeProvider2 = _interopRequireDefault(_themeProvider);
 
-	var _withTheme = __webpack_require__(33);
+	var _withTheme = __webpack_require__(35);
 
 	var _withTheme2 = _interopRequireDefault(_withTheme);
 
@@ -90,16 +90,38 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 	var _domElements = __webpack_require__(2);
 
 	var _domElements2 = _interopRequireDefault(_domElements);
 
 	var _adonisComponent = __webpack_require__(3);
 
+	var _baseStyles = __webpack_require__(33);
+
+	var _baseStyles2 = _interopRequireDefault(_baseStyles);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	module.exports = function () {
 	  var adonis = function adonis(base) {
+	    if (base instanceof _baseStyles2.default) {
+	      var _ret = function () {
+	        var factory = {};
+	        _domElements2.default.forEach(function (tagName) {
+	          factory[tagName] = function (styles, variations) {
+	            return (0, _adonisComponent.create)(tagName, styles, variations, base);
+	          };
+	        });
+	        return {
+	          v: factory
+	        };
+	      }();
+
+	      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+	    }
+
 	    return function (styles, variations) {
 	      return (0, _adonisComponent.create)(base, styles, variations);
 	    };
@@ -110,6 +132,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return (0, _adonisComponent.create)(tagName, styles, variations);
 	    };
 	  });
+
+	  adonis.css = function (styles, variations) {
+	    return new _baseStyles2.default(styles, variations);
+	  };
 
 	  return adonis;
 	}();
@@ -135,8 +161,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	exports.create = create;
@@ -151,9 +175,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _utils2 = _interopRequireDefault(_utils);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _styles2 = __webpack_require__(32);
 
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	var _styles3 = _interopRequireDefault(_styles2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -177,30 +203,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	  theme: _react.PropTypes.object
 	};
 
-	function create(target, styles) {
+	function create(target, stylesObject) {
 	  var variations = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+	  var baseStylesObject = arguments[3];
 
 	  var isTag = typeof target === 'string';
 	  var isAdonisComponent = BaseAdonisComponent.isPrototypeOf(target);
 	  var isComponent = !isAdonisComponent && _react.Component.isPrototypeOf(target);
 
-	  var styleName = _utils2.default.generateStyleNameForTarget(target);
-	  var stylesObject = _defineProperty({}, styleName, styles);
+	  var styles = new _styles3.default(target, stylesObject, variations);
+	  var baseStyles = baseStylesObject ? new _styles3.default('baseStyles', baseStylesObject.styles, baseStylesObject.variations) : null;
 
-	  // Attach variation styles to styles object
-	  var availableVariations = Object.keys(variations);
-	  availableVariations.forEach(function (variation) {
-	    stylesObject[variation] = variations[variation];
-	  });
+	  if (styles.canInjectBeforeRender()) {
+	    styles.createStyleSheet();
+	  }
 
-	  // In case we have any asynchronous style definitions (i.e. styles that need the theme passed
-	  // to the component, which is only available after the component has been instantiated),
-	  // we need to create the stylesheet on render.
-	  var injectOnRender = _utils2.default.objectHasFunctions(stylesObject);
-
-	  var aphroStyles = void 0;
-	  if (!injectOnRender) {
-	    aphroStyles = _noImportant.StyleSheet.create(stylesObject);
+	  if (baseStyles && baseStyles.canInjectBeforeRender()) {
+	    baseStyles.createStyleSheet();
 	  }
 
 	  var ParentComponent = isComponent ? target : BaseAdonisComponent;
@@ -215,41 +234,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(AdonisComponent, [{
-	      key: '_processStylesObject',
-
-	      /**
-	       * Walks through the given styles object. If it finds a function instead of a string / number,
-	       * it calls the function and passes the theme and puts the resulting value at the same position
-	       * @param  {Object} stylesObject
-	       * @return {Object}
-	       */
-	      value: function _processStylesObject(stylesObject) {
-	        var _this3 = this;
-
-	        var processObject = function processObject(obj) {
-	          var newObject = {};
-
-	          for (var prop in obj) {
-	            var value = obj[prop];
-	            var valueType = typeof value === 'undefined' ? 'undefined' : _typeof(value);
-	            if (valueType === 'object') {
-	              newObject[prop] = processObject(value);
-	            } else if (valueType === 'function') {
-	              newObject[prop] = value(_this3.context.theme);
-	            }
-	          }
-
-	          return newObject;
-	        };
-	        return processObject(stylesObject);
-	      }
-	    }, {
 	      key: 'render',
 	      value: function render() {
-	        var _this4 = this;
+	        var _this3 = this;
 
-	        if (injectOnRender) {
-	          aphroStyles = _noImportant.StyleSheet.create(this._processStylesObject(stylesObject));
+	        if (!styles.canInjectBeforeRender()) {
+	          styles.createStyleSheet(this.context.theme);
+	        }
+	        if (baseStyles && !baseStyles.canInjectBeforeRender()) {
+	          baseStyles.createStyleSheet(this.context.theme);
 	        }
 
 	        var _props = this.props,
@@ -260,28 +253,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        // Clone props
 	        Object.keys(this.props).forEach(function (prop) {
-	          elementProps[prop] = _this4.props[prop];
+	          elementProps[prop] = _this3.props[prop];
 	        });
 
-	        // We are passing overriding styles using the `styles` property. Make sure we're generating
-	        // a class name using both the target's and the target's prop styles.
-	        var styles = [aphroStyles[styleName]];
+	        var aphroStyles = [];
+	        [baseStyles, styles].forEach(function (_styles) {
+	          if (!_styles) return;
+	          aphroStyles.push(_styles.getDefaultStylesheet());
+	          Object.keys(variations).forEach(function (variation) {
+	            if (elementProps[variation]) {
+	              aphroStyles.push(_styles.getVariationStylesheet(variation));
+	            }
+	          });
+	        });
+
+	        // We are passing overriding styles using the `styles` property
 	        if (this.props.styles) {
-	          styles = styles.concat(this.props.styles);
+	          aphroStyles = aphroStyles.concat(this.props.styles);
 	        }
 
 	        // If an available variation is passed in as a property, we add the styles to the class and
 	        // remove the prop from the props we pass to our target element
-	        availableVariations.forEach(function (variation) {
-	          if (elementProps[variation]) {
-	            styles.push(aphroStyles[variation]);
-	            delete elementProps[variation];
-	          }
+	        Object.keys(variations).forEach(function (variation) {
+	          delete elementProps[variation];
 	        });
 
 	        // Generate className
-	        elementProps.className = _noImportant.css.apply(null, styles);
-	        elementProps.styles = styles;
+	        elementProps.className = _noImportant.css.apply(null, aphroStyles);
+	        elementProps.styles = aphroStyles;
 	        if (isComponent || isAdonisComponent) {
 	          elementProps.innerRef = innerRef;
 	        } else {
@@ -2239,6 +2238,119 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	    return false;
+	  },
+
+
+	  /**
+	   * Assigns own enumerable properties of source object(s) to the destination
+	   * object for all destination properties that resolve to undefined. Once a
+	   * property is set, additional values of the same property are ignored.
+	   * @param  {Object} object
+	   * @param  {Object} ...sources
+	   * @return {Object}
+	   */
+	  defaults: function defaults(object) {
+	    // Shallow clone
+	    var newObject = {};
+	    for (var key in object) {
+	      newObject[key] = object[key];
+	    }
+
+	    // Clone sources
+
+	    for (var _len = arguments.length, sources = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	      sources[_key - 1] = arguments[_key];
+	    }
+
+	    for (var i = 0; i < sources.length; i++) {
+	      var source = sources[i];
+	      for (var _key2 in source) {
+	        if (typeof newObject[_key2] === 'undefined') {
+	          newObject[_key2] = source[_key2];
+	        }
+	      }
+	    }
+
+	    return newObject;
+	  },
+
+
+	  /**
+	   * Assigns own enumerable properties of source object(s) to the destination
+	   * object for all destination properties and their properties that resolve to
+	   * undefined. Once a property is set, additional value sof the same property
+	   * are ignored.
+	   * @param  {Object} object
+	   * @param  {Object} ...sources
+	   * @return {Object}
+	   */
+	  deepDefaults: function deepDefaults(object) {
+	    // Shallow clone
+	    var newObject = {};
+	    for (var key in object) {
+	      newObject[key] = object[key];
+	    }
+
+	    // Clone sources
+
+	    for (var _len2 = arguments.length, sources = Array(_len2 > 1 ? _len2 - 1 : 0), _key3 = 1; _key3 < _len2; _key3++) {
+	      sources[_key3 - 1] = arguments[_key3];
+	    }
+
+	    for (var i = 0; i < sources.length; i++) {
+	      var source = sources[i];
+	      for (var _key4 in source) {
+	        if (Utils.isExtendable(newObject[_key4]) && Utils.isExtendable(source[_key4])) {
+	          newObject[_key4] = Utils.deepDefaults(newObject[_key4], source[_key4]);
+	        } else if (typeof newObject[_key4] === 'undefined') {
+	          newObject[_key4] = source[_key4];
+	        }
+	      }
+	    }
+
+	    return newObject;
+	  },
+
+
+	  /**
+	   * Assigns own enumerable properties of source object(s) to the destination
+	   * object. Subsequent sources overwrite property assignments of previous
+	   * sources.
+	   * @param {Object} object
+	   * @param {Object} ...sources
+	   * @return {Object}
+	   */
+	  extend: function extend(object) {
+	    // Shallow clone
+	    var newObject = {};
+	    for (var key in object) {
+	      newObject[key] = object[key];
+	    }
+
+	    // Extend sources
+
+	    for (var _len3 = arguments.length, sources = Array(_len3 > 1 ? _len3 - 1 : 0), _key5 = 1; _key5 < _len3; _key5++) {
+	      sources[_key5 - 1] = arguments[_key5];
+	    }
+
+	    for (var i = 0; i < sources.length; i++) {
+	      var source = sources[i];
+	      for (var _key6 in source) {
+	        newObject[_key6] = source[_key6];
+	      }
+	    }
+
+	    return newObject;
+	  },
+
+
+	  /**
+	   * Checks if this value is extendable / can have keys
+	   * @param  {*}  val
+	   * @return {Boolean}
+	   */
+	  isExtendable: function isExtendable(val) {
+	    return typeof val !== 'undefined' && val !== null && ((typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object' || typeof val === 'function');
 	  }
 	};
 
@@ -2246,6 +2358,172 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _utils = __webpack_require__(31);
+
+	var _utils2 = _interopRequireDefault(_utils);
+
+	var _noImportant = __webpack_require__(5);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Styles = function () {
+	  function Styles(target, stylesObject) {
+	    var variationsObject = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+	    _classCallCheck(this, Styles);
+
+	    this._target = target;
+	    this._stylesObject = stylesObject;
+	    this._variationsObject = variationsObject;
+	    this._defaultStyleName = _utils2.default.generateStyleNameForTarget(target);
+
+	    this._createCombinedStylesObject();
+	  }
+
+	  /**
+	   * Creates an object containing both the default style and the variations
+	   * @private
+	   */
+
+
+	  _createClass(Styles, [{
+	    key: '_createCombinedStylesObject',
+	    value: function _createCombinedStylesObject() {
+	      this._combinedStyles = _defineProperty({}, this._defaultStyleName, this._stylesObject);
+
+	      for (var prop in this._variationsObject) {
+	        this._combinedStyles[prop] = this._variationsObject[prop];
+	      }
+
+	      this._needsProcessing = _utils2.default.objectHasFunctions(this._combinedStyles);
+	    }
+
+	    /**
+	     * Walks through the combined object and calls every function it finds,
+	     * passing the theme
+	     * @param  {Object} theme
+	     * @private
+	     */
+
+	  }, {
+	    key: '_processStyles',
+	    value: function _processStyles(theme) {
+	      var processObject = function processObject(obj) {
+	        var newObject = {};
+
+	        for (var prop in obj) {
+	          var value = obj[prop];
+	          var valueType = typeof value === 'undefined' ? 'undefined' : _typeof(value);
+	          if (valueType === 'object') {
+	            newObject[prop] = processObject(value);
+	          } else if (valueType === 'function') {
+	            newObject[prop] = value(theme);
+	          } else {
+	            newObject[prop] = value;
+	          }
+	        }
+
+	        return newObject;
+	      };
+	      this._processedStyles = processObject(this._combinedStyles);
+	    }
+
+	    /**
+	     * Injects the stylesheet after it has been processed
+	     * @param  {Object} theme
+	     * @private
+	     */
+
+	  }, {
+	    key: 'createStyleSheet',
+	    value: function createStyleSheet(theme) {
+	      if (this._needsProcessing && theme) {
+	        this._processStyles(theme);
+	      }
+	      this._styleSheet = _noImportant.StyleSheet.create(this._processedStyles || this._combinedStyles);
+	    }
+
+	    /**
+	     * Checks if the stylesheet can be injected before the first render has been called
+	     * @return {Boolean}
+	     */
+
+	  }, {
+	    key: 'canInjectBeforeRender',
+	    value: function canInjectBeforeRender() {
+	      return !this._needsProcessing;
+	    }
+
+	    /**
+	     * Returns the default style sheet
+	     * @return {Object}
+	     */
+
+	  }, {
+	    key: 'getDefaultStylesheet',
+	    value: function getDefaultStylesheet() {
+	      return this._styleSheet[this._defaultStyleName];
+	    }
+
+	    /**
+	     * Returns the stylesheet for the given variation
+	     * @param  {String} variation
+	     * @return {Object}
+	     */
+
+	  }, {
+	    key: 'getVariationStylesheet',
+	    value: function getVariationStylesheet(variation) {
+	      return this._styleSheet[variation];
+	    }
+	  }]);
+
+	  return Styles;
+	}();
+
+	exports.default = Styles;
+
+/***/ },
+/* 33 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var BaseStyles = function BaseStyles(styles) {
+	  var variations = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	  _classCallCheck(this, BaseStyles);
+
+	  this.styles = styles;
+	  this.variations = variations;
+	};
+
+	exports.default = BaseStyles;
+
+/***/ },
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2312,7 +2590,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 33 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

@@ -1,5 +1,5 @@
 import Utils from './utils'
-import { StyleSheet } from 'aphrodite/no-important'
+import { StyleSheet } from '../globals'
 
 export default class Styles {
   constructor (target, stylesObject, variationsObject = {}) {

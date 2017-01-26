@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { StyleSheet, css } from 'aphrodite/no-important'
-import Utils from './utils'
+import { css } from '../globals'
 import Styles from './styles'
 
 class BaseAdonisComponent extends Component {}

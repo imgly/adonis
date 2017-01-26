@@ -117,6 +117,22 @@ describe('adonis', () => {
     })
   })
 
+  describe('immediate child selector', () => {
+    it('should be supported', () => {
+      const Button = adonis.div({
+        '> *': {
+          background: 'red'
+        }
+      })
+
+      const content = <Button />
+      const { html, css } = render(content)
+
+      html.should.equal(`<div class="div_ldei0g"></div>`)
+      css.content.should.equal(`.div_ldei0g > * {background:red;}`)
+    })
+  })
+
   describe('theming', () => {
     describe('when wrapping a component in a ThemeProvider', () => {
       it('styles should have access to the theme', () => {
