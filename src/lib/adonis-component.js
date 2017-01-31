@@ -104,9 +104,10 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
 
       // If an available variation is passed in as a property, we add the styles to the class and
       // remove the prop from the props we pass to our target element
-      activeVariations.forEach((variation) => {
-        delete elementProps[variation]
-      })
+      Object.keys(variations)
+        .forEach((variation) => {
+          delete elementProps[variation]
+        })
 
       // Apply and pass styles
       let { styles: aphroStyles, className } =

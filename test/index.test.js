@@ -80,7 +80,7 @@ describe('adonis', () => {
       it('should render correctly', () => {
         class App extends React.Component {
           render () {
-            return <Button primary />
+            return <Button primary red={false} />
           }
         }
 
@@ -90,6 +90,9 @@ describe('adonis', () => {
         }, {
           primary: {
             background: 'blue'
+          },
+          red: {
+            background: 'red'
           }
         })
 
