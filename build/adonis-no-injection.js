@@ -81,6 +81,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	_adonis2.default.disableInjection();
+
 	exports.default = _adonis2.default;
 	exports.StyleSheetServer = _globals.StyleSheetServer;
 	exports.StyleSheet = _globals.StyleSheet;

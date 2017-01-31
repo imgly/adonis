@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var MINIFY = process.env.MINIFY
+var BASENAME = process.env.NO_INJECTION ? 'adonis-no-injection' : 'adonis'
 
 module.exports = {
 
@@ -8,12 +9,12 @@ module.exports = {
   watch: !!process.env.WATCH,
 
   entry: {
-    index: './src/index.js'
+    index: process.env.NO_INJECTION ? './src/no-injection.js' : './src/index.js'
   },
 
   output: {
     path: './build',
-    filename: MINIFY ? 'adonis.min.js' : 'adonis.js',
+    filename: BASENAME + (MINIFY ? '.min.js' : '.js'),
     library: 'adonis',
     libraryTarget: 'umd'
   },
