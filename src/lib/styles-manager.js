@@ -60,7 +60,7 @@ export default class StylesManager {
       if (!styles) return
 
       aphroStyles.push(styles.getDefaultStylesheet())
-      variations.forEach((variation) => {
+      variations.sort().forEach((variation) => {
         aphroStyles.push(styles.getVariationStylesheet(variation))
       })
     })

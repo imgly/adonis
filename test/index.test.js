@@ -103,6 +103,34 @@ describe('adonis', () => {
         css.content.should.equal(`.div_18550lg-o_O-primary_1nxhvta{border:1px solid black;padding:10px 5px;background:blue;}`)
       })
     })
+
+    describe('when passing multiple variation styles flags', () => {
+      it('should render variations in alphabetical order', () => {
+        class App extends React.Component {
+          render () {
+            return <Button red primary />
+          }
+        }
+
+        const Button = adonis.div({
+          border: '1px solid black',
+          padding: '10px 5px'
+        }, {
+          red: {
+            background: 'red'
+          },
+          primary: {
+            background: 'blue'
+          }
+        })
+
+        const content = <App />
+        const { html, css } = render(content)
+
+        html.should.equal('<div class="div_18550lg-o_O-primary_1nxhvta-o_O-red_10ip45p"></div>')
+        css.content.should.equal(`.div_18550lg-o_O-primary_1nxhvta-o_O-red_10ip45p{border:1px solid black;padding:10px 5px;background:red;}`)
+      })
+    })
   })
 
   describe('base styles without tag name', () => {
@@ -269,6 +297,23 @@ describe('adonis', () => {
 
             adonis(Wrapper)({
               background: 'blue'
+            })
+          })
+
+          css.content.should.equal(`.div_im3wl1{color:red;}.div_im3wl1-o_O-AdonisComponent_1nxhvta{color:red;background:blue;}`)
+        })
+      })
+
+      describe('theming', () => {
+        it('should render correctly', () => {
+          const theme = { textColor: 'red', backgroundColor: 'blue' }
+          const css = preRenderCSS(theme, () => {
+            const Wrapper = adonis.div({
+              color: theme => theme.textColor
+            })
+
+            adonis(Wrapper)({
+              background: theme => theme.backgroundColor
             })
           })
 
