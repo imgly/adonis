@@ -155,7 +155,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  adonis.disableInjection = function () {
 	    _globals.StyleSheetTestUtils.suppressStyleInjection();
-	    console.log('suppressing style injection');
 	  };
 
 	  adonis.preRenderTheme = null;
@@ -2258,7 +2257,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        // If an available variation is passed in as a property, we add the styles to the class and
 	        // remove the prop from the props we pass to our target element
-	        activeVariations.forEach(function (variation) {
+	        Object.keys(variations).forEach(function (variation) {
 	          delete elementProps[variation];
 	        });
 
