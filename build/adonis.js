@@ -2723,7 +2723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (!styles) return;
 
 	        aphroStyles.push(styles.getDefaultStylesheet());
-	        variations.forEach(function (variation) {
+	        variations.sort().forEach(function (variation) {
 	          aphroStyles.push(styles.getVariationStylesheet(variation));
 	        });
 	      });
