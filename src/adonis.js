@@ -41,7 +41,6 @@ module.exports = (() => {
 
   adonis.disableInjection = () => {
     StyleSheetTestUtils.suppressStyleInjection()
-    console.log('suppressing style injection')
   }
 
   adonis.preRenderTheme = null
