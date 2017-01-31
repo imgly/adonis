@@ -60,10 +60,13 @@ export default class Styles {
    * @private
    */
   createStyleSheet (theme) {
-    if (this._needsProcessing && theme) {
-      this._processStyles(theme)
+    if (!this._styleSheet) {
+      if (this._needsProcessing && theme) {
+        this._processStyles(theme)
+      }
+
+      this._styleSheet = StyleSheet.create(this._processedStyles || this._combinedStyles)
     }
-    this._styleSheet = StyleSheet.create(this._processedStyles || this._combinedStyles)
   }
 
   /**

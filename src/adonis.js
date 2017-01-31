@@ -1,3 +1,4 @@
+import { StyleSheetTestUtils } from './globals'
 import DOMElements from './lib/dom-elements'
 import { create as createAdonisComponent } from './lib/adonis-component'
 import BaseStyles from './lib/base-styles'
@@ -8,20 +9,20 @@ module.exports = (() => {
       const factory = {}
       DOMElements.forEach((tagName) => {
         factory[tagName] = (styles, variations) => {
-          return createAdonisComponent(tagName, styles, variations, base)
+          return createAdonisComponent(adonis, tagName, styles, variations, base)
         }
       })
       return factory
     }
 
     return (styles, variations) => {
-      return createAdonisComponent(base, styles, variations)
+      return createAdonisComponent(adonis, base, styles, variations)
     }
   }
 
   DOMElements.forEach((tagName) => {
     adonis[tagName] = (styles, variations) => {
-      return createAdonisComponent(tagName, styles, variations)
+      return createAdonisComponent(adonis, tagName, styles, variations)
     }
   })
 
@@ -29,5 +30,21 @@ module.exports = (() => {
     return new BaseStyles(styles, variations)
   }
 
+  adonis.enablePreRenderInjection = (theme) => {
+    adonis.preRenderInjection = true
+    adonis.preRenderTheme = theme
+  }
+
+  adonis.disablePreRenderInjection = () => {
+    adonis.preRenderInjection = true
+  }
+
+  adonis.disableInjection = () => {
+    StyleSheetTestUtils.suppressStyleInjection()
+    console.log('suppressing style injection')
+  }
+
+  adonis.preRenderTheme = null
+  adonis.preRenderInjection = false
   return adonis
 })()
