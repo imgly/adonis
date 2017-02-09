@@ -30,8 +30,8 @@ const getTargetStyles = (target) => {
 
 export function create (adonis, target, stylesObject, variations = {}, baseStylesObject) {
   const isTag = typeof target === 'string'
-  const isAdonisComponent = BaseAdonisComponent.isPrototypeOf(target)
-  const isComponent = !isAdonisComponent && Component.isPrototypeOf(target)
+  const isAdonisComponent = target.prototype instanceof BaseAdonisComponent
+  const isComponent = !isAdonisComponent && target.prototype instanceof Component
 
   const styles = new Styles(target, stylesObject, variations)
   const baseStyles = baseStylesObject &&
