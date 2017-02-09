@@ -2163,8 +2163,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var baseStylesObject = arguments[4];
 
 	  var isTag = typeof target === 'string';
-	  var isAdonisComponent = BaseAdonisComponent.isPrototypeOf(target);
-	  var isComponent = !isAdonisComponent && _react.Component.isPrototypeOf(target);
+	  var isAdonisComponent = target.prototype instanceof BaseAdonisComponent;
+	  var isComponent = !isAdonisComponent && target.prototype instanceof _react.Component;
 
 	  var styles = new _styles2.default(target, stylesObject, variations);
 	  var baseStyles = baseStylesObject && new _styles2.default('baseStyles', baseStylesObject.styles, baseStylesObject.variations);
