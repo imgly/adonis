@@ -66,8 +66,7 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
     stylesManager.prepareVariations(Object.keys(variations))
   }
 
-  const ParentComponent = isComponent ? target : BaseAdonisComponent
-  class AdonisComponent extends ParentComponent {
+  class AdonisComponent extends BaseAdonisComponent {
     /**
      * Returns a shallow clone of this component's props
      * @return {Object}
@@ -133,7 +132,7 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
     }
   }
 
-  AdonisComponent.contextTypes = ParentComponent.contextTypes
+  AdonisComponent.contextTypes = BaseAdonisComponent.contextTypes
   AdonisComponent._adonisTarget = target
   AdonisComponent._adonisStyles = styles
   AdonisComponent._adonisBaseStyles = baseStyles
