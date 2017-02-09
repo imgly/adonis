@@ -116,10 +116,12 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
 
       // Pass ref
       const { children, innerRef } = this.props
-      if (isComponent || isAdonisComponent) {
-        elementProps.innerRef = innerRef
-      } else {
-        elementProps.ref = innerRef
+      if (innerRef) {
+        if (isComponent || isTag) {
+          elementProps.ref = innerRef
+        } else if (isAdonisComponent) {
+          elementProps.innerRef = innerRef
+        }
       }
 
       // We don't want to pass invalid props to tags
