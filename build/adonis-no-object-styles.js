@@ -78,7 +78,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.default = (0, _exports2.default)({
 	  noInjection: (undefined),
-	  noObjectStyles: (undefined)
+	  noObjectStyles: ("true")
 	});
 
 /***/ },

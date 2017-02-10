@@ -5,7 +5,7 @@
   "main": "build/adonis.js",
   "scripts": {
     "build": "rimraf build && webpack",
-    "build:publish": "rimraf build && webpack && MINIFY=true webpack && NO_INJECTION=true webpack && MINIFY=true NO_INJECTION=true webpack",
+    "build:publish": "rimraf build && webpack && MINIFY=true webpack && NO_INJECTION=true webpack && NO_OBJECT_STYLES=true webpack && MINIFY=true NO_INJECTION=true webpack && MINIFY=true NO_OBJECT_STYLES=true webpack",
     "build:watch": "rimraf build && WATCH=true webpack",
     "prestart": "npm run build",
     "start": "node bin/main.js",
@@ -46,6 +46,7 @@
     "babel-preset-react": "^6.22.0",
     "mocha": "^2.4.5",
     "mocha-sinon": "^1.1.6",
+    "preprocess-loader": "^0.2.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "rimraf": "^2.5.1",

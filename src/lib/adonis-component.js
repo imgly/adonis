@@ -33,9 +33,9 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
   const isAdonisComponent = target.prototype instanceof BaseAdonisComponent
   const isComponent = !isAdonisComponent && target.prototype instanceof Component
 
-  const styles = new Styles(target, stylesObject, variations)
+  const styles = new Styles(adonis, target, stylesObject, variations)
   const baseStyles = baseStylesObject &&
-    new Styles('baseStyles', baseStylesObject.styles, baseStylesObject.variations)
+    new Styles(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations)
 
   let targetStyles = []
   if (adonis.preRenderInjection) {

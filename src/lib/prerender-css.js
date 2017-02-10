@@ -1,16 +1,19 @@
-import { StyleSheetServer } from '../globals'
-import adonis from '../adonis'
+export default (adonis, options, StyleSheetServer) => {
+  return (theme, renderFunction) => {
+    if (!StyleSheetServer && options.noObjectStyles) {
+      throw new Error("adonis can't pre-render CSS if `noObjectStyles` is set to `true`.")
+    }
 
-export default function (theme, renderFunction) {
-  if (typeof renderFunction === 'undefined') {
-    renderFunction = theme
-    theme = null
+    if (typeof renderFunction === 'undefined') {
+      renderFunction = theme
+      theme = null
+    }
+
+    adonis.enablePreRenderInjection(theme)
+    const { css } = StyleSheetServer.renderStatic(() => {
+      renderFunction()
+      adonis.disablePreRenderInjection()
+    })
+    return css
   }
-
-  adonis.enablePreRenderInjection(theme)
-  const { css } = StyleSheetServer.renderStatic(() => {
-    renderFunction()
-    adonis.disablePreRenderInjection()
-  })
-  return css
 }

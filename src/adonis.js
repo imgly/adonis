@@ -1,9 +1,14 @@
-import { StyleSheetTestUtils } from './globals'
 import DOMElements from './lib/dom-elements'
 import { create as createAdonisComponent } from './lib/adonis-component'
 import BaseStyles from './lib/base-styles'
+import Utils from './lib/utils'
 
-module.exports = (() => {
+module.exports = (options = {}, { StyleSheetTestUtils, css, StyleSheet }) => {
+  options = Utils.defaults(options, {
+    noInjection: false,
+    noObjectStyles: false
+  })
+
   let adonis = (base) => {
     if (base instanceof BaseStyles) {
       const factory = {}
@@ -43,7 +48,18 @@ module.exports = (() => {
     StyleSheetTestUtils.suppressStyleInjection()
   }
 
+  if (options.noInjection && !options.noObjectStyles) {
+    adonis.disableInjection()
+  }
+
   adonis.preRenderTheme = null
   adonis.preRenderInjection = false
+
+  adonis.aphrodite = {
+    StyleSheet,
+    css
+  }
+  adonis.Utils = Utils
+
   return adonis
-})()
+}

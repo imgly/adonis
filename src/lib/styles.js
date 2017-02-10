@@ -1,8 +1,8 @@
 import Utils from './utils'
-import { StyleSheet } from '../globals'
 
 export default class Styles {
-  constructor (target, stylesObject, variationsObject = {}) {
+  constructor (adonis, target, stylesObject, variationsObject = {}) {
+    this._adonis = adonis
     this._target = target
     this._stylesObject = stylesObject
     this._variationsObject = variationsObject
@@ -65,7 +65,7 @@ export default class Styles {
         this._processStyles(theme)
       }
 
-      this._styleSheet = StyleSheet.create(this._processedStyles || this._combinedStyles)
+      this._styleSheet = this._adonis.aphrodite.StyleSheet.create(this._processedStyles || this._combinedStyles)
     }
   }
 

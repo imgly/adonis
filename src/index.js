@@ -1,8 +1,11 @@
-import adonis from './adonis'
-import ThemeProvider from './lib/theme-provider'
-import withTheme from './lib/with-theme'
-import preRenderCSS from './lib/prerender-css'
-import { StyleSheetServer, StyleSheet, css } from './globals'
+import buildExports from './exports'
 
-export default adonis
-export { StyleSheetServer, StyleSheet, css, ThemeProvider, withTheme, preRenderCSS }
+const {
+  defaultExport, css, StyleSheet, StyleSheetTestUtils, StyleSheetServer, preRenderCSS, withTheme, ThemeProvider, hashObject
+} = buildExports({
+  noInjection: process.env.NO_INJECTION,
+  noObjectStyles: process.env.NO_OBJECT_STYLES
+})
+
+export default defaultExport
+export { defaultExport, css, StyleSheet, StyleSheetTestUtils, StyleSheetServer, preRenderCSS, withTheme, ThemeProvider, hashObject }

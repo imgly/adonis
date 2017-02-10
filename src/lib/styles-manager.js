@@ -1,7 +1,6 @@
-import { css } from '../globals'
-
 export default class StylesManager {
   constructor (adonis, styles) {
+    this._adonis = adonis
     this._styles = styles
       .filter((style) => !!style)
 
@@ -69,6 +68,6 @@ export default class StylesManager {
       aphroStyles = aphroStyles.concat(additionalStyles)
     }
 
-    return { styles: aphroStyles, className: css.apply(null, aphroStyles) }
+    return { styles: aphroStyles, className: this._adonis.aphrodite.css.apply(null, aphroStyles) }
   }
 }
