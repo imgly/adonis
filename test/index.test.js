@@ -33,6 +33,20 @@ describe('adonis', () => {
       html.should.equal('<div class="div_tcorpq"></div>')
       css.content.should.equal(`.div_tcorpq{background:red;padding:5px;}`)
     })
+
+    describe('with name given', () => {
+      it('$should render correctly', () => {
+        const Wrapper = adonis.div({
+          background: 'red',
+          padding: '5px'
+        }, 'Wrapper')
+        const content = <Wrapper />
+        const { html, css } = render(content)
+
+        html.should.equal('<div class="Wrapper_tcorpq"></div>')
+        css.content.should.equal(`.Wrapper_tcorpq{background:red;padding:5px;}`)
+      })
+    })
   })
 
   describe('overriding styles of an adonis component', () => {
@@ -49,6 +63,23 @@ describe('adonis', () => {
 
       html.should.equal('<div class="div_tcorpq-o_O-AdonisComponent_1nxhvta"></div>')
       css.content.should.equal(`.AdonisComponent_1nxhvta{background:blue;}.div_tcorpq-o_O-AdonisComponent_1nxhvta{background:blue;padding:5px;}`)
+    })
+
+    describe('with name given', () => {
+      it('should render correctly', () => {
+        const Wrapper = adonis.div({
+          background: 'red',
+          padding: '5px'
+        }, 'Wrapper')
+        const OverriddenWrapper = adonis(Wrapper)({
+          background: 'blue'
+        }, 'OverriddenWrapper')
+        const content = <OverriddenWrapper />
+        const { html, css } = render(content)
+
+        html.should.equal('<div class="Wrapper_tcorpq-o_O-OverriddenWrapper_1nxhvta"></div>')
+        css.content.should.equal(`.OverriddenWrapper_1nxhvta{background:blue;}.Wrapper_tcorpq-o_O-OverriddenWrapper_1nxhvta{background:blue;padding:5px;}`)
+      })
     })
   })
 
@@ -72,6 +103,29 @@ describe('adonis', () => {
 
       html.should.equal('<div class="div_1k8vrzz-o_O-Button_1nxhvta"></div>')
       css.content.should.equal(`.Button_1nxhvta{background:blue;}.div_1k8vrzz-o_O-Button_1nxhvta{border:1px solid red;padding:10px 5px;background:blue;}`)
+    })
+
+    describe('with name given', () => {
+      it('should render correctly', () => {
+        class Button extends React.Component {
+          render () {
+            const { RootElement } = this.constructor
+            return (<RootElement styles={this.props.styles}>{this.props.caption}</RootElement>)
+          }
+        }
+        Button.RootElement = adonis.div({
+          border: '1px solid red',
+          padding: '10px 5px'
+        }, 'Button')
+        const PrimaryButton = adonis(Button)({
+          background: 'blue'
+        }, 'PrimaryButton')
+        const content = <PrimaryButton />
+        const { html, css } = render(content)
+
+        html.should.equal('<div class="Button_1k8vrzz-o_O-PrimaryButton_1nxhvta"></div>')
+        css.content.should.equal(`.PrimaryButton_1nxhvta{background:blue;}.Button_1k8vrzz-o_O-PrimaryButton_1nxhvta{border:1px solid red;padding:10px 5px;background:blue;}`)
+      })
     })
   })
 
@@ -101,6 +155,34 @@ describe('adonis', () => {
 
         html.should.equal('<div class="div_18550lg-o_O-primary_1nxhvta"></div>')
         css.content.should.equal(`.div_18550lg-o_O-primary_1nxhvta{border:1px solid black;padding:10px 5px;background:blue;}`)
+      })
+
+      describe('with name given', () => {
+        it('should render correctly', () => {
+          class App extends React.Component {
+            render () {
+              return <Button primary red={false} />
+            }
+          }
+
+          const Button = adonis.div({
+            border: '1px solid black',
+            padding: '10px 5px'
+          }, {
+            primary: {
+              background: 'blue'
+            },
+            red: {
+              background: 'red'
+            }
+          }, 'Button')
+
+          const content = <App />
+          const { html, css } = render(content)
+
+          html.should.equal('<div class="Button_18550lg-o_O-primary_1nxhvta"></div>')
+          css.content.should.equal(`.Button_18550lg-o_O-primary_1nxhvta{border:1px solid black;padding:10px 5px;background:blue;}`)
+        })
       })
     })
 
@@ -189,8 +271,8 @@ describe('adonis', () => {
         const content = <ThemeProvider theme={theme}><App /></ThemeProvider>
         const { html, css } = render(content)
 
-        html.should.equal(`<div class="div_12v0gjx"></div>`)
-        css.content.should.equal(`.div_12v0gjx{background-color:grey;color:blue;}`)
+        html.should.equal(`<div class="div_18p49ll"></div>`)
+        css.content.should.equal(`.div_18p49ll{background-color:grey;color:blue;}`)
       })
     })
   })

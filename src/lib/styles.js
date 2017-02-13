@@ -1,12 +1,12 @@
 import Utils from './utils'
 
 export default class Styles {
-  constructor (adonis, target, stylesObject, variationsObject = {}) {
+  constructor (adonis, target, stylesObject, variationsObject = {}, name) {
     this._adonis = adonis
     this._target = target
     this._stylesObject = stylesObject
     this._variationsObject = variationsObject
-    this._defaultStyleName = Utils.generateStyleNameForTarget(target)
+    this._defaultStyleName = name || Utils.generateStyleNameForTarget(target)
 
     this._createCombinedStylesObject()
   }
@@ -34,16 +34,20 @@ export default class Styles {
    * @private
    */
   _processStyles (theme) {
-    const processObject = (obj) => {
+    const processObject = (obj, serializeFunctions = false) => {
       let newObject = {}
 
       for (let prop in obj) {
         const value = obj[prop]
         const valueType = typeof value
         if (valueType === 'object') {
-          newObject[prop] = processObject(value)
+          newObject[prop] = processObject(value, serializeFunctions)
         } else if (valueType === 'function') {
-          newObject[prop] = value(theme)
+          if (!serializeFunctions) {
+            newObject[prop] = value(theme)
+          } else {
+            newObject[prop] = value.toString()
+          }
         } else {
           newObject[prop] = value
         }
@@ -51,7 +55,27 @@ export default class Styles {
 
       return newObject
     }
+    this._staticProcessedStyles = processObject(this._combinedStyles, true)
     this._processedStyles = processObject(this._combinedStyles)
+  }
+
+  /**
+   * Takes the aphrodite stylesheet objects and fixes their names so that the hash calculation
+   * does not incorporate any variable styles. This allows us to render multiple themes into
+   * external CSS files without having to re-compile the JavaScript (since changed theme values
+   * would also affect the class names)
+   * @private
+   */
+  _fixStylesheetNames () {
+    for (let key in this._styleSheet) {
+      const style = this._styleSheet[key]
+      let [name] = style._name.split('_')
+
+      // Important: use `_staticProcessedStyles` instead of `_processedStyles`, since they don't
+      // include theme values
+      const newHash = Utils.hashObject(this._staticProcessedStyles[key])
+      style._name = `${name}_${newHash}`
+    }
   }
 
   /**
@@ -66,6 +90,9 @@ export default class Styles {
       }
 
       this._styleSheet = this._adonis.aphrodite.StyleSheet.create(this._processedStyles || this._combinedStyles)
+      if (this._needsProcessing) {
+        this._fixStylesheetNames()
+      }
     }
   }
 

@@ -13,26 +13,42 @@ module.exports = (options = {}, { StyleSheetTestUtils, css, StyleSheet }) => {
     if (base instanceof BaseStyles) {
       const factory = {}
       DOMElements.forEach((tagName) => {
-        factory[tagName] = (styles, variations) => {
-          return createAdonisComponent(adonis, tagName, styles, variations, base)
+        factory[tagName] = (styles, variations, name) => {
+          if (typeof variations !== 'object') {
+            name = variations
+            variations = undefined
+          }
+          return createAdonisComponent(adonis, tagName, styles, variations, base, name)
         }
       })
       return factory
     }
 
-    return (styles, variations) => {
-      return createAdonisComponent(adonis, base, styles, variations)
+    return (styles, variations, name) => {
+      if (typeof variations !== 'object') {
+        name = variations
+        variations = undefined
+      }
+      return createAdonisComponent(adonis, base, styles, variations, name)
     }
   }
 
   DOMElements.forEach((tagName) => {
-    adonis[tagName] = (styles, variations) => {
-      return createAdonisComponent(adonis, tagName, styles, variations)
+    adonis[tagName] = (styles, variations, name) => {
+      if (typeof variations !== 'object') {
+        name = variations
+        variations = undefined
+      }
+      return createAdonisComponent(adonis, tagName, styles, variations, name)
     }
   })
 
-  adonis.css = (styles, variations) => {
-    return new BaseStyles(styles, variations)
+  adonis.css = (styles, variations, name) => {
+    if (typeof variations !== 'object') {
+      name = variations
+      variations = undefined
+    }
+    return new BaseStyles(styles, variations, name)
   }
 
   adonis.enablePreRenderInjection = (theme) => {

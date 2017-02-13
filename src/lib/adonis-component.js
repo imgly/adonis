@@ -28,14 +28,19 @@ const getTargetStyles = (target) => {
   return styles.filter((style) => !!style)
 }
 
-export function create (adonis, target, stylesObject, variations = {}, baseStylesObject) {
+export function create (adonis, target, stylesObject, variations = {}, baseStylesObject, name) {
+  if (typeof baseStylesObject !== 'object') {
+    name = baseStylesObject
+    baseStylesObject = undefined
+  }
+
   const isTag = typeof target === 'string'
   const isAdonisComponent = target.prototype instanceof BaseAdonisComponent
   const isComponent = !isAdonisComponent && target.prototype instanceof Component
 
-  const styles = new Styles(adonis, target, stylesObject, variations)
+  const styles = new Styles(adonis, target, stylesObject, variations, name)
   const baseStyles = baseStylesObject &&
-    new Styles(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations)
+    new Styles(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations, name)
 
   let targetStyles = []
   if (adonis.preRenderInjection) {
