@@ -34,19 +34,17 @@ export default class Styles {
    * @private
    */
   _processStyles (theme) {
-    const processObject = (obj, serializeFunctions = false) => {
+    const processObject = (obj, skipFunctions = false) => {
       let newObject = {}
 
       for (let prop in obj) {
         const value = obj[prop]
         const valueType = typeof value
         if (valueType === 'object') {
-          newObject[prop] = processObject(value, serializeFunctions)
+          newObject[prop] = processObject(value, skipFunctions)
         } else if (valueType === 'function') {
-          if (!serializeFunctions) {
+          if (!skipFunctions) {
             newObject[prop] = value(theme)
-          } else {
-            newObject[prop] = value.toString()
           }
         } else {
           newObject[prop] = value
