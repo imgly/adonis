@@ -125,8 +125,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      StyleSheetTestUtils = void 0;
 
 	  //
+	  if (options.noObjectStyles) {
+	    // When object styles are disabled and we're passing object hashes instead, we only need
+	    // a very dumb version of aphrodite which creates class names
+	    var dumbAphrodite = __webpack_require__(6);
+	    css = dumbAphrodite.css;
+	    StyleSheet = dumbAphrodite.StyleSheet;
+	  }
 
-	  var adonis = __webpack_require__(6)(options, { StyleSheet: StyleSheet, StyleSheetTestUtils: StyleSheetTestUtils, css: css });
+	  var adonis = __webpack_require__(7)(options, { StyleSheet: StyleSheet, StyleSheetTestUtils: StyleSheetTestUtils, css: css });
 
 	  return {
 	    defaultExport: adonis,
@@ -299,23 +306,66 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	exports.css = css;
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function css() {
+	  for (var _len = arguments.length, styles = Array(_len), _key = 0; _key < _len; _key++) {
+	    styles[_key] = arguments[_key];
+	  }
+
+	  return styles.join('-o_O-');
+	}
+
+	var StyleSheet = exports.StyleSheet = function () {
+	  function StyleSheet() {
+	    _classCallCheck(this, StyleSheet);
+	  }
+
+	  _createClass(StyleSheet, null, [{
+	    key: 'create',
+	    value: function create(styles) {
+	      var stylesObject = {};
+	      for (var key in styles) {
+	        stylesObject[key] = key + '_' + styles[key];
+	      }
+	      return stylesObject;
+	    }
+	  }]);
+
+	  return StyleSheet;
+	}();
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _domElements = __webpack_require__(7);
+	var _domElements = __webpack_require__(8);
 
 	var _domElements2 = _interopRequireDefault(_domElements);
 
-	var _adonisComponent = __webpack_require__(8);
+	var _adonisComponent = __webpack_require__(9);
 
-	var _baseStyles = __webpack_require__(12);
+	var _baseStyles = __webpack_require__(13);
 
 	var _baseStyles2 = _interopRequireDefault(_baseStyles);
 
-	var _utils = __webpack_require__(10);
+	var _utils = __webpack_require__(11);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -411,7 +461,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -422,7 +472,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'main', 'map', 'mark', 'menu', 'menuitem', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr', 'circle', 'clipPath', 'defs', 'ellipse', 'g', 'image', 'line', 'linearGradient', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'text', 'tspan'];
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -441,11 +491,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _styles = __webpack_require__(9);
+	var _styles = __webpack_require__(10);
 
 	var _styles2 = _interopRequireDefault(_styles);
 
-	var _stylesManager = __webpack_require__(11);
+	var _stylesManager = __webpack_require__(12);
 
 	var _stylesManager2 = _interopRequireDefault(_stylesManager);
 
@@ -649,7 +699,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -664,7 +714,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _utils = __webpack_require__(10);
+	var _utils = __webpack_require__(11);
 
 	var _utils2 = _interopRequireDefault(_utils);
 
@@ -834,7 +884,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Styles;
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1065,7 +1115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Utils;
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1171,7 +1221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = StylesManager;
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	"use strict";
