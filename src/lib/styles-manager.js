@@ -68,6 +68,8 @@ export default class StylesManager {
       aphroStyles = aphroStyles.concat(additionalStyles)
     }
 
+    aphroStyles = aphroStyles.filter((s) => s)
+
     return { styles: aphroStyles, className: this._adonis.aphrodite.css.apply(null, aphroStyles) }
   }
 }
