@@ -511,7 +511,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var isComponent = !isAdonisComponent && target.prototype instanceof _react.Component;
 
 	  var styles = new _styles2.default(adonis, target, stylesObject, variations, name);
-	  var baseStyles = baseStylesObject && new _styles2.default(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations, name);
+	  var baseStyles = baseStylesObject && new _styles2.default(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations, baseStylesObject.name || 'baseStyles');
 
 	  var targetStyles = [];
 	  if (adonis.preRenderInjection) {
@@ -1184,11 +1184,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var BaseStyles = function BaseStyles(styles) {
 	  var variations = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	  var name = arguments[2];
 
 	  _classCallCheck(this, BaseStyles);
 
 	  this.styles = styles;
 	  this.variations = variations;
+	  this.name = name;
 	};
 
 	exports.default = BaseStyles;
