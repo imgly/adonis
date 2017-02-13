@@ -338,8 +338,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _ret = function () {
 	        var factory = {};
 	        _domElements2.default.forEach(function (tagName) {
-	          factory[tagName] = function (styles, variations) {
-	            return (0, _adonisComponent.create)(adonis, tagName, styles, variations, base);
+	          factory[tagName] = function (styles, variations, name) {
+	            if ((typeof variations === 'undefined' ? 'undefined' : _typeof(variations)) !== 'object') {
+	              name = variations;
+	              variations = undefined;
+	            }
+	            return (0, _adonisComponent.create)(adonis, tagName, styles, variations, base, name);
 	          };
 	        });
 	        return {
@@ -350,19 +354,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
 	    }
 
-	    return function (styles, variations) {
-	      return (0, _adonisComponent.create)(adonis, base, styles, variations);
+	    return function (styles, variations, name) {
+	      if ((typeof variations === 'undefined' ? 'undefined' : _typeof(variations)) !== 'object') {
+	        name = variations;
+	        variations = undefined;
+	      }
+	      return (0, _adonisComponent.create)(adonis, base, styles, variations, name);
 	    };
 	  };
 
 	  _domElements2.default.forEach(function (tagName) {
-	    adonis[tagName] = function (styles, variations) {
-	      return (0, _adonisComponent.create)(adonis, tagName, styles, variations);
+	    adonis[tagName] = function (styles, variations, name) {
+	      if ((typeof variations === 'undefined' ? 'undefined' : _typeof(variations)) !== 'object') {
+	        name = variations;
+	        variations = undefined;
+	      }
+	      return (0, _adonisComponent.create)(adonis, tagName, styles, variations, name);
 	    };
 	  });
 
-	  adonis.css = function (styles, variations) {
-	    return new _baseStyles2.default(styles, variations);
+	  adonis.css = function (styles, variations, name) {
+	    if ((typeof variations === 'undefined' ? 'undefined' : _typeof(variations)) !== 'object') {
+	      name = variations;
+	      variations = undefined;
+	    }
+	    return new _baseStyles2.default(styles, variations, name);
 	  };
 
 	  adonis.enablePreRenderInjection = function (theme) {
@@ -416,6 +432,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	exports.create = create;
 
@@ -481,13 +499,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	function create(adonis, target, stylesObject) {
 	  var variations = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 	  var baseStylesObject = arguments[4];
+	  var name = arguments[5];
+
+	  if ((typeof baseStylesObject === 'undefined' ? 'undefined' : _typeof(baseStylesObject)) !== 'object') {
+	    name = baseStylesObject;
+	    baseStylesObject = undefined;
+	  }
 
 	  var isTag = typeof target === 'string';
 	  var isAdonisComponent = target.prototype instanceof BaseAdonisComponent;
 	  var isComponent = !isAdonisComponent && target.prototype instanceof _react.Component;
 
-	  var styles = new _styles2.default(adonis, target, stylesObject, variations);
-	  var baseStyles = baseStylesObject && new _styles2.default(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations);
+	  var styles = new _styles2.default(adonis, target, stylesObject, variations, name);
+	  var baseStyles = baseStylesObject && new _styles2.default(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations, name);
 
 	  var targetStyles = [];
 	  if (adonis.preRenderInjection) {
@@ -634,6 +658,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -651,6 +677,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Styles = function () {
 	  function Styles(adonis, target, stylesObject) {
 	    var variationsObject = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+	    var name = arguments[4];
 
 	    _classCallCheck(this, Styles);
 
@@ -658,7 +685,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this._target = target;
 	    this._stylesObject = stylesObject;
 	    this._variationsObject = variationsObject;
-	    this._defaultStyleName = _utils2.default.generateStyleNameForTarget(target);
+	    this._defaultStyleName = name || _utils2.default.generateStyleNameForTarget(target);
 
 	    this._createCombinedStylesObject();
 	  }
@@ -692,15 +719,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '_processStyles',
 	    value: function _processStyles(theme) {
 	      var processObject = function processObject(obj) {
+	        var serializeFunctions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
 	        var newObject = {};
 
 	        for (var prop in obj) {
 	          var value = obj[prop];
 	          var valueType = typeof value === 'undefined' ? 'undefined' : _typeof(value);
 	          if (valueType === 'object') {
-	            newObject[prop] = processObject(value);
+	            newObject[prop] = processObject(value, serializeFunctions);
 	          } else if (valueType === 'function') {
-	            newObject[prop] = value(theme);
+	            if (!serializeFunctions) {
+	              newObject[prop] = value(theme);
+	            } else {
+	              newObject[prop] = value.toString();
+	            }
 	          } else {
 	            newObject[prop] = value;
 	          }
@@ -708,7 +741,35 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        return newObject;
 	      };
+	      this._staticProcessedStyles = processObject(this._combinedStyles, true);
 	      this._processedStyles = processObject(this._combinedStyles);
+	    }
+
+	    /**
+	     * Takes the aphrodite stylesheet objects and fixes their names so that the hash calculation
+	     * does not incorporate any variable styles. This allows us to render multiple themes into
+	     * external CSS files without having to re-compile the JavaScript (since changed theme values
+	     * would also affect the class names)
+	     * @private
+	     */
+
+	  }, {
+	    key: '_fixStylesheetNames',
+	    value: function _fixStylesheetNames() {
+	      for (var key in this._styleSheet) {
+	        var style = this._styleSheet[key];
+
+	        var _style$_name$split = style._name.split('_'),
+	            _style$_name$split2 = _slicedToArray(_style$_name$split, 1),
+	            name = _style$_name$split2[0];
+
+	        // Important: use `_staticProcessedStyles` instead of `_processedStyles`, since they don't
+	        // include theme values
+
+
+	        var newHash = _utils2.default.hashObject(this._staticProcessedStyles[key]);
+	        style._name = name + '_' + newHash;
+	      }
 	    }
 
 	    /**
@@ -726,6 +787,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        this._styleSheet = this._adonis.aphrodite.StyleSheet.create(this._processedStyles || this._combinedStyles);
+	        if (this._needsProcessing) {
+	          this._fixStylesheetNames();
+	        }
 	      }
 	    }
 

@@ -35,7 +35,7 @@ describe('adonis', () => {
     })
 
     describe('with name given', () => {
-      it('$should render correctly', () => {
+      it('should render correctly', () => {
         const Wrapper = adonis.div({
           background: 'red',
           padding: '5px'
@@ -230,6 +230,24 @@ describe('adonis', () => {
 
       html.should.equal(`<button class="baseStyles_1b2uzpk-o_O-button_ro0g1e"></button>`)
       css.content.should.equal(`.baseStyles_1b2uzpk-o_O-button_ro0g1e{background-color:blue;cursor:pointer;}`)
+    })
+
+    describe('with name given', () => {
+      it('should combine the two classes', () => {
+        const PrimaryBackgroundColor = adonis.css({
+          backgroundColor: 'blue'
+        }, 'PrimaryBackgroundColor')
+
+        const Button = adonis(PrimaryBackgroundColor).button({
+          cursor: 'pointer'
+        }, 'Button')
+
+        const content = <Button />
+        const { html, css } = render(content)
+
+        html.should.equal(`<button class="PrimaryBackgroundColor_1b2uzpk-o_O-Button_ro0g1e"></button>`)
+        css.content.should.equal(`.PrimaryBackgroundColor_1b2uzpk-o_O-Button_ro0g1e{background-color:blue;cursor:pointer;}`)
+      })
     })
   })
 

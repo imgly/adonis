@@ -40,7 +40,7 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
 
   const styles = new Styles(adonis, target, stylesObject, variations, name)
   const baseStyles = baseStylesObject &&
-    new Styles(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations, name)
+    new Styles(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations, baseStylesObject.name || 'baseStyles')
 
   let targetStyles = []
   if (adonis.preRenderInjection) {
