@@ -5,7 +5,7 @@ import buildPreRenderCSS from './lib/prerender-css'
 export default (options = {}) => {
   let StyleSheet, css, StyleSheetServer, StyleSheetTestUtils
 
-  // @if NO_OBJECT_STYLES='false'
+  // @if NO_OBJECT_STYLES=false
   if (!options.noObjectStyles) {
     const OriginalStyleSheet = require('aphrodite/no-important').StyleSheet
 
@@ -20,7 +20,7 @@ export default (options = {}) => {
   }
   // @endif
   //
-  // @if NO_OBJECT_STYLES='true'
+  // @if NO_OBJECT_STYLES=true
   if (options.noObjectStyles) {
     // When object styles are disabled and we're passing object hashes instead, we only need
     // a very dumb version of aphrodite which creates class names
