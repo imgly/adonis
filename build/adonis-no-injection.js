@@ -69,7 +69,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _buildExports = (0, _exports2.default)({
 	  noInjection: ("true"),
-	  noObjectStyles: (undefined)
+	  noObjectStyles: (undefined),
+	  preInjection: (undefined)
 	}),
 	    defaultExport = _buildExports.defaultExport,
 	    css = _buildExports.css,
@@ -2221,7 +2222,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  options = _utils2.default.defaults(options, {
 	    noInjection: false,
-	    noObjectStyles: false
+	    noObjectStyles: false,
+	    preInjection: false
 	  });
 
 	  var adonis = function adonis(base) {
@@ -2292,6 +2294,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  adonis.preRenderTheme = null;
 	  adonis.preRenderInjection = false;
 
+	  if (options.preInjection) {
+	    adonis.enablePreRenderInjection();
+	  }
+
 	  adonis.aphrodite = {
 	    StyleSheet: StyleSheet,
 	    css: css
@@ -2326,6 +2332,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+	var _templateObject = _taggedTemplateLiteral([''], ['']),
+	    _templateObject2 = _taggedTemplateLiteral(['Warning: Trying to pre-render CSS for a React Component (', ')\n          styled via adonis(Component). Due to the way styles are inherited in aphrodite, it\'s\n          possible that the rendered CSS is incomplete. If you\'re making use of style inheritance,\n          please make sure you\'re attaching a `RootElement` to your React Component'], ['Warning: Trying to pre-render CSS for a React Component (', ')\n          styled via adonis(Component). Due to the way styles are inherited in aphrodite, it\'s\n          possible that the rendered CSS is incomplete. If you\'re making use of style inheritance,\n          please make sure you\'re attaching a \\`RootElement\\` to your React Component']);
+
 	exports.create = create;
 
 	var _react = __webpack_require__(3);
@@ -2341,6 +2350,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _stylesManager2 = _interopRequireDefault(_stylesManager);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2410,9 +2421,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (target.RootElement) {
 	        targetStyles = getTargetStyles(target);
 	      } else {
-	        console.log('Warning: Trying to pre-render CSS for React Component styled via adonis(Component).');
-	        console.log('         Due to the way that styles are inherited in aphrodite, it\'s possible that');
-	        console.log('         the rendered CSS is incomplete.');
+	        console.log(''(_templateObject2, target.name)(_templateObject));
 	      }
 	    } else {
 	      targetStyles = getTargetStyles(target);
@@ -2485,7 +2494,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	      key: 'render',
 	      value: function render() {
-	        stylesManager.createStyleSheets(this.context.theme);
+	        // Don't inject twice
+	        if (!adonis.preRenderInjection) {
+	          stylesManager.createStyleSheets(this.context.theme);
+	        }
 
 	        var activeVariations = this._getActiveVariations();
 	        var elementProps = this._cloneProps();
@@ -2610,7 +2622,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '_processStyles',
 	    value: function _processStyles(theme) {
 	      var processObject = function processObject(obj) {
-	        var serializeFunctions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+	        var skipFunctions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
 	        var newObject = {};
 
@@ -2618,12 +2630,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var value = obj[prop];
 	          var valueType = typeof value === 'undefined' ? 'undefined' : _typeof(value);
 	          if (valueType === 'object') {
-	            newObject[prop] = processObject(value, serializeFunctions);
+	            newObject[prop] = processObject(value, skipFunctions);
 	          } else if (valueType === 'function') {
-	            if (!serializeFunctions) {
+	            if (!skipFunctions) {
 	              newObject[prop] = value(theme);
-	            } else {
-	              newObject[prop] = value.toString();
 	            }
 	          } else {
 	            newObject[prop] = value;
@@ -3051,6 +3061,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (additionalStyles) {
 	        aphroStyles = aphroStyles.concat(additionalStyles);
 	      }
+
+	      aphroStyles = aphroStyles.filter(function (s) {
+	        return s;
+	      });
 
 	      return { styles: aphroStyles, className: this._adonis.aphrodite.css.apply(null, aphroStyles) };
 	    }

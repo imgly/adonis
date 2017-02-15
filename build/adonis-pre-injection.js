@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _buildExports = (0, _exports2.default)({
 	  noInjection: (undefined),
 	  noObjectStyles: (undefined),
-	  preInjection: (undefined)
+	  preInjection: ("true")
 	}),
 	    defaultExport = _buildExports.defaultExport,
 	    css = _buildExports.css,
