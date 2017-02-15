@@ -114,7 +114,7 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
         .filter(s => !!s)
       stylesManager.setStyles(allStyles)
 
-      // Don't inject twice
+      // Don't create stylesheet twice
       if (!adonis.preRenderInjection) {
         stylesManager.createStyleSheets(this.context.theme)
       }

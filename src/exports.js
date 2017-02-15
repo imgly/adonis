@@ -5,8 +5,8 @@ import buildPreRenderCSS from './lib/prerender-css'
 export default (options = {}) => {
   let StyleSheet, css, StyleSheetServer, StyleSheetTestUtils
 
-  // @if NO_OBJECT_STYLES=false && PRE_INJECTION=false
-  if (!options.noObjectStyles && !options.preInjection) {
+  // @if NO_OBJECT_STYLES=false
+  if (!options.noObjectStyles) {
     const OriginalStyleSheet = require('aphrodite/no-important').StyleSheet
 
     // Extensions
@@ -19,14 +19,28 @@ export default (options = {}) => {
     StyleSheetTestUtils = ExtendedStyleSheet.StyleSheetTestUtils
   }
   // @endif
-  //
-  // @if NO_OBJECT_STYLES=true || PRE_INJECTION=true
-  if (options.noObjectStyles || options.preInjection) {
+
+  // @if NO_OBJECT_STYLES=true
+  if (options.noObjectStyles) {
     // When object styles are disabled and we're passing object hashes instead, we only need
     // a very dumb version of aphrodite which creates class names
     const dumbAphrodite = require('./lib/dumb-aphrodite')
     css = dumbAphrodite.css
     StyleSheet = dumbAphrodite.StyleSheet
+  }
+  // @endif
+
+  // @if PRE_INJECTION=true
+  // We don't need injection while rendering if we are pre-injecting
+  if (options.preInjection) {
+    const originalCSS = css
+    css = (...styleDefinitions) => {
+      StyleSheetTestUtils.suppressStyleInjection()
+      const className = originalCSS(...styleDefinitions)
+      StyleSheetTestUtils.clearBufferAndResumeStyleInjection()
+
+      return className
+    }
   }
   // @endif
 
