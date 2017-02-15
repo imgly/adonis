@@ -30,22 +30,7 @@ export default (options = {}) => {
   }
   // @endif
 
-  // @if PRE_INJECTION=true
-  // We don't need injection while rendering if we are pre-injecting
-  if (options.preInjection) {
-    const originalCSS = css
-    css = (...styleDefinitions) => {
-      StyleSheetTestUtils.suppressStyleInjection()
-      const className = originalCSS(...styleDefinitions)
-      StyleSheetTestUtils.clearBufferAndResumeStyleInjection()
-
-      return className
-    }
-  }
-  // @endif
-
   const adonis = require('./adonis')(options, { StyleSheet, StyleSheetTestUtils, css })
-
   return {
     defaultExport: adonis,
     StyleSheet,

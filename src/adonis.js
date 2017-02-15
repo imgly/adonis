@@ -34,6 +34,8 @@ module.exports = (options = {}, { StyleSheetTestUtils, css, StyleSheet }) => {
     }
   }
 
+  adonis.options = options
+
   DOMElements.forEach((tagName) => {
     adonis[tagName] = (styles, variations, name) => {
       if (typeof variations !== 'object') {
@@ -63,6 +65,10 @@ module.exports = (options = {}, { StyleSheetTestUtils, css, StyleSheet }) => {
 
   adonis.disableInjection = () => {
     StyleSheetTestUtils.suppressStyleInjection()
+  }
+
+  adonis.enableInjection = () => {
+    StyleSheetTestUtils.clearBufferAndResumeStyleInjection()
   }
 
   if (options.noInjection && !options.noObjectStyles) {

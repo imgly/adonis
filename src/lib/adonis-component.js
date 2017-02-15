@@ -130,10 +130,16 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
         })
 
       // Apply and pass styles
+      if (adonis.options.preInjection) {
+        adonis.disableInjection()
+      }
       let { styles: aphroStyles, className } =
         stylesManager.getClassName(activeVariations, this.props.styles)
       elementProps.className = className
       elementProps.styles = aphroStyles
+      if (adonis.options.preInjection) {
+        adonis.enableInjection()
+      }
 
       // Pass ref
       const { children, innerRef } = this.props
