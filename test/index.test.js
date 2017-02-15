@@ -289,8 +289,8 @@ describe('adonis', () => {
         const content = <ThemeProvider theme={theme}><App /></ThemeProvider>
         const { html, css } = render(content)
 
-        html.should.equal(`<div class="div_18p49ll"></div>`)
-        css.content.should.equal(`.div_18p49ll{background-color:grey;color:blue;}`)
+        html.should.equal(`<div class="div_hxfs3d"></div>`)
+        css.content.should.equal(`.div_hxfs3d{background-color:grey;color:blue;}`)
       })
     })
   })

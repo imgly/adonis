@@ -142,7 +142,7 @@ describe('server-side rendering', () => {
           })
         })
 
-        css.content.should.equal(`.div_1i4oedf{color:red;}.div_1i4oedf-o_O-AdonisComponent_1y5vlr0{color:red;background:blue;}`)
+        css.content.should.equal(`.div_120drhm{color:red;}.div_120drhm-o_O-AdonisComponent_120drhm{color:red;background:blue;}`)
       })
     })
   })
