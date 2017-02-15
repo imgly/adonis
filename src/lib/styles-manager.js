@@ -2,7 +2,6 @@ export default class StylesManager {
   constructor (adonis, styles) {
     this._adonis = adonis
     this._styles = styles
-      .filter((style) => !!style)
 
     this._variationCombinations = {}
   }
@@ -71,5 +70,9 @@ export default class StylesManager {
     aphroStyles = aphroStyles.filter((s) => s)
 
     return { styles: aphroStyles, className: this._adonis.aphrodite.css.apply(null, aphroStyles) }
+  }
+
+  setStyles (styles) {
+    this._styles = styles
   }
 }

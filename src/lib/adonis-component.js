@@ -43,8 +43,13 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
     new Styles(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations, baseStylesObject.name || 'baseStyles')
 
   let targetStyles = []
+  // Since style inheritance only happens during runtime, we need to grab the target's styles
+  // when injecting before rendering (e.g. for server-side rendering)
   if (adonis.preRenderInjection) {
     if (isComponent) {
+      // We have a special case for components, since we don't know their styles as long as we
+      // don't have a `RootElement` property pointing to an adonis component (of which we DO know
+      // the styles)
       if (target.RootElement) {
         targetStyles = getTargetStyles(target)
       } else {
@@ -54,6 +59,7 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
           please make sure you're attaching a \`RootElement\` to your React Component`)
       }
     } else {
+      // We're grabbing the styles from our target
       targetStyles = getTargetStyles(target)
     }
   }
@@ -61,7 +67,7 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
   let allStyles = [baseStyles].concat(targetStyles).concat([styles])
     .filter(s => !!s)
 
-  const stylesManager = new StylesManager(adonis, allStyles)
+  let stylesManager = new StylesManager(adonis, allStyles)
   if (adonis.preRenderInjection) {
     stylesManager.createStyleSheets(adonis.preRenderTheme)
   } else {
@@ -102,6 +108,12 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
      * @return {React.Element|React.Component}
      */
     render () {
+      // We don't want to include target styles when rendering, because our rendering
+      // mechanism makes sure styles are inherited (by passing a `styles` prop to children)
+      allStyles = [baseStyles].concat([styles])
+        .filter(s => !!s)
+      stylesManager.setStyles(allStyles)
+
       // Don't inject twice
       if (!adonis.preRenderInjection) {
         stylesManager.createStyleSheets(this.context.theme)
