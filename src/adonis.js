@@ -6,7 +6,8 @@ import Utils from './lib/utils'
 module.exports = (options = {}, { StyleSheetTestUtils, css, StyleSheet }) => {
   options = Utils.defaults(options, {
     noInjection: false,
-    noObjectStyles: false
+    noObjectStyles: false,
+    preInjection: false
   })
 
   let adonis = (base) => {
@@ -70,6 +71,10 @@ module.exports = (options = {}, { StyleSheetTestUtils, css, StyleSheet }) => {
 
   adonis.preRenderTheme = null
   adonis.preRenderInjection = false
+
+  if (options.preInjection) {
+    adonis.enablePreRenderInjection()
+  }
 
   adonis.aphrodite = {
     StyleSheet,

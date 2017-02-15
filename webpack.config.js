@@ -2,10 +2,11 @@ var path = require('path')
 var qs = require('querystring')
 var webpack = require('webpack')
 
-const { NO_INJECTION, NO_OBJECT_STYLES, MINIFY } = process.env
+const { PRE_INJECTION, NO_INJECTION, NO_OBJECT_STYLES, MINIFY } = process.env
 
 var plugins = [
   new webpack.DefinePlugin({
+    'process.env.PRE_INJECTION': JSON.stringify(PRE_INJECTION),
     'process.env.NO_INJECTION': JSON.stringify(NO_INJECTION),
     'process.env.NO_OBJECT_STYLES': JSON.stringify(NO_OBJECT_STYLES)
   })
@@ -19,6 +20,8 @@ if (MINIFY) {
 var OUTPUT_NAME = 'adonis'
 if (NO_INJECTION) {
   OUTPUT_NAME = 'adonis-no-injection'
+} else if (PRE_INJECTION) {
+  OUTPUT_NAME = 'adonis-pre-injection'
 } else if (NO_OBJECT_STYLES) {
   OUTPUT_NAME = 'adonis-no-object-styles'
 }
@@ -64,7 +67,7 @@ module.exports = {
         path.resolve(__dirname, './src')
       ],
       exclude: /node_modules/,
-      loader: 'preprocess?' + qs.stringify({ NO_INJECTION, NO_OBJECT_STYLES })
+      loader: 'preprocess?' + qs.stringify({ PRE_INJECTION, NO_INJECTION, NO_OBJECT_STYLES })
     }]
   },
 
