@@ -48,10 +48,10 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
       if (target.RootElement) {
         targetStyles = getTargetStyles(target)
       } else {
-        console.log(```Warning: Trying to pre-render CSS for a React Component (${target.name})
+        console.log(`Warning: Trying to pre-render CSS for a React Component (${target.name})
           styled via adonis(Component). Due to the way styles are inherited in aphrodite, it's
           possible that the rendered CSS is incomplete. If you're making use of style inheritance,
-          please make sure you're attaching a \`RootElement\` to your React Component```)
+          please make sure you're attaching a \`RootElement\` to your React Component`)
       }
     } else {
       targetStyles = getTargetStyles(target)
