@@ -19,12 +19,6 @@ const getTargetStyles = (target) => {
   if (target.RootElement) {
     styles = styles.concat(getTargetStyles(target.RootElement))
   }
-
-  // React component extends a react component with root element
-  const proto = Object.getPrototypeOf(target)
-  if (proto) {
-    styles = styles.concat(getTargetStyles(proto))
-  }
   return styles.filter((style) => !!style)
 }
 
