@@ -129,9 +129,15 @@ export function create (adonis, target, stylesObject, variations = {}, baseStyle
       if (adonis.options.preInjection) {
         adonis.disableInjection()
       }
+
       let { styles: aphroStyles, className } =
         stylesManager.getClassName(activeVariations, this.props.styles)
-      elementProps.className = className
+
+      if (isTag) {
+        // No need to pass the class name to components
+        elementProps.className = [this.props.className, className].filter(c => c).join(' ')
+      }
+
       elementProps.styles = aphroStyles
       if (adonis.options.preInjection) {
         adonis.enableInjection()

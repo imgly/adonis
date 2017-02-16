@@ -47,6 +47,20 @@ describe('adonis', () => {
         css.content.should.equal(`.Wrapper_tcorpq{background:red;padding:5px;}`)
       })
     })
+
+    describe('when passing an additional class name', () => {
+      it('should render correctly', () => {
+        const Wrapper = adonis.div({
+          background: 'red',
+          padding: '5px'
+        }, 'Wrapper')
+        const content = <Wrapper className='foo' />
+        const { html, css } = render(content)
+
+        html.should.equal('<div class="foo Wrapper_tcorpq"></div>')
+        css.content.should.equal(`.Wrapper_tcorpq{background:red;padding:5px;}`)
+      })
+    })
   })
 
   describe('overriding styles of an adonis component', () => {
