@@ -1,6 +1,6 @@
 {
   "name": "adonis",
-  "version": "0.7.8",
+  "version": "0.7.9",
   "description": "The best of aphrodite and styled-components combined",
   "main": "build/adonis.js",
   "scripts": {
