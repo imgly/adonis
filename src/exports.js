@@ -11,7 +11,11 @@ export default (options = {}) => {
 
     // Extensions
     const ImmediateChildExtension = require('./lib/extensions/immediate-child').default
-    let ExtendedStyleSheet = OriginalStyleSheet.extend([ImmediateChildExtension])
+    const SelfExtensions = require('./lib/extensions/self').default
+    let ExtendedStyleSheet = OriginalStyleSheet.extend([
+      ImmediateChildExtension,
+      SelfExtensions
+    ])
 
     StyleSheet = ExtendedStyleSheet.StyleSheet
     css = ExtendedStyleSheet.css

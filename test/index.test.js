@@ -277,7 +277,7 @@ describe('adonis', () => {
       const { html, css } = render(content)
 
       html.should.equal(`<div class="div_ldei0g"></div>`)
-      css.content.should.equal(`.div_ldei0g > * {background:red;}`)
+      css.content.should.equal(`.div_ldei0g>*{background:red;}`)
     })
   })
 
