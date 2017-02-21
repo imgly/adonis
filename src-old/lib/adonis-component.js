@@ -2,11 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import Styles from './styles'
 import StylesManager from './styles-manager'
 
-class BaseAdonisComponent extends Component {}
-BaseAdonisComponent.contextTypes = {
-  theme: PropTypes.object
-}
-
 const getTargetStyles = (target) => {
   let styles = [target._adonisStyles, target._adonisBaseStyles]
 

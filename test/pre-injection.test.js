@@ -1,6 +1,5 @@
 import adonis, { StyleSheetServer, preRenderCSS } from '../src/no-injection'
 import React from 'react'
-import ReactDOMServer from 'react-dom/server'
 
 require('mocha-sinon')
 

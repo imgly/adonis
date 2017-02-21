@@ -9,7 +9,7 @@
     "build:watch": "rimraf build && WATCH=true webpack",
     "prestart": "npm run build",
     "start": "node bin/main.js",
-    "test": "mocha test",
+    "test": "mocha test/rendering",
     "prepublish": "npm run build:publish"
   },
   "repository": {
@@ -52,13 +52,13 @@
     "preprocess-loader": "^0.2.0",
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
-    "react-dom": "^15.4.2",
     "rimraf": "^2.5.1",
     "should": "^11.1.2",
     "sinon": "^1.17.7",
     "webpack": "^1.12.12"
   },
   "dependencies": {
-    "aphrodite": "^1.1.0"
+    "aphrodite": "^1.1.0",
+    "react-dom": "^15.4.2"
   }
 }
