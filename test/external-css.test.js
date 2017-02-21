@@ -1,6 +1,5 @@
 import adonis from '../src/no-object-styles'
 import React from 'react'
-import ReactDOMServer from 'react-dom/server'
 
 require('mocha-sinon')
 

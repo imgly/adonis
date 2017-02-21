@@ -1,33 +1,11 @@
 var path = require('path')
 var qs = require('querystring')
-var webpack = require('webpack')
+// var webpack = require('webpack')
 
-const { PRE_INJECTION, NO_INJECTION, NO_OBJECT_STYLES, MINIFY } = process.env
-
-var plugins = [
-  new webpack.DefinePlugin({
-    'process.env.PRE_INJECTION': JSON.stringify(PRE_INJECTION),
-    'process.env.NO_INJECTION': JSON.stringify(NO_INJECTION),
-    'process.env.NO_OBJECT_STYLES': JSON.stringify(NO_OBJECT_STYLES)
-  })
-]
-if (MINIFY) {
-  plugins.push(new webpack.optimize.UglifyJsPlugin({
-    compress: { warnings: false }
-  }))
-}
-
-var OUTPUT_NAME = 'adonis'
-if (NO_INJECTION) {
-  OUTPUT_NAME = 'adonis-no-injection'
-} else if (PRE_INJECTION) {
-  OUTPUT_NAME = 'adonis-pre-injection'
-} else if (NO_OBJECT_STYLES) {
-  OUTPUT_NAME = 'adonis-no-object-styles'
-}
+const MINIFY = false
+const plugins = []
 
 module.exports = {
-
   debug: false,
   watch: !!process.env.WATCH,
 
@@ -37,7 +15,7 @@ module.exports = {
 
   output: {
     path: './build',
-    filename: OUTPUT_NAME + (MINIFY ? '.min.js' : '.js'),
+    filename: 'adonis' + (MINIFY ? '.min.js' : '.js'),
     library: 'adonis',
     libraryTarget: 'umd'
   },
@@ -67,7 +45,7 @@ module.exports = {
         path.resolve(__dirname, './src')
       ],
       exclude: /node_modules/,
-      loader: 'preprocess?' + qs.stringify({ PRE_INJECTION, NO_INJECTION, NO_OBJECT_STYLES })
+      loader: 'preprocess?' + qs.stringify({})
     }]
   },
 
