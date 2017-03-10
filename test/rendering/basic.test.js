@@ -4,7 +4,7 @@ import jsdom from 'mocha-jsdom'
 import { render } from '../utils'
 
 const adonis = new Adonis()
-describe.only('adonis.tag({})', () => {
+describe('adonis.tag({})', () => {
   jsdom()
   it('should render correctly', () => {
     const Wrapper = adonis.div({
