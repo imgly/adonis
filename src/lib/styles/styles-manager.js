@@ -5,16 +5,8 @@ export default class StylesManager {
     this._baseStyles = baseStyles
   }
 
-  _generateClassName (rulesets) {
-    const nameSeparator = this._adonis.getOption('nameSeparator')
-    return rulesets
-      .map((ruleset) => ruleset.getClassName())
-      .join(nameSeparator)
-  }
-
-  getClassName (variations) {
+  getRulesets (variations) {
     const rulesets = []
-
     this._styles.forEach((styles) => {
       if (!styles) return
 
@@ -25,9 +17,6 @@ export default class StylesManager {
         })
     })
 
-    return {
-      rulesets: rulesets.filter((r) => r),
-      className: this._generateClassName(rulesets)
-    }
+    return rulesets.filter(r => r)
   }
 }

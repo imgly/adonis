@@ -18,7 +18,7 @@ export default (options) => {
             variations = undefined
           }
 
-          return adonis.createComponent(target, {
+          return adonis.createComponent(domElement, {
             styles, variations, name, baseStyles
           })
         }
@@ -52,7 +52,17 @@ export default (options) => {
         styles, variations, name
       })
     }
-  });
+  })
+
+  // adonis.css(styles, variations, name)
+  factory.css = (styles, variations, name) => {
+    if (typeof variations === 'string') {
+      name = variations
+      variations = undefined
+    }
+
+    return new BaseStyles(adonis, { styles, variations, name: name || 'baseStyles' })
+  };
 
   // Proxy some methods
   ['renderToStatic'].forEach((prop) => {
