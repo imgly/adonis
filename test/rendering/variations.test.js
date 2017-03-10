@@ -26,8 +26,8 @@ describe('with variations', () => {
     })
     const { html, css } = render(adonis, <App />)
 
-    html.should.equal('<div class="div_18550lg-o_O-primary_1nxhvta"></div>')
-    css.content.should.equal(`.div_18550lg-o_O-primary_1nxhvta {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background:blue;\n}`)
+    html.should.equal('<div class="div_18550lg--primary_1nxhvta"></div>')
+    css.content.should.equal(`.div_18550lg--primary_1nxhvta {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background:blue;\n}`)
   })
 
   describe('when passing a name', () => {
@@ -52,8 +52,8 @@ describe('with variations', () => {
 
       const { html, css } = render(adonis, <App />)
 
-      html.should.equal('<div class="Button_18550lg-o_O-primary_1nxhvta"></div>')
-      css.content.should.equal(`.Button_18550lg-o_O-primary_1nxhvta {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: blue;\n}`)
+      html.should.equal('<div class="Button_18550lg--primary_1nxhvta"></div>')
+      css.content.should.equal(`.Button_18550lg--primary_1nxhvta {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: blue;\n}`)
     })
   })
 })
