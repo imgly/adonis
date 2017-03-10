@@ -58,7 +58,7 @@ describe('server-side rendering', () => {
           })
         })
 
-        css.content.should.equal(`.div_tcorpq{background:red;padding:5px;}.div_tcorpq-o_O-variation1_im3wl1{background:red;padding:5px;color:red;}.div_tcorpq-o_O-variation2_1nxhvta{background:blue;padding:5px;}.div_tcorpq-o_O-variation1_im3wl1-o_O-variation2_1nxhvta{background:blue;padding:5px;color:red;}`)
+        css.content.should.equal(`.div_tcorpq{background:red;padding:5px;}.div_tcorpq__variation1_im3wl1{background:red;padding:5px;color:red;}.div_tcorpq__variation2_1nxhvta{background:blue;padding:5px;}.div_tcorpq__variation1_im3wl1__variation2_1nxhvta{background:blue;padding:5px;color:red;}`)
       })
     })
 
@@ -81,7 +81,7 @@ describe('server-side rendering', () => {
           })
         })
 
-        css.content.should.equal(`.div_im3wl1{color:red;}.div_im3wl1-o_O-Wrapper_1nxhvta{color:red;background:blue;}`)
+        css.content.should.equal(`.div_im3wl1{color:red;}.div_im3wl1__Wrapper_1nxhvta{color:red;background:blue;}`)
       })
 
       describe('that has a deeply styled adonis component', () => {
@@ -107,7 +107,7 @@ describe('server-side rendering', () => {
             })
           })
 
-          css.content.should.equal(`.div_1cqh1i4{border:1px solid red;}.div_1cqh1i4-o_O-AdonisComponent_im3wl1{border:1px solid red;color:red;}.AdonisComponent_im3wl1-o_O-div_1cqh1i4-o_O-Wrapper_1nxhvta{color:red;border:1px solid red;background:blue;}`)
+          css.content.should.equal(`.div_1cqh1i4{border:1px solid red;}.div_1cqh1i4__AdonisComponent_im3wl1{border:1px solid red;color:red;}.AdonisComponent_im3wl1__div_1cqh1i4__Wrapper_1nxhvta{color:red;border:1px solid red;background:blue;}`)
         })
       })
     })
@@ -124,7 +124,7 @@ describe('server-side rendering', () => {
           })
         })
 
-        css.content.should.equal(`.div_im3wl1{color:red;}.div_im3wl1-o_O-AdonisComponent_1nxhvta{color:red;background:blue;}`)
+        css.content.should.equal(`.div_im3wl1{color:red;}.div_im3wl1__AdonisComponent_1nxhvta{color:red;background:blue;}`)
       })
     })
 
@@ -141,7 +141,7 @@ describe('server-side rendering', () => {
           })
         })
 
-        css.content.should.equal(`.div_120drhm{color:red;}.div_120drhm-o_O-AdonisComponent_120drhm{color:red;background:blue;}`)
+        css.content.should.equal(`.div_120drhm{color:red;}.div_120drhm__AdonisComponent_120drhm{color:red;background:blue;}`)
       })
     })
   })
