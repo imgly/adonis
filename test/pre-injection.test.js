@@ -32,7 +32,7 @@ describe('pre injection', () => {
       const content = <InactiveIcon />
       const { html, css } = render(content)
 
-      html.should.equal('<img class="Icon_120drhm-o_O-InactiveIcon_120drhm"/>')
+      html.should.equal('<img class="Icon_120drhm__InactiveIcon_120drhm"/>')
       css.content.should.equal('')
     })
   })

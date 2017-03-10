@@ -33,7 +33,7 @@ describe('when passing hashes instead of style objects', () => {
       const content = <OverriddenWrapper />
       const html = render(content)
 
-      html.should.equal('<div class="div_tcorpq-o_O-AdonisComponent_1nxhvta"></div>')
+      html.should.equal('<div class="div_tcorpq__AdonisComponent_1nxhvta"></div>')
     })
   })
 
@@ -50,7 +50,7 @@ describe('when passing hashes instead of style objects', () => {
       const content = <PrimaryButton />
       const html = render(content)
 
-      html.should.equal('<div class="div_1k8vrzz-o_O-Button_1nxhvta"></div>')
+      html.should.equal('<div class="div_1k8vrzz__Button_1nxhvta"></div>')
     })
   })
 
@@ -71,7 +71,7 @@ describe('when passing hashes instead of style objects', () => {
         const content = <App />
         const html = render(content)
 
-        html.should.equal('<div class="div_18550lg-o_O-primary_1nxhvta"></div>')
+        html.should.equal('<div class="div_18550lg__primary_1nxhvta"></div>')
       })
     })
 
@@ -91,7 +91,7 @@ describe('when passing hashes instead of style objects', () => {
         const content = <App />
         const html = render(content)
 
-        html.should.equal('<div class="div_18550lg-o_O-primary_1nxhvta-o_O-red_10ip45p"></div>')
+        html.should.equal('<div class="div_18550lg__primary_1nxhvta__red_10ip45p"></div>')
       })
     })
   })
@@ -104,7 +104,7 @@ describe('when passing hashes instead of style objects', () => {
 
       const content = <Button />
       const html = render(content)
-      html.should.equal(`<button class="baseStyles_1b2uzpk-o_O-button_ro0g1e"></button>`)
+      html.should.equal(`<button class="baseStyles_1b2uzpk__button_ro0g1e"></button>`)
     })
   })
 

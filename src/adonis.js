@@ -14,9 +14,10 @@ export default class Adonis {
     this._options = defaults(options, {
       injection: true,
       minified: false,
+      autoPrefix: true,
       selectorPrefix: '',
-      hashSeparator: '_',
-      nameSeparator: '-o_O-',
+      hashSeparator: '~',
+      nameSeparator: '__',
       variationSeparator: '--'
     })
     this._stylesBuffer = new StylesBuffer(this)

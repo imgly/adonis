@@ -26,8 +26,8 @@ describe('with variations', () => {
     })
     const { html, css } = render(adonis, <App />)
 
-    html.should.equal('<div class="div_18550lg--primary_1nxhvta"></div>')
-    css.content.should.equal(`.div_18550lg--primary_1nxhvta {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: blue;\n}`)
+    html.should.equal('<div class="div~18550lg--primary~1nxhvta"></div>')
+    css.content.should.equal(`.div~18550lg--primary~1nxhvta {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: blue;\n}`)
   })
 
   describe('when passing a name', () => {
@@ -52,8 +52,8 @@ describe('with variations', () => {
 
       const { html, css } = render(adonis, <App />)
 
-      html.should.equal('<div class="Button_18550lg--primary_1nxhvta"></div>')
-      css.content.should.equal(`.Button_18550lg--primary_1nxhvta {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: blue;\n}`)
+      html.should.equal('<div class="Button~18550lg--primary~1nxhvta"></div>')
+      css.content.should.equal(`.Button~18550lg--primary~1nxhvta {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: blue;\n}`)
     })
   })
 })
@@ -80,7 +80,7 @@ describe('with multiple variations passed to component', () => {
     })
     const { html, css } = render(adonis, <App />)
 
-    html.should.equal('<div class="div_18550lg--primary_1nxhvta--red_10ip45p"></div>')
-    css.content.should.equal(`.div_18550lg--primary_1nxhvta--red_10ip45p {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: red;\n}`)
+    html.should.equal('<div class="div~18550lg--primary~1nxhvta--red~10ip45p"></div>')
+    css.content.should.equal(`.div~18550lg--primary~1nxhvta--red~10ip45p {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: red;\n}`)
   })
 })

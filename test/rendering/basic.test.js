@@ -13,8 +13,8 @@ describe('adonis.tag({})', () => {
     })
     const { html, css } = render(adonis, <Wrapper />)
 
-    html.should.equal('<div class="div_tcorpq"></div>')
-    css.content.should.equal(`.div_tcorpq {\n  background: red;\n  padding: 5px;\n}`)
+    html.should.equal('<div class="div~tcorpq"></div>')
+    css.content.should.equal(`.div~tcorpq {\n  background: red;\n  padding: 5px;\n}`)
   })
 
   describe('when passing an additional class name', () => {
@@ -25,8 +25,8 @@ describe('adonis.tag({})', () => {
       }, 'Wrapper')
       const { html, css } = render(adonis, <Wrapper className='foo' />)
 
-      html.should.equal('<div class="foo Wrapper_tcorpq"></div>')
-      css.content.should.equal(`.Wrapper_tcorpq {\n  background: red;\n  padding: 5px;\n}`)
+      html.should.equal('<div class="foo Wrapper~tcorpq"></div>')
+      css.content.should.equal(`.Wrapper~tcorpq {\n  background: red;\n  padding: 5px;\n}`)
     })
   })
 
@@ -38,8 +38,8 @@ describe('adonis.tag({})', () => {
       }, 'Wrapper')
       const { html, css } = render(adonis, <Wrapper />)
 
-      html.should.equal('<div class="Wrapper_tcorpq"></div>')
-      css.content.should.equal(`.Wrapper_tcorpq {\n  background: red;\n  padding: 5px;\n}`)
+      html.should.equal('<div class="Wrapper~tcorpq"></div>')
+      css.content.should.equal(`.Wrapper~tcorpq {\n  background: red;\n  padding: 5px;\n}`)
     })
   })
 })

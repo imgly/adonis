@@ -18,8 +18,8 @@ describe('extensions', () => {
       const content = <Wrapper />
       const { html, css } = render(content)
 
-      html.should.equal('<div class="div_1ehru9u"></div>')
-      css.content.should.equal(`.div_1ehru9u {\n  background: red;\n}\n.div_1ehru9u > h1 {\n  color: red;\n}`)
+      html.should.equal('<div class="div~1ehru9u"></div>')
+      css.content.should.equal(`.div~1ehru9u {\n  background: red;\n}\n.div~1ehru9u > h1 {\n  color: red;\n}`)
     })
   })
 
@@ -34,8 +34,8 @@ describe('extensions', () => {
       const content = <Wrapper />
       const { html, css } = render(content)
 
-      html.should.equal('<div class="div_1i24nhp"></div>')
-      css.content.should.equal(`.div_1i24nhp {\n  background: red;\n}\n.div_1i24nhp h1, .div_1i24nhp h2, .div_1i24nhp h3 {\n  color: red;\n}`)
+      html.should.equal('<div class="div~1i24nhp"></div>')
+      css.content.should.equal(`.div~1i24nhp {\n  background: red;\n}\n.div~1i24nhp h1, .div~1i24nhp h2, .div~1i24nhp h3 {\n  color: red;\n}`)
     })
   })
 })

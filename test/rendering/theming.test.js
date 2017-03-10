@@ -26,7 +26,7 @@ describe('when wrapping a component in a ThemeProvider', () => {
     const content = <ThemeProvider theme={theme}><App /></ThemeProvider>
     const { html, css } = render(content)
 
-    html.should.equal(`<div class="div_hxfs3d"></div>`)
-    css.content.should.equal(`.div_hxfs3d {\m  background-color: grey;\n  color: blue;\n}`)
+    html.should.equal(`<div class="div~hxfs3d"></div>`)
+    css.content.should.equal(`.div~hxfs3d {\n  background-color: grey;\n  color: blue;\n}`)
   })
 })
