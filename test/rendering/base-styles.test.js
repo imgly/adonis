@@ -4,7 +4,7 @@ import jsdom from 'mocha-jsdom'
 import { render } from '../utils'
 
 const adonis = new Adonis()
-describe('defining and extending base styles', () => {
+describe.only('defining and extending base styles', () => {
   jsdom()
   it('should render correctly', () => {
     const PrimaryBackgroundColor = adonis.css({
