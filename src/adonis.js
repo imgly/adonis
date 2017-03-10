@@ -13,12 +13,13 @@ export default class Adonis {
   constructor (options) {
     this._options = defaults(options, {
       injection: true,
+      minified: false,
       selectorPrefix: '',
       hashSeparator: '_',
       nameSeparator: '-o_O-',
       variationSeparator: '--'
     })
-    this._stylesBuffer = new StylesBuffer()
+    this._stylesBuffer = new StylesBuffer(this)
     this._componentFactory = new ComponentFactory(this, this._options)
   }
 
@@ -48,6 +49,14 @@ export default class Adonis {
     return { css: { content: output }, html }
   }
 
+  getStylesBuffer () {
+    return this._stylesBuffer
+  }
+
+  /**
+   * Returns all options for this adonis instance
+   * @return {Object}
+   */
   getOptions () {
     return this._options
   }
