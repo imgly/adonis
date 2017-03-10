@@ -1,7 +1,12 @@
 export default class StylesBuffer {
-  constructor () {
+  constructor (adonis) {
+    this._adonis = adonis
     this._injectionEnabled = true
-    this._buffer = ''
+    this._buffer = []
+  }
+
+  bufferRuleset (string) {
+    this._buffer.push(string)
   }
 
   disableInjection () {
@@ -13,6 +18,9 @@ export default class StylesBuffer {
   }
 
   flushToString () {
-    return this._buffer
+    const { minified } = this._adonis.getOptions()
+    const content = this._buffer.join(minified ? '' : '\n\n')
+    this._buffer = []
+    return content
   }
 }

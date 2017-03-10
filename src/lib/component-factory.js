@@ -95,7 +95,7 @@ export default class ComponentFactory {
         const combinedRuleset = new CombinedRuleset(this._adonis, rulesets)
         classNames.push(combinedRuleset.getClassName())
 
-        return { rulesets, className: classNames.filter(c => c).join(' ') }
+        return { rulesets, combinedRuleset, className: classNames.filter(c => c).join(' ') }
       }
 
       /**
@@ -105,7 +105,13 @@ export default class ComponentFactory {
       render () {
         const elementProps = this._cloneProps()
 
-        const { className, rulesets } = this._buildClassName()
+        const { className, rulesets, combinedRuleset } = this._buildClassName()
+
+        const { injection } = this._adonis.getOptions()
+        if (injection === true) {
+          const stylesBuffer = this._adonis.getStylesBuffer()
+          stylesBuffer.bufferRuleset(combinedRuleset.generateCSS())
+        }
 
         // If an available variation is passed in as a property, we add the styles to the class and
         // remove the prop from the props we pass to our target element

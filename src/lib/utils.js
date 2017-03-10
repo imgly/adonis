@@ -29,9 +29,9 @@ export const defaults = (object, ...sources) => {
 /**
  * JS Implementation of MurmurHash2
  *
- * @author <a href="mailto:gary.court@gmail.com">Gary Court</a>
+ * @author Gary Court <gary.court@gmail.com>
  * @see http://github.com/garycourt/murmurhash-js
- * @author <a href="mailto:aappleby@gmail.com">Austin Appleby</a>
+ * @author Austin Appleby <aappleby@gmail.com>
  * @see http://sites.google.com/site/murmurhash/
  *
  * @param {Object}
