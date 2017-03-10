@@ -110,7 +110,7 @@ export default class ComponentFactory {
         // If an available variation is passed in as a property, we add the styles to the class and
         // remove the prop from the props we pass to our target element
         if (isTag) {
-          Object.keys(variations)
+          Object.keys(variations || {})
             .forEach((variation) => {
               delete elementProps[variation]
             })

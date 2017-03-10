@@ -38,7 +38,7 @@ export default class Ruleset {
   }
 
   getClassName () {
-    const hashSeparator = this._adonis.getOption('hashSeparator')
+    const { hashSeparator } = this._adonis.getOptions()
     const hash = hashObject(this._staticStyles)
     return `${this._options.name}${hashSeparator}${hash}`
   }

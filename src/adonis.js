@@ -13,7 +13,7 @@ export default class Adonis {
   constructor (options) {
     this._options = defaults(options, {
       injection: true,
-      selectorPrefix: '💪',
+      selectorPrefix: '',
       hashSeparator: '_',
       nameSeparator: '-o_O-',
       variationSeparator: '--'
@@ -48,5 +48,7 @@ export default class Adonis {
     return { css: { content: output }, html }
   }
 
-  getOption (name) { return this._options[name] }
+  getOptions () {
+    return this._options
+  }
 }

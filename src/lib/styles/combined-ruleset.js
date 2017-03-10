@@ -5,8 +5,7 @@ export default class CombinedRuleset {
   }
 
   getClassName () {
-    const nameSeparator = this._adonis.getOption('nameSeparator')
-    const variationSeparator = this._adonis.getOption('variationSeparator')
+    const { selectorPrefix, nameSeparator, variationSeparator } = this._adonis.getOptions()
 
     return this._rulesets.reduce((acc, ruleset) => {
       const isFirst = ruleset === this._rulesets[0]
@@ -15,6 +14,6 @@ export default class CombinedRuleset {
       }
       acc += ruleset.getClassName()
       return acc
-    }, '')
+    }, selectorPrefix || '')
   }
 }
