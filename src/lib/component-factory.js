@@ -107,6 +107,15 @@ export default class ComponentFactory {
 
         const { className, rulesets } = this._buildClassName()
 
+        // If an available variation is passed in as a property, we add the styles to the class and
+        // remove the prop from the props we pass to our target element
+        if (isTag) {
+          Object.keys(variations)
+            .forEach((variation) => {
+              delete elementProps[variation]
+            })
+        }
+
         // We only need to pass the class name to tags, not to components
         if (isTag) {
           elementProps.className = className
