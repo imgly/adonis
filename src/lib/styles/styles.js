@@ -15,12 +15,11 @@ export default class Styles {
   _buildVariationRulesets () {
     const rulesets = {}
     const { variations } = this._options
-    const variationSeparator = this._adonis.getOption('variationSeparator')
     for (let key in variations) {
-      const rulesetName = `${this._options.name}${variationSeparator}${key}`
       rulesets[key] = new Ruleset(this._adonis, this, {
-        name: rulesetName,
-        styles: variations[key]
+        name: key,
+        styles: variations[key],
+        variation: true
       })
     }
     return rulesets

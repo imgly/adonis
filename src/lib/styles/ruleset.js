@@ -9,6 +9,10 @@ export default class Ruleset {
     this._processStyles()
   }
 
+  isVariation () {
+    return !!this._options.variation
+  }
+
   _processStyles () {
     const processObject = (obj, skipFunctions = false) => {
       let newObject = {}
