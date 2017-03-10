@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import BaseAdonisComponent from './components/base-adonis-component'
+import CombinedRuleset from './styles/combined-ruleset'
 import Styles from './styles/styles'
 import StylesManager from './styles/styles-manager'
 
@@ -28,6 +29,7 @@ export default class ComponentFactory {
    * @return {AdonisComponent}
    */
   createComponent (target, options) {
+    const adonis = this._adonis
     let { name } = options
     if (!name) name = this._getName(target)
 
@@ -42,6 +44,12 @@ export default class ComponentFactory {
     const isComponent = !isAdonisComponent && target.prototype instanceof Component
 
     class AdonisComponent extends BaseAdonisComponent {
+      constructor (...args) {
+        super(...args)
+
+        this._adonis = adonis
+      }
+
       /**
        * Returns a shallow clone of this component's props
        * @return {Object}
@@ -72,16 +80,22 @@ export default class ComponentFactory {
        * @private
        */
       _buildClassName () {
-        const { styles: passedStyles, className: passedClassName } = this.props
+        const { styles: passedRulesets, className: passedClassName } = this.props
 
         const activeVariations = this._getActiveVariations()
 
-        const classNames = passedClassName ? [passedClassName] : []
+        // We can pass additional class names to components
+        const classNames = []
+        classNames.push(passedClassName)
 
-        const { className, styles } = stylesManager.getClassName(activeVariations)
-        classNames.push(className)
+        // Generate a class name for this component
+        const rulesets = stylesManager.getRulesets(activeVariations)
+          .concat(passedRulesets)
+          .filter(r => r)
+        const combinedRuleset = new CombinedRuleset(this._adonis, rulesets)
+        classNames.push(combinedRuleset.getClassName())
 
-        return classNames.join(' ')
+        return { rulesets, className: classNames.filter(c => c).join(' ') }
       }
 
       /**
@@ -89,10 +103,33 @@ export default class ComponentFactory {
        * @return {React.Element}
        */
       render () {
-        const { children } = this.props
-
         const elementProps = this._cloneProps()
-        elementProps.className = this._buildClassName()
+
+        const { className, rulesets } = this._buildClassName()
+
+        // We only need to pass the class name to tags, not to components
+        if (isTag) {
+          elementProps.className = className
+        } else {
+          elementProps.styles = rulesets
+        }
+
+        // Pass ref
+        const { children, innerRef } = this.props
+        if (innerRef) {
+          if (isComponent || isTag) {
+            elementProps.ref = innerRef
+          } else if (isAdonisComponent) {
+            elementProps.innerRef = innerRef
+          }
+        }
+
+        // We don't want to pass invalid props to tags
+        if (isTag) {
+          delete elementProps.styles
+          delete elementProps.innerRef
+        }
+
         return React.createElement(target, elementProps, children)
       }
     }
