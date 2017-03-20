@@ -46,7 +46,7 @@ export default class ComponentFactory {
         this._stylesObject = new Styles(adonis, { styles, variations, name })
 
         const allStyles = [baseStyles, this._stylesObject, this.props.styles].filter(s => s)
-        this._stylesManager = new StylesManager(adonis, allStyles, activeVariations)
+        this._stylesManager = new StylesManager(adonis, allStyles, activeVariations, this.context.theme)
         this._adonis = adonis
       }
 
