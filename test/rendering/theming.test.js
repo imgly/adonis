@@ -1,4 +1,4 @@
-import Adonis from '../../src'
+import Adonis, { withTheme, ThemeProvider } from '../../src'
 import React from 'react'
 import jsdom from 'mocha-jsdom'
 import { render } from '../utils'

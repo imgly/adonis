@@ -1,35 +1,44 @@
-import Ruleset from './ruleset'
+import { hashObject } from '../utils'
 
 export default class Styles {
   constructor (adonis, options) {
     this._adonis = adonis
     this._options = options
 
-    const { name, styles } = this._options
-    this._defaultRuleset = new Ruleset(this._adonis, this, {
-      name, styles
-    })
-    this._variationRulesets = this._buildVariationRulesets()
+    this._hash = hashObject(this._options.styles)
+    this._variationHashes = this._hashVariations()
   }
 
-  _buildVariationRulesets () {
-    const rulesets = {}
+  _hashVariations () {
+    const hashes = {}
     const { variations } = this._options
-    for (let key in variations) {
-      rulesets[key] = new Ruleset(this._adonis, this, {
-        name: key,
-        styles: variations[key],
-        variation: true
-      })
+    for (let variation in variations) {
+      const variationStyles = variations[variation]
+      hashes[variation] = hashObject(variationStyles)
     }
-    return rulesets
+    return hashes
   }
 
-  getDefaultRuleset () {
-    return this._defaultRuleset
+  getIdentifierForVariations (variations) {
+    const { name } = this._options
+    const { hashSeparator, variationSeparator } = this._adonis.getOptions()
+    let identifier = `${name}${hashSeparator}${this._hash}`
+    variations.sort()
+      .forEach((variation) => {
+        const hash = this._variationHashes[variation]
+        if (!hash) return
+        identifier += `${variationSeparator}${variation}${hashSeparator}${hash}`
+      })
+    return identifier
   }
 
-  getVariationRuleset (variation) {
-    return this._variationRulesets[variation]
+  getStyles () {
+    return this._options.styles
+  }
+
+  getVariationStyles (variations) {
+    const { variations: allVariations } = this._options
+    return variations
+      .map(variation => allVariations[variation])
   }
 }

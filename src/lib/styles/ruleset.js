@@ -1,80 +1,66 @@
-import { hashObject } from '../utils'
+import { hashObject, resolveStylesObject } from '../utils'
 import Rule from './rule'
+import extensions from './extensions'
 
 export default class Ruleset {
-  constructor (adonis, styles, options) {
-    this._adonis = adonis
-    this._styles = styles
+  constructor (adonis, selector, styles, options) {
     this._options = options
 
-    this._processStyles()
-  }
+    this._adonis = adonis
+    this._selector = selector
+    this._styles = styles
+    this._resolvedStyles = resolveStylesObject(this._styles, this._options.theme)
 
-  isVariation () {
-    return !!this._options.variation
-  }
+    this._hash = hashObject(this._styles)
 
-  _resolveSelector (selector) {
-    return false
-  }
-
-  _processStyles () {
-    this._prepareStyles()
-
-    const { rules, subRulesets } = this._parseStyles()
-    this._rules = rules
+    const { subRulesets, rules } = this._parseStyles()
     this._subRulesets = subRulesets
+    this._rules = rules
+  }
+
+  _getSubRuleset (key, value) {
+    const { minified } = this._adonis.getOptions()
+
+    let subRuleset = null
+    const generateSubRuleset = (newSelector) => {
+      subRuleset = new Ruleset(this._adonis, newSelector, value, this._options)
+    }
+
+    for (let i = 0; i < extensions.length; i++) {
+      const extension = extensions[i]
+      extension(key, this._selector, generateSubRuleset, minified)
+      if (subRuleset) return subRuleset
+    }
   }
 
   _parseStyles () {
-    const rules = []
     const subRulesets = []
-
-    for (let key in this._processedStaticStyles) {
-      var resolveResult = this._resolveSelector(key)
-      if (resolveResult instanceof Ruleset) {
-        subRulesets.push(resolveResult)
+    const rules = []
+    for (let key in this._resolvedStyles) {
+      const value = this._resolvedStyles[key]
+      const subRuleset = this._getSubRuleset(key, value)
+      if (subRuleset) {
+        subRulesets.push(subRuleset, subRuleset.getSubRulesets())
       } else {
-        rules.push(new Rule(key, this._processedStaticStyles[key]))
+        rules.push(new Rule(key, value))
       }
     }
-
-    return { rules, subRulesets }
+    return { subRulesets, rules }
   }
 
-  // @todo move this out of here - it's called multiple times per style. should probably go to
-  //       style class instead, so that the processed styles object is passed to a ruleset
-  _prepareStyles () {
-    this._staticStyles = this._processStylesObject(this._options.styles, true)
-    this._processedStaticStyles = this._processStylesObject(this._options.styles)
+  toCSS () {
+    const { minified } = this._adonis.getOptions()
+
+    let css = `${this._selector}`
+    css += minified ? '{' : ' {\n'
+    this._rules.forEach(rule => {
+      css += (minified ? '' : '  ') + rule.toCSS(minified) + (minified ? '' : '\n')
+    })
+    css += '}'
+    return css
   }
 
-  _processStylesObject (obj, skipFunctions = false) {
-    let newObject = {}
-
-    for (let prop in obj) {
-      const value = obj[prop]
-      const valueType = typeof value
-      if (valueType === 'object') {
-        newObject[prop] = this._processStylesObject(value, skipFunctions)
-      } else if (valueType === 'function') {
-        if (!skipFunctions) {
-          newObject[prop] = value(this._options.theme)
-        }
-      } else {
-        newObject[prop] = value
-      }
-    }
-
-    return newObject
+  getSubRulesets () {
+    return this._subRulesets
   }
-
-  getClassName () {
-    const { hashSeparator } = this._adonis.getOptions()
-    const hash = hashObject(this._staticStyles)
-    return `${this._options.name}${hashSeparator}${hash}`
-  }
-
-  getRules () { return this._rules }
-  getSubRulesets () { return this._subRulesets }
 }
