@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import BaseAdonisComponent from './components/base-adonis-component'
-import CombinedRuleset from './styles/combined-ruleset'
 import Styles from './styles/styles'
 import StylesManager from './styles/styles-manager'
 
@@ -33,12 +32,6 @@ export default class ComponentFactory {
     let { name } = options
     if (!name) name = this._getName(target)
 
-    const { styles, variations, baseStyles } = options
-    const stylesObject = new Styles(this._adonis, { styles, variations, name })
-
-    const allStyles = [baseStyles, stylesObject].filter((s) => s)
-    const stylesManager = new StylesManager(this._adonis, allStyles)
-
     const isTag = typeof target === 'string'
     const isAdonisComponent = target.prototype instanceof BaseAdonisComponent
     const isComponent = !isAdonisComponent && target.prototype instanceof Component
@@ -47,6 +40,13 @@ export default class ComponentFactory {
       constructor (...args) {
         super(...args)
 
+        const activeVariations = this._getActiveVariations()
+
+        const { styles, variations, baseStyles } = options
+        this._stylesObject = new Styles(adonis, { styles, variations, name })
+
+        const allStyles = [baseStyles, this._stylesObject, this.props.styles].filter(s => s)
+        this._stylesManager = new StylesManager(adonis, allStyles, activeVariations)
         this._adonis = adonis
       }
 
@@ -70,8 +70,10 @@ export default class ComponentFactory {
        * @private
        */
       _getActiveVariations () {
+        const { variations } = options
         return Object.keys(variations || {})
           .filter((variation) => !!this.props[variation])
+          .sort()
       }
 
       /**
@@ -80,22 +82,16 @@ export default class ComponentFactory {
        * @private
        */
       _buildClassName () {
-        const { styles: passedRulesets, className: passedClassName } = this.props
-
-        const activeVariations = this._getActiveVariations()
+        const { className: passedClassName } = this.props
 
         // We can pass additional class names to components
         const classNames = []
         classNames.push(passedClassName)
 
         // Generate a class name for this component
-        const rulesets = stylesManager.getRulesets(activeVariations)
-          .concat(passedRulesets)
-          .filter(r => r)
-        const combinedRuleset = new CombinedRuleset(this._adonis, rulesets)
-        classNames.push(combinedRuleset.getClassName())
+        classNames.push(this._stylesManager.getClassName())
 
-        return { rulesets, combinedRuleset, className: classNames.filter(c => c).join(' ') }
+        return { className: classNames.filter(c => c).join(' ') }
       }
 
       /**
@@ -105,17 +101,18 @@ export default class ComponentFactory {
       render () {
         const elementProps = this._cloneProps()
 
-        const { className, rulesets, combinedRuleset } = this._buildClassName()
+        const { className } = this._buildClassName()
 
         const { injection } = this._adonis.getOptions()
         if (injection === true) {
           const stylesBuffer = this._adonis.getStylesBuffer()
-          stylesBuffer.bufferRuleset(combinedRuleset.generateCSS())
+          stylesBuffer.bufferStyles(this._stylesManager.generateCSS())
         }
 
         // If an available variation is passed in as a property, we add the styles to the class and
         // remove the prop from the props we pass to our target element
         if (isTag) {
+          const { variations } = options
           Object.keys(variations || {})
             .forEach((variation) => {
               delete elementProps[variation]
@@ -126,7 +123,7 @@ export default class ComponentFactory {
         if (isTag) {
           elementProps.className = className
         } else {
-          elementProps.styles = rulesets
+          elementProps.styles = this._stylesObject
         }
 
         // Pass ref

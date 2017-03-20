@@ -4,6 +4,7 @@ import jsdom from 'mocha-jsdom'
 import { render } from '../utils'
 
 const adonis = new Adonis()
+
 describe('extensions', () => {
   jsdom()
 
@@ -15,11 +16,12 @@ describe('extensions', () => {
           color: 'red'
         }
       })
-      const content = <Wrapper />
-      const { html, css } = render(content)
+
+      const content = <Wrapper active />
+      const { html, css } = render(adonis, content)
 
       html.should.equal('<div class="div~1ehru9u"></div>')
-      css.content.should.equal(`.div~1ehru9u {\n  background: red;\n}\n.div~1ehru9u > h1 {\n  color: red;\n}`)
+      css.content.should.equal(`.div~1ehru9u {\n  background: red;\n}\n\n.div~1ehru9u > h1 {\n  color: red;\n}`)
     })
   })
 
@@ -32,10 +34,10 @@ describe('extensions', () => {
         }
       })
       const content = <Wrapper />
-      const { html, css } = render(content)
+      const { html, css } = render(adonis, content)
 
       html.should.equal('<div class="div~1i24nhp"></div>')
-      css.content.should.equal(`.div~1i24nhp {\n  background: red;\n}\n.div~1i24nhp h1, .div~1i24nhp h2, .div~1i24nhp h3 {\n  color: red;\n}`)
+      css.content.should.equal(`.div~1i24nhp {\n  background: red;\n}\n\n.div~1i24nhp h1, .div~1i24nhp h2, .div~1i24nhp h3 {\n  color: red;\n}`)
     })
   })
 })

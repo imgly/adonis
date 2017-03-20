@@ -5,8 +5,8 @@ export default class StylesBuffer {
     this._buffer = []
   }
 
-  bufferRuleset (string) {
-    this._buffer.push(string)
+  bufferStyles (styles) {
+    this._buffer = this._buffer.concat(styles)
   }
 
   disableInjection () {

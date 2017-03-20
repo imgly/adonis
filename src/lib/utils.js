@@ -75,3 +75,92 @@ export const hashObject = (object) => {
 
   return (h >>> 0).toString(36)
 }
+
+/**
+ * Returns a flattened version of the given array
+ * @param  {Array} arr
+ * @return {Array}
+ */
+export const flatten = arr => arr.reduce(
+  (acc, val) => acc.concat(
+    Array.isArray(val) ? flatten(val) : val
+  ),
+  []
+)
+
+/**
+ * Returns a copy of the given object, removing all properties that point to functions`
+ * @param  {Object} obj
+ * @return {Object}
+ */
+export const toStaticStyles = (obj) => {
+  const newObject = {}
+  for (let key in obj) {
+    const value = obj[key]
+    if (typeof value === 'object') {
+      newObject[key] = toStaticStyles(value)
+    } else if (typeof value !== 'function') {
+      newObject[key] = value
+    }
+  }
+  return newObject
+}
+
+/**
+ * Deep merges the given target and source
+ * @param  {Object} target
+ * @param  {Object} source
+ * @return {Object}
+ */
+export const deepMerge = (target, source) => {
+  const destination = {}
+
+  for (let key in target) {
+    destination[key] = target[key]
+  }
+
+  for (let key in source) {
+    if (typeof source[key] === 'object' && target[key]) {
+      destination[key] = deepMerge(target[key], source[key])
+    } else {
+      destination[key] = source[key]
+    }
+  }
+  return destination
+}
+
+/**
+ * Deep merges the given objects
+ * @param  {Object[]} arr
+ * @return {Object}
+ */
+export const deepMergeAll = arr => arr.reduce(
+  (prev, next) => {
+    return deepMerge(prev, next)
+  }
+)
+
+/**
+ * Walks through the given object, if it finds a function, it calls it with the given `theme`
+ * object and places the result at the same key
+ * @param  {Object} object
+ * @param  {Object} theme
+ * @return {Object}
+ */
+export const resolveStylesObject = (object, theme) => {
+  const resolved = {}
+  for (let key in object) {
+    const value = object[key]
+    if (typeof value === 'object') {
+      resolved[key] = resolveStylesObject(value, theme)
+    } else if (typeof value === 'function') {
+      if (!theme) {
+        throw new Error(`Trying to resolve a dynamic property without a \`theme\` given.`)
+      }
+      resolved[key] = value(theme)
+    } else {
+      resolved[key] = value
+    }
+  }
+  return resolved
+}
