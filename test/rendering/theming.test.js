@@ -1,7 +1,7 @@
 import Adonis, { withTheme, ThemeProvider } from '../../src'
 import React from 'react'
 import jsdom from 'mocha-jsdom'
-import { render } from '../utils'
+import { mount } from '../utils'
 
 const adonis = new Adonis()
 describe('when wrapping a component in a ThemeProvider', () => {
@@ -24,7 +24,7 @@ describe('when wrapping a component in a ThemeProvider', () => {
     })
 
     const content = <ThemeProvider theme={theme}><App /></ThemeProvider>
-    const { html, css } = render(content)
+    const { html, css } = mount(adonis, content)
 
     html.should.equal(`<div class="div~hxfs3d"></div>`)
     css.content.should.equal(`.div~hxfs3d {\n  background-color: grey;\n  color: blue;\n}`)

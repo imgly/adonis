@@ -2,9 +2,10 @@ import { flatten, deepMergeAll } from '../utils'
 import Ruleset from './ruleset'
 
 export default class StylesManager {
-  constructor (adonis, styles, activeVariations) {
+  constructor (adonis, styles, activeVariations, theme) {
     this._adonis = adonis
     this._styles = styles
+    this._theme = theme
     this._activeVariations = activeVariations
     this._className = this._generateClassName()
     this._baseSelector = `.${this._className}`
@@ -33,9 +34,8 @@ export default class StylesManager {
   }
 
   _generateRulesets () {
-    const { theme } = this._adonis.getOptions()
     const defaultRuleset = new Ruleset(this._adonis, this._baseSelector, this._getCombinedStyles(), {
-      theme
+      theme: this._theme
     })
     return flatten([defaultRuleset, defaultRuleset.getSubRulesets()])
   }

@@ -1,6 +1,8 @@
 import Adonis from './adonis'
 import DOMElements from './lib/dom-elements'
 import BaseStyles from './lib/styles/base-styles'
+import withTheme from './lib/with-theme'
+import ThemeProvider from './lib/components/theme-provider'
 
 export default (options) => {
   const adonis = new Adonis(options)
@@ -71,3 +73,5 @@ export default (options) => {
 
   return factory
 }
+
+export { withTheme, ThemeProvider }
