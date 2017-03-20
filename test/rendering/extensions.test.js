@@ -17,7 +17,7 @@ describe('extensions', () => {
         }
       })
 
-      const content = <Wrapper active />
+      const content = <Wrapper />
       const { html, css } = render(adonis, content)
 
       html.should.equal('<div class="div~1ehru9u"></div>')
