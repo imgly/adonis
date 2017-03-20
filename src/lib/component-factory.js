@@ -95,6 +95,18 @@ export default class ComponentFactory {
       }
 
       /**
+       * Checks if CSS injection for this component is required
+       * @private
+       */
+      _shouldInjectCSS () {
+        const { injection } = this._adonis.getOptions()
+        if (!injection) return false
+
+        // Injection is only needed if the rendered child is a real tag
+        return isTag || (isComponent && !isAdonisComponent)
+      }
+
+      /**
        * Renders this component
        * @return {React.Element}
        */
@@ -103,8 +115,7 @@ export default class ComponentFactory {
 
         const { className } = this._buildClassName()
 
-        const { injection } = this._adonis.getOptions()
-        if (injection === true) {
+        if (this._shouldInjectCSS()) {
           const stylesBuffer = this._adonis.getStylesBuffer()
           stylesBuffer.bufferStyles(this._stylesManager.generateCSS())
         }
