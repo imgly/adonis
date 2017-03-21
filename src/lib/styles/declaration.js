@@ -1,6 +1,6 @@
 import CSSPrefixes from '../css-prefixes'
 
-export default class Rule {
+export default class Declaration {
   constructor (adonis, key, value) {
     this._adonis = adonis
     this.key = key
@@ -9,7 +9,7 @@ export default class Rule {
   }
 
   /**
-   * If this rule's key requires vendor prefixes, this function returns an array of [key, value]
+   * If this declaration's key requires vendor prefixes, this function returns an array of [key, value]
    * pairs with prefixed keys.
    * @return {Array[]}
    * @private
@@ -26,7 +26,7 @@ export default class Rule {
   }
 
   /**
-   * Returns the CSS string for this rule
+   * Returns the CSS string for this declaration
    * @return {String}
    */
   toCSS () {
