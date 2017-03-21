@@ -22,6 +22,14 @@ export default class Adonis {
    * @param {String} [options.variationSeparator = '--'] The string that is used to separate element
    *                                             identifiers from variation identifiers
    * @param {DOMElement} [options.styleNode] The <style> node that the CSS should be appended to
+   * @param {String} [options.injectionMode] `fast` injects the css using a browser-backed stylesheet
+   *                                         while `debug` injects it using text nodes, which makes
+   *                                         the styles debuggable and editable in the browser.
+   *                                         Default is `fast` for production, `debug` otherwise.
+   * @param {Boolean} [options.hashedStyles = false] When set to true, adonis expects string hashes
+   *                                        instead of style objects. This is useful when you are
+   *                                        using external CSS files and don't want your production
+   *                                        code to be full of style objects
    */
   constructor (options) {
     this._options = defaults(options, {
@@ -33,7 +41,8 @@ export default class Adonis {
       nameSeparator: '__',
       variationSeparator: '--',
       styleNode: null,
-      injectionMode: production ? 'fast' : 'debug'
+      injectionMode: production ? 'fast' : 'debug',
+      hashedStyles: false
     })
     this._stylesBuffer = new StylesBuffer(this)
     this._componentFactory = new ComponentFactory(this, this._options)

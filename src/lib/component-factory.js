@@ -65,8 +65,8 @@ export default class ComponentFactory {
     const stylesObject = new Styles(adonis, { styles, variations, name })
 
     let allStyles, stylesManager
-    const { injection, theme } = adonis.getOptions()
-    if (injection === 'pre') {
+    const { injection, theme, hashedStyles } = adonis.getOptions()
+    if (injection === 'pre' && !hashedStyles) {
       const targetStyles = this._getTargetStyles(target)
       allStyles = targetStyles.concat([baseStyles, stylesObject]).filter(s => s)
       stylesManager = new PreinjectionStylesManager(adonis, allStyles, theme)
@@ -135,7 +135,7 @@ export default class ComponentFactory {
        * @private
        */
       _shouldInjectCSS () {
-        if (!injection) return false
+        if (!injection || hashedStyles) return false
 
         // Injection is only needed if the rendered child is a real tag
         return isTag || (isComponent && !isAdonisComponent)
@@ -152,8 +152,7 @@ export default class ComponentFactory {
         if (this._shouldInjectCSS()) {
           stylesBuffer.bufferRulesets(stylesManager.generateCSS())
 
-          const { injection } = this._adonis.getOptions()
-          if (injection === true) {
+          if (injection === true && !hashedStyles) {
             stylesBuffer.flushToStyleTag()
           }
         }

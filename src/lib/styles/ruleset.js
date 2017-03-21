@@ -11,7 +11,8 @@ export default class Ruleset {
     this._styles = styles
     this._resolvedStyles = resolveStylesObject(this._styles, this._options.theme)
 
-    this._hash = hashObject(this._styles)
+    const { hashedStyles } = this._adonis.getOptions()
+    this._hash = hashedStyles ? this._styles : hashObject(this._styles)
 
     const { subRulesets, declarations } = this._parseStyles()
     this._subRulesets = subRulesets

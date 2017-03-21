@@ -5,7 +5,11 @@ export default class Styles {
     this._adonis = adonis
     this._options = options
 
-    this._hash = hashObject(this._options.styles)
+    const { hashedStyles } = this._adonis.getOptions()
+    if (hashedStyles && typeof this._options.styles !== 'string') {
+      throw new Error('Passing style objects with `hashedStyles` set to true is invalid.')
+    }
+    this._hash = hashedStyles ? this._options.styles : hashObject(this._options.styles)
     this._variationHashes = this._hashVariations()
   }
 
@@ -16,10 +20,11 @@ export default class Styles {
    */
   _hashVariations () {
     const hashes = {}
+    const { hashedStyles } = this._adonis.getOptions()
     const { variations } = this._options
     for (let variation in variations) {
       const variationStyles = variations[variation]
-      hashes[variation] = hashObject(variationStyles)
+      hashes[variation] = hashedStyles ? variationStyles : hashObject(variationStyles)
     }
     return hashes
   }
