@@ -12,11 +12,20 @@ export default class StylesManager {
     this._rulesets = this._generateRulesets()
   }
 
+  /**
+   * Generates the CSS of all rulesets
+   * @return {String[]}
+   */
   generateCSS () {
     return this._rulesets
       .map(ruleset => ruleset.toCSS())
   }
 
+  /**
+   * Returns the deeply merged styles object
+   * @return {Object}
+   * @private
+   */
   _getCombinedStyles () {
     const allStyles = flatten(
       this._styles
@@ -26,6 +35,11 @@ export default class StylesManager {
     return deepMergeAll(allStyles)
   }
 
+  /**
+   * Generates the class name
+   * @return {String}
+   * @private
+   */
   _generateClassName () {
     const { nameSeparator, selectorPrefix } = this._adonis.getOptions()
     return selectorPrefix + this._styles
@@ -33,6 +47,11 @@ export default class StylesManager {
       .join(nameSeparator)
   }
 
+  /**
+   * Generates the rulesets and sub rulesets
+   * @return {Ruleset[]}
+   * @private
+   */
   _generateRulesets () {
     const defaultRuleset = new Ruleset(this._adonis, this._baseSelector, this._getCombinedStyles(), {
       theme: this._theme
@@ -40,6 +59,10 @@ export default class StylesManager {
     return flatten([defaultRuleset, defaultRuleset.getSubRulesets()])
   }
 
+  /**
+   * Returns the class name
+   * @return {String}
+   */
   getClassName () {
     return this._className
   }

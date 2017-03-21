@@ -9,6 +9,11 @@ export default class Styles {
     this._variationHashes = this._hashVariations()
   }
 
+  /**
+   * Generates hashes for all existing variations
+   * @return {Object}
+   * @private
+   */
   _hashVariations () {
     const hashes = {}
     const { variations } = this._options
@@ -19,6 +24,11 @@ export default class Styles {
     return hashes
   }
 
+  /**
+   * Returns an identifier for the given active variations
+   * @param  {String[]} variations
+   * @return {String}
+   */
   getIdentifierForVariations (variations) {
     const { name } = this._options
     const { hashSeparator, variationSeparator } = this._adonis.getOptions()
@@ -32,10 +42,19 @@ export default class Styles {
     return identifier
   }
 
+  /**
+   * Returns the styles object
+   * @return {Object}
+   */
   getStyles () {
     return this._options.styles
   }
 
+  /**
+   * Returns the styles for the given variations
+   * @param  {String[]} variations
+   * @return {Object[]}
+   */
   getVariationStyles (variations) {
     const { variations: allVariations } = this._options
     return variations

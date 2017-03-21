@@ -5,10 +5,19 @@ import { defaults } from './lib/utils'
 export default class Adonis {
   /**
    * @param  {Object} [options]
-   * @param  {Boolean|String} [options.injection] - If `true`, styles will be injected on render,
+   * @param  {Boolean|String} [options.injection = true] If `true`, styles will be injected on render,
    *                                              if `false`, they will not be injected. If set to
    *                                              `pre`, styles are injected before rendering.
-   * @param  {String} [options.selectorPrefix] - The selector prepended to all CSS rules.
+   * @param {Boolean} [options.minified = false] Should the resulting CSS be minified?
+   * @param {Boolean} [options.autoPrefix = true] Should adonis automatically add vendor prefixes to
+   *                                       CSS properties when necessary?
+   * @param {String} [options.selectorPrefix = ''] The selector prepended to all CSS rules
+   * @param {String} [options.hashSeparator = '~'] The string that is used to separate element names
+   *                                         from their hashes
+   * @param {String} [options.nameSeparator = '__'] The string that is used to separate multiple
+   *                                        styled elements
+   * @param {String} [options.variationSeparator = '--'] The string that is used to separate element
+   *                                             identifiers from variation identifiers
    */
   constructor (options) {
     this._options = defaults(options, {
@@ -50,6 +59,10 @@ export default class Adonis {
     return { css: { content: output }, html }
   }
 
+  /**
+   * Returns the styles buffer
+   * @return {StylesBuffer}
+   */
   getStylesBuffer () {
     return this._stylesBuffer
   }

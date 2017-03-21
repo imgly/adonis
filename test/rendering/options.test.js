@@ -136,7 +136,7 @@ describe('options', () => {
         })
       })
 
-      it('should prefix css selectors', () => {
+      it('should generate the correct class names and selectors', () => {
         const PrimaryBackgroundColor = adonis.css({
           backgroundColor: 'blue'
         })
@@ -161,7 +161,7 @@ describe('options', () => {
         })
       })
 
-      it('should prefix css selectors', () => {
+      it('should generate the correct class names and selectors', () => {
         const Button = adonis.button({
           backgroundColor: 'blue'
         }, {
