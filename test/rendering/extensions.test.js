@@ -26,18 +26,36 @@ describe('extensions', () => {
   })
 
   describe('self selector', () => {
-    it('should render correctly', () => {
-      const Wrapper = adonis.div({
-        background: 'red',
-        '& h1, h2, h3': {
-          color: 'red'
-        }
-      })
-      const content = <Wrapper />
-      const { html, css } = render(adonis, content)
+    describe('when selecting child objects', () => {
+      it('should render correctly', () => {
+        const Wrapper = adonis.div({
+          background: 'red',
+          '& h1, h2, h3': {
+            color: 'red'
+          }
+        })
+        const content = <Wrapper />
+        const { html, css } = render(adonis, content)
 
-      html.should.equal('<div class="div~1i24nhp"></div>')
-      css.content.should.equal(`.div~1i24nhp {\n  background: red;\n}\n\n.div~1i24nhp h1, .div~1i24nhp h2, .div~1i24nhp h3 {\n  color: red;\n}`)
+        html.should.equal('<div class="div~1i24nhp"></div>')
+        css.content.should.equal(`.div~1i24nhp {\n  background: red;\n}\n\n.div~1i24nhp h1, .div~1i24nhp h2, .div~1i24nhp h3 {\n  color: red;\n}`)
+      })
+    })
+
+    describe('when extending the selector', () => {
+      it('should render correctly', () => {
+        const Wrapper = adonis.div({
+          background: 'red',
+          '&.foo, .bar': {
+            color: 'red'
+          }
+        })
+        const content = <Wrapper />
+        const { html, css } = render(adonis, content)
+
+        html.should.equal('<div class="div~w1tv17"></div>')
+        css.content.should.equal(`.div~w1tv17 {\n  background: red;\n}\n\n.div~w1tv17.foo, .div~w1tv17 .bar {\n  color: red;\n}`)
+      })
     })
   })
 })
