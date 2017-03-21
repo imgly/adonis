@@ -42,7 +42,7 @@ export default class Ruleset {
       if (subRuleset) {
         subRulesets.push(subRuleset, subRuleset.getSubRulesets())
       } else {
-        rules.push(new Rule(key, value))
+        rules.push(new Rule(this._adonis, key, value))
       }
     }
     return { subRulesets, rules }
@@ -54,7 +54,7 @@ export default class Ruleset {
     let css = `${this._selector}`
     css += minified ? '{' : ' {\n'
     this._rules.forEach(rule => {
-      css += (minified ? '' : '  ') + rule.toCSS(minified) + (minified ? '' : '\n')
+      css += rule.toCSS() + (minified ? '' : '\n')
     })
     css += '}'
     return css
