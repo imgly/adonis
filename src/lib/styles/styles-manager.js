@@ -7,7 +7,7 @@ export default class StylesManager {
     this._styles = styles
     this._theme = theme
     this._activeVariations = activeVariations
-    this._className = this._generateClassName()
+    this._className = this._generateClassName(this._activeVariations)
     this._baseSelector = `.${this._className}`
     this._rulesets = this._generateRulesets()
   }
@@ -23,13 +23,14 @@ export default class StylesManager {
 
   /**
    * Returns the deeply merged styles object
+   * @param {String[]} activeVariations = []
    * @return {Object}
    * @private
    */
-  _getCombinedStyles () {
+  _getCombinedStyles (activeVariations = []) {
     const allStyles = flatten(
       this._styles
-        .map(s => [s.getStyles(), s.getVariationStyles(this._activeVariations)])
+        .map(s => [s.getStyles(), s.getVariationStyles(activeVariations)])
     )
 
     return deepMergeAll(allStyles)
@@ -37,13 +38,14 @@ export default class StylesManager {
 
   /**
    * Generates the class name
+   * @param {String[]} activeVariations = []
    * @return {String}
    * @private
    */
-  _generateClassName () {
+  _generateClassName (activeVariations = []) {
     const { nameSeparator, selectorPrefix } = this._adonis.getOptions()
     return selectorPrefix + this._styles
-      .map((style) => style.getIdentifierForVariations(this._activeVariations))
+      .map((style) => style.getIdentifierForVariations(activeVariations))
       .join(nameSeparator)
   }
 
@@ -53,7 +55,7 @@ export default class StylesManager {
    * @private
    */
   _generateRulesets () {
-    const defaultRuleset = new Ruleset(this._adonis, this._baseSelector, this._getCombinedStyles(), {
+    const defaultRuleset = new Ruleset(this._adonis, this._baseSelector, this._getCombinedStyles(this._activeVariations), {
       theme: this._theme
     })
     return flatten([defaultRuleset, defaultRuleset.getSubRulesets()])
