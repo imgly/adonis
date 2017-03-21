@@ -1,3 +1,6 @@
+/**
+ * Creates a sub ruleset every time an immediate child selector (e.g. '> h1') is found
+ */
 export default (selector, baseSelector, generateSubRuleset, minified) => {
   selector = selector.trim()
   if (selector[0] !== '>') {

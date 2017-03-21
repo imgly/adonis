@@ -8,6 +8,12 @@ export default class Rule {
     this.cssKey = this.key.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`)
   }
 
+  /**
+   * If this rule's key requires vendor prefixes, this function returns an array of [key, value]
+   * pairs with prefixed keys.
+   * @return {Array[]}
+   * @private
+   */
   _getAutoPrefixedKeyPairs () {
     const prefixes = CSSPrefixes[this.key]
     const keyPairs = []
@@ -19,6 +25,10 @@ export default class Rule {
     return keyPairs
   }
 
+  /**
+   * Returns the CSS string for this rule
+   * @return {String}
+   */
   toCSS () {
     const { minified, autoPrefix } = this._adonis.getOptions()
 

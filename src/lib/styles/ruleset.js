@@ -18,6 +18,14 @@ export default class Ruleset {
     this._rules = rules
   }
 
+  /**
+   * If any registered extension resolves the given key to a sub ruleset, this method
+   * returns the new Ruleset
+   * @param  {String} key
+   * @param  {String|Object} value
+   * @return {Ruleset}
+   * @private
+   */
   _getSubRuleset (key, value) {
     const { minified } = this._adonis.getOptions()
 
@@ -33,6 +41,11 @@ export default class Ruleset {
     }
   }
 
+  /**
+   * Parses this ruleset's styles object and returns the parsed rules and sub rulesets
+   * @return {Object}
+   * @private
+   */
   _parseStyles () {
     const subRulesets = []
     const rules = []
@@ -48,6 +61,10 @@ export default class Ruleset {
     return { subRulesets, rules }
   }
 
+  /**
+   * Returns the CSS string for this ruleset
+   * @return {String}
+   */
   toCSS () {
     const { minified } = this._adonis.getOptions()
 
@@ -60,6 +77,10 @@ export default class Ruleset {
     return css
   }
 
+  /**
+   * Returns this ruleset's sub rulesets
+   * @return {Ruleset[]}
+   */
   getSubRulesets () {
     return this._subRulesets
   }
