@@ -1,5 +1,5 @@
 import { hashObject, resolveStylesObject } from '../utils'
-import Rule from './rule'
+import Declaration from './declaration'
 import extensions from './extensions'
 
 export default class Ruleset {
@@ -13,9 +13,9 @@ export default class Ruleset {
 
     this._hash = hashObject(this._styles)
 
-    const { subRulesets, rules } = this._parseStyles()
+    const { subRulesets, declarations } = this._parseStyles()
     this._subRulesets = subRulesets
-    this._rules = rules
+    this._declarations = declarations
   }
 
   /**
@@ -42,23 +42,23 @@ export default class Ruleset {
   }
 
   /**
-   * Parses this ruleset's styles object and returns the parsed rules and sub rulesets
+   * Parses this ruleset's styles object and returns the parsed declarations and sub rulesets
    * @return {Object}
    * @private
    */
   _parseStyles () {
     const subRulesets = []
-    const rules = []
+    const declarations = []
     for (let key in this._resolvedStyles) {
       const value = this._resolvedStyles[key]
       const subRuleset = this._getSubRuleset(key, value)
       if (subRuleset) {
         subRulesets.push(subRuleset, subRuleset.getSubRulesets())
       } else {
-        rules.push(new Rule(this._adonis, key, value))
+        declarations.push(new Declaration(this._adonis, key, value))
       }
     }
-    return { subRulesets, rules }
+    return { subRulesets, declarations }
   }
 
   /**
@@ -70,7 +70,7 @@ export default class Ruleset {
 
     let css = `${this._selector}`
     css += minified ? '{' : ' {\n'
-    this._rules.forEach(rule => {
+    this._declarations.forEach(rule => {
       css += rule.toCSS() + (minified ? '' : '\n')
     })
     css += '}'
