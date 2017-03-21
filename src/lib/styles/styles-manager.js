@@ -27,8 +27,8 @@ export default class StylesManager {
   }
 
   _generateClassName () {
-    const { nameSeparator } = this._adonis.getOptions()
-    return this._styles
+    const { nameSeparator, selectorPrefix } = this._adonis.getOptions()
+    return selectorPrefix + this._styles
       .map((style) => style.getIdentifierForVariations(this._activeVariations))
       .join(nameSeparator)
   }
