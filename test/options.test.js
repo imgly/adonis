@@ -177,4 +177,53 @@ describe('options', () => {
       })
     })
   })
+
+  describe('`hashedStyles` option', () => {
+    jsdom()
+    describe('when set to `true`', () => {
+      beforeEach(() => {
+        adonis = new Adonis({
+          hashedStyles: true
+        })
+      })
+
+      describe('when passing hashes instead of style objects', () => {
+        it('should not inject any css', () => {
+          const Button = adonis.button('1b2uzpk', {
+            active: '1wtftbl'
+          })
+
+          const { css } = render(adonis, <Button active />)
+
+          css.content.should.equal('')
+        })
+
+        it('should correctly generate class names', () => {
+          const Button = adonis.button('1b2uzpk', {
+            active: '1wtftbl'
+          })
+
+          const { html } = render(adonis, <Button active />)
+
+          html.should.equal(`<button class="button~1b2uzpk--active~1wtftbl"></button>`)
+        })
+      })
+
+      describe('when passing style objects instead of hashes', () => {
+        it('should throw an error', () => {
+          const throwable = () => {
+            adonis.button({
+              backgroundColor: 'blue'
+            }, {
+              active: {
+                backgroundColor: 'red'
+              }
+            })
+          }
+
+          throwable.should.throw('Passing style objects with `hashedStyles` set to true is invalid.')
+        })
+      })
+    })
+  })
 })
