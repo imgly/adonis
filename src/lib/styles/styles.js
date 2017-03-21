@@ -60,4 +60,12 @@ export default class Styles {
     return variations
       .map(variation => allVariations[variation])
   }
+
+  /**
+   * Returns all available variations
+   * @return {String[]}
+   */
+  getVariations () {
+    return Object.keys(this._options.variations || {})
+  }
 }

@@ -9,7 +9,7 @@
     "build:watch": "rimraf build && WATCH=true webpack",
     "prestart": "npm run build",
     "start": "node bin/main.js",
-    "test": "mocha test/rendering",
+    "test": "mocha test",
     "prepublish": "npm run build:publish"
   },
   "repository": {

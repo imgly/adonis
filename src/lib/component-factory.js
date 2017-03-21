@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import { flatten } from './utils'
 import BaseAdonisComponent from './components/base-adonis-component'
 import Styles from './styles/styles'
 import StylesManager from './styles/styles-manager'
+import PreinjectionStylesManager from './styles/preinjection-styles-manager'
 
 export default class ComponentFactory {
   constructor (adonis, options) {
@@ -22,6 +24,29 @@ export default class ComponentFactory {
   }
 
   /**
+   * Returns the given target's styles. This function gets the styles recursively, meaning that
+   * if the target has another target, it returns its styles as well.
+   * @param  {ReactComponent|BaseAdonisComponent} target
+   * @return {Styles[]}
+   * @private
+   */
+  _getTargetStyles (target) {
+    const styles = [target.adonisStyles, target.adonisBaseStyles]
+
+    // Target has another target, get its styles
+    if (target.adonisTarget && typeof target.adonisTarget === 'string') {
+      styles.push(this._getTargetStyles(target.adonisTarget))
+    }
+
+    // Target has a RootElement that inherits styles
+    if (target.RootElement) {
+      styles.push(this._getTargetStyles(target.RootElement))
+    }
+
+    return flatten(styles).filter(s => s)
+  }
+
+  /**
    * Creates an adonis component for the given target
    * @param  {String|React.Component|AdonisComponent} target
    * @param  {Object} options
@@ -36,17 +61,28 @@ export default class ComponentFactory {
     const isAdonisComponent = target.prototype instanceof BaseAdonisComponent
     const isComponent = !isAdonisComponent && target.prototype instanceof Component
 
+    const { styles, variations, baseStyles } = options
+    const stylesObject = new Styles(adonis, { styles, variations, name })
+
+    let allStyles, stylesManager
+    const { injection, theme } = adonis.getOptions()
+    if (injection === 'pre') {
+      const targetStyles = this._getTargetStyles(target)
+      allStyles = targetStyles.concat([baseStyles, stylesObject]).filter(s => s)
+      stylesManager = new PreinjectionStylesManager(adonis, allStyles, theme)
+
+      const stylesBuffer = adonis.getStylesBuffer()
+      stylesBuffer.bufferRulesets(stylesManager.generateCSS())
+      stylesBuffer.flushToStyleTag()
+    }
+
     class AdonisComponent extends BaseAdonisComponent {
       constructor (...args) {
         super(...args)
 
         const activeVariations = this._getActiveVariations()
-
-        const { styles, variations, baseStyles } = options
-        this._stylesObject = new Styles(adonis, { styles, variations, name })
-
-        const allStyles = [baseStyles, this._stylesObject, this.props.styles].filter(s => s)
-        this._stylesManager = new StylesManager(adonis, allStyles, activeVariations, this.context.theme)
+        allStyles = [baseStyles, stylesObject, this.props.styles].filter(s => s)
+        stylesManager = new StylesManager(adonis, allStyles, activeVariations, this.context.theme)
         this._adonis = adonis
       }
 
@@ -89,7 +125,7 @@ export default class ComponentFactory {
         classNames.push(passedClassName)
 
         // Generate a class name for this component
-        classNames.push(this._stylesManager.getClassName())
+        classNames.push(stylesManager.getClassName())
 
         return { className: classNames.filter(c => c).join(' ') }
       }
@@ -99,7 +135,6 @@ export default class ComponentFactory {
        * @private
        */
       _shouldInjectCSS () {
-        const { injection } = this._adonis.getOptions()
         if (!injection) return false
 
         // Injection is only needed if the rendered child is a real tag
@@ -112,12 +147,15 @@ export default class ComponentFactory {
        */
       render () {
         const elementProps = this._cloneProps()
-
         const { className } = this._buildClassName()
-
+        const stylesBuffer = this._adonis.getStylesBuffer()
         if (this._shouldInjectCSS()) {
-          const stylesBuffer = this._adonis.getStylesBuffer()
-          stylesBuffer.bufferStyles(this._stylesManager.generateCSS())
+          stylesBuffer.bufferRulesets(stylesManager.generateCSS())
+
+          const { injection } = this._adonis.getOptions()
+          if (injection === true) {
+            stylesBuffer.flushToStyleTag()
+          }
         }
 
         // If an available variation is passed in as a property, we add the styles to the class and
@@ -134,7 +172,7 @@ export default class ComponentFactory {
         if (isTag) {
           elementProps.className = className
         } else {
-          elementProps.styles = this._stylesObject
+          elementProps.styles = stylesObject
         }
 
         // Pass ref
@@ -156,6 +194,11 @@ export default class ComponentFactory {
         return React.createElement(target, elementProps, children)
       }
     }
+
+    AdonisComponent.contextTypes = BaseAdonisComponent.contextTypes
+    AdonisComponent.adonisTarget = target
+    AdonisComponent.adonisStyles = stylesObject
+    AdonisComponent.adonisBaseStyles = baseStyles
 
     return AdonisComponent
   }

@@ -164,3 +164,22 @@ export const resolveStylesObject = (object, theme) => {
   }
   return resolved
 }
+
+/**
+ * Returns all possible combinations for the given set of objects
+ * @param  {*[]} set
+ * @return {*[]}
+ */
+export const findAllCombinations = (set) =>
+  (function acc (xs, set) {
+    var x = xs[0]
+
+    if (typeof x === 'undefined') {
+      return set
+    }
+
+    for (var i = 0, l = set.length; i < l; ++i) {
+      set.push(set[i].concat(x))
+    }
+    return acc(xs.slice(1), set)
+  })(set, [[]]).slice(1)

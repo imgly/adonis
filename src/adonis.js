@@ -2,6 +2,9 @@ import StylesBuffer from './lib/styles-buffer'
 import ComponentFactory from './lib/component-factory'
 import { defaults } from './lib/utils'
 
+const production = typeof process !== 'undefined' &&
+  process.env.NODE_ENV === 'production'
+
 export default class Adonis {
   /**
    * @param  {Object} [options]
@@ -18,6 +21,7 @@ export default class Adonis {
    *                                        styled elements
    * @param {String} [options.variationSeparator = '--'] The string that is used to separate element
    *                                             identifiers from variation identifiers
+   * @param {DOMElement} [options.styleNode] The <style> node that the CSS should be appended to
    */
   constructor (options) {
     this._options = defaults(options, {
@@ -27,7 +31,9 @@ export default class Adonis {
       selectorPrefix: '',
       hashSeparator: '~',
       nameSeparator: '__',
-      variationSeparator: '--'
+      variationSeparator: '--',
+      styleNode: null,
+      injectionMode: production ? 'fast' : 'debug'
     })
     this._stylesBuffer = new StylesBuffer(this)
     this._componentFactory = new ComponentFactory(this, this._options)
