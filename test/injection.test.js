@@ -42,6 +42,27 @@ describe('injection', () => {
       styleNode.innerHTML.should.equal(css)
     })
 
+    describe('with theme', () => {
+      beforeEach(() => {
+        adonis = new Adonis({
+          injection: 'pre',
+          theme: {
+            redColor: 'red'
+          },
+          styleNode
+        })
+      })
+
+      it('should rener correctly', () => {
+        adonis.div({
+          background: theme => theme.redColor,
+          padding: '5px'
+        })
+
+        styleNode.innerHTML.should.equal('.div~1y8a5z5 {\n  background: red;\n  padding: 5px;\n}')
+      })
+    })
+
     describe('when multiple variations are given', () => {
       it('should pre-render all possible variation combinations', () => {
         adonis.div({
