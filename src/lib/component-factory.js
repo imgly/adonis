@@ -80,10 +80,39 @@ export default class ComponentFactory {
       constructor (...args) {
         super(...args)
 
-        const activeVariations = this._getActiveVariations()
-        allStyles = [baseStyles, stylesObject, this.props.styles].filter(s => s)
-        stylesManager = new StylesManager(adonis, allStyles, activeVariations, this.context.theme)
+        this._updateStylesManager()
         this._adonis = adonis
+      }
+
+      /**
+       * Updates the styles manager for the given props
+       * @param  {Object} props
+       * @private
+       */
+      _updateStylesManager (props = this.props) {
+        const activeVariations = this._getActiveVariationsFromProps(props)
+        allStyles = [baseStyles, stylesObject, props.styles].filter(s => s)
+        stylesManager = new StylesManager(adonis, allStyles, activeVariations, this.context.theme)
+      }
+
+      /**
+       * Invoked before a mounted component receives new props
+       * @param  {Object} props
+       */
+      componentWillReceiveProps (props) {
+        const stylesChanged = props.styles !== this.props.styles
+
+        let variationsChanged = false
+        Object.keys(variations)
+          .forEach((variation) => {
+            if (props[variation] !== this.props[variation]) {
+              variationsChanged = true
+            }
+          })
+
+        if (stylesChanged || variationsChanged) {
+          this._updateStylesManager(props)
+        }
       }
 
       /**
@@ -101,14 +130,15 @@ export default class ComponentFactory {
       }
 
       /**
-       * Returns an array containing the active variations for this component
+       * Returns an array containing the active variations for this component from the given props
+       * @param {Object} props
        * @return {String[]}
        * @private
        */
-      _getActiveVariations () {
+      _getActiveVariationsFromProps (props = this.props) {
         const { variations } = options
         return Object.keys(variations || {})
-          .filter((variation) => !!this.props[variation])
+          .filter((variation) => !!props[variation])
           .sort()
       }
 

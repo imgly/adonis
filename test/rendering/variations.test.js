@@ -2,8 +2,10 @@ import Adonis from '../../src'
 import React from 'react'
 import jsdom from 'mocha-jsdom'
 import { render } from '../utils'
+import { mount } from 'enzyme'
 
-const adonis = new Adonis()
+let adonis = new Adonis()
+let styleNode
 describe('with variations', () => {
   jsdom()
   it('should render correctly', () => {
@@ -82,5 +84,35 @@ describe('with multiple variations passed to component', () => {
 
     html.should.equal('<div class="div-18550lg--primary-1nxhvta--red-10ip45p"></div>')
     css.content.should.equal(`.div-18550lg--primary-1nxhvta--red-10ip45p {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: red;\n}`)
+  })
+})
+
+describe('when variations change', () => {
+  jsdom()
+
+  beforeEach(() => {
+    styleNode = document.createElement('style')
+    styleNode.setAttribute('data-adonis', true)
+    document.head.appendChild(styleNode)
+
+    adonis = new Adonis({
+      styleNode
+    })
+  })
+
+  it('should update the class name', () => {
+    const Button = adonis.div({
+      background: 'blue'
+    }, {
+      active: {
+        background: 'red'
+      }
+    })
+
+    const wrapper = mount(<Button />)
+    const domNode = wrapper.getDOMNode()
+    domNode.getAttribute('class').should.equal('div-1nxhvta')
+    wrapper.setProps({ active: true })
+    domNode.getAttribute('class').should.equal('div-1nxhvta--active-10ip45p')
   })
 })
