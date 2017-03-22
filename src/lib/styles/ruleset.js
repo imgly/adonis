@@ -1,4 +1,4 @@
-import { hashObject, resolveStylesObject } from '../utils'
+import { hashObject, resolveStylesObject, deepMerge } from '../utils'
 import Declaration from './declaration'
 import extensions from './extensions'
 
@@ -31,8 +31,11 @@ export default class Ruleset {
     const { minified } = this._adonis.getOptions()
 
     let subRuleset = null
-    const generateSubRuleset = (newSelector) => {
-      subRuleset = new Ruleset(this._adonis, newSelector, value, this._options)
+    const generateSubRuleset = (newSelector, parentSelector) => {
+      const options = deepMerge(this._options, {
+        parentSelector
+      })
+      subRuleset = new Ruleset(this._adonis, newSelector, value, options)
     }
 
     for (let i = 0; i < extensions.length; i++) {
@@ -69,12 +72,24 @@ export default class Ruleset {
   toCSS () {
     const { minified } = this._adonis.getOptions()
 
-    let css = `${this._selector}`
-    css += minified ? '{' : ' {\n'
+    if (this._declarations.length === 0) return null
+
+    let css = ''
+    let indentation = ''
+    if (this._options.parentSelector) {
+      css += this._options.parentSelector + (minified ? '{' : ' {\n')
+      indentation = '  '
+    }
+
+    css += indentation + this._selector + (minified ? '{' : ' {\n')
     this._declarations.forEach(rule => {
-      css += rule.toCSS() + (minified ? '' : '\n')
+      css += indentation + rule.toCSS() + (minified ? '' : '\n')
     })
-    css += '}'
+    css += indentation + '}'
+
+    if (this._options.parentSelector) {
+      css += minified ? '}' : '\n}'
+    }
     return css
   }
 
