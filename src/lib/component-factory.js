@@ -103,7 +103,7 @@ export default class ComponentFactory {
         const stylesChanged = props.styles !== this.props.styles
 
         let variationsChanged = false
-        Object.keys(variations)
+        Object.keys(variations || {})
           .forEach((variation) => {
             if (props[variation] !== this.props[variation]) {
               variationsChanged = true
