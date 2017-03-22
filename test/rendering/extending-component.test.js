@@ -23,8 +23,8 @@ describe('extending a React component with an adonis component as root element',
     })
     const { html, css } = render(adonis, <PrimaryButton />)
 
-    html.should.equal('<div class="div~1k8vrzz__Button~1nxhvta"></div>')
-    css.content.should.equal(`.Button~1nxhvta {\n  background: blue;\n}\n\n.div~1k8vrzz__Button~1nxhvta {\n  border: 1px solid red;\n  padding: 10px 5px;\n  background: blue;\n}`)
+    html.should.equal('<div class="div-1k8vrzz__Button-1nxhvta"></div>')
+    css.content.should.equal(`.Button-1nxhvta {\n  background: blue;\n}\n\n.div-1k8vrzz__Button-1nxhvta {\n  border: 1px solid red;\n  padding: 10px 5px;\n  background: blue;\n}`)
   })
 
   describe('when passing a name', () => {
@@ -45,8 +45,8 @@ describe('extending a React component with an adonis component as root element',
       }, 'PrimaryButton')
       const { html, css } = render(adonis, <PrimaryButton />)
 
-      html.should.equal('<div class="Button~1k8vrzz__PrimaryButton~1nxhvta"></div>')
-      css.content.should.equal(`.PrimaryButton~1nxhvta {\n  background: blue;\n}\n\n.Button~1k8vrzz__PrimaryButton~1nxhvta {\n  border: 1px solid red;\n  padding: 10px 5px;\n  background: blue;\n}`)
+      html.should.equal('<div class="Button-1k8vrzz__PrimaryButton-1nxhvta"></div>')
+      css.content.should.equal(`.PrimaryButton-1nxhvta {\n  background: blue;\n}\n\n.Button-1k8vrzz__PrimaryButton-1nxhvta {\n  border: 1px solid red;\n  padding: 10px 5px;\n  background: blue;\n}`)
     })
   })
 })
