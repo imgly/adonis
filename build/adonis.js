@@ -823,49 +823,87 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	          var _this = _possibleConstructorReturn(this, (_ref = AdonisComponent.__proto__ || Object.getPrototypeOf(AdonisComponent)).call.apply(_ref, [this].concat(args)));
 
-	          var activeVariations = _this._getActiveVariations();
-	          allStyles = [baseStyles, stylesObject, _this.props.styles].filter(function (s) {
-	            return s;
-	          });
-	          stylesManager = new _stylesManager2.default(adonis, allStyles, activeVariations, _this.context.theme);
+	          _this._updateStylesManager();
 	          _this._adonis = adonis;
 	          return _this;
 	        }
 
 	        /**
-	         * Returns a shallow clone of this component's props
-	         * @return {Object}
+	         * Updates the styles manager for the given props
+	         * @param  {Object} props
 	         * @private
 	         */
 
 
 	        _createClass(AdonisComponent, [{
+	          key: '_updateStylesManager',
+	          value: function _updateStylesManager() {
+	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+
+	            var activeVariations = this._getActiveVariationsFromProps(props);
+	            allStyles = [baseStyles, stylesObject, props.styles].filter(function (s) {
+	              return s;
+	            });
+	            stylesManager = new _stylesManager2.default(adonis, allStyles, activeVariations, this.context.theme);
+	          }
+
+	          /**
+	           * Invoked before a mounted component receives new props
+	           * @param  {Object} props
+	           */
+
+	        }, {
+	          key: 'componentWillReceiveProps',
+	          value: function componentWillReceiveProps(props) {
+	            var _this2 = this;
+
+	            var stylesChanged = props.styles !== this.props.styles;
+
+	            var variationsChanged = false;
+	            Object.keys(variations).forEach(function (variation) {
+	              if (props[variation] !== _this2.props[variation]) {
+	                variationsChanged = true;
+	              }
+	            });
+
+	            if (stylesChanged || variationsChanged) {
+	              this._updateStylesManager(props);
+	            }
+	          }
+
+	          /**
+	           * Returns a shallow clone of this component's props
+	           * @return {Object}
+	           * @private
+	           */
+
+	        }, {
 	          key: '_cloneProps',
 	          value: function _cloneProps() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            var elementProps = {};
 	            Object.keys(this.props).forEach(function (prop) {
-	              elementProps[prop] = _this2.props[prop];
+	              elementProps[prop] = _this3.props[prop];
 	            });
 	            return elementProps;
 	          }
 
 	          /**
-	           * Returns an array containing the active variations for this component
+	           * Returns an array containing the active variations for this component from the given props
+	           * @param {Object} props
 	           * @return {String[]}
 	           * @private
 	           */
 
 	        }, {
-	          key: '_getActiveVariations',
-	          value: function _getActiveVariations() {
-	            var _this3 = this;
-
+	          key: '_getActiveVariationsFromProps',
+	          value: function _getActiveVariationsFromProps() {
+	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 	            var variations = options.variations;
 
 	            return Object.keys(variations || {}).filter(function (variation) {
-	              return !!_this3.props[variation];
+	              return !!props[variation];
 	            }).sort();
 	          }
 
