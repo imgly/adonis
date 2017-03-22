@@ -1,9 +1,15 @@
 var path = require('path')
 var qs = require('querystring')
-// var webpack = require('webpack')
+var webpack = require('webpack')
 
-const MINIFY = false
+const MINIFY = process.env.MINIFY
 const plugins = []
+
+if (MINIFY) {
+  plugins.push(new webpack.optimize.UglifyJsPlugin({
+    compress: { warnings: false }
+  }))
+}
 
 module.exports = {
   debug: false,
