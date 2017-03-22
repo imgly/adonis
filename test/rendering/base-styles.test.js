@@ -16,8 +16,8 @@ describe('defining and extending base styles', () => {
     })
     const { html, css } = render(adonis, <Button />)
 
-    html.should.equal(`<button class="baseStyles~1b2uzpk__button~ro0g1e"></button>`)
-    css.content.should.equal(`.baseStyles~1b2uzpk__button~ro0g1e {\n  background-color: blue;\n  cursor: pointer;\n}`)
+    html.should.equal(`<button class="baseStyles-1b2uzpk__button-ro0g1e"></button>`)
+    css.content.should.equal(`.baseStyles-1b2uzpk__button-ro0g1e {\n  background-color: blue;\n  cursor: pointer;\n}`)
   })
 
   describe('when passing a name', () => {
@@ -31,8 +31,8 @@ describe('defining and extending base styles', () => {
       }, 'Button')
       const { html, css } = render(adonis, <Button />)
 
-      html.should.equal(`<button class="PrimaryBackgroundColor~1b2uzpk__Button~ro0g1e"></button>`)
-      css.content.should.equal(`.PrimaryBackgroundColor~1b2uzpk__Button~ro0g1e {\n  background-color: blue;\n  cursor: pointer;\n}`)
+      html.should.equal(`<button class="PrimaryBackgroundColor-1b2uzpk__Button-ro0g1e"></button>`)
+      css.content.should.equal(`.PrimaryBackgroundColor-1b2uzpk__Button-ro0g1e {\n  background-color: blue;\n  cursor: pointer;\n}`)
     })
   })
 })

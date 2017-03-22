@@ -26,7 +26,7 @@ describe('injection', () => {
         padding: '5px'
       })
 
-      styleNode.innerHTML.should.equal('.div~tcorpq {\n  background: red;\n  padding: 5px;\n}')
+      styleNode.innerHTML.should.equal('.div-tcorpq {\n  background: red;\n  padding: 5px;\n}')
     })
 
     it('should not inject styles on render', () => {
@@ -35,7 +35,7 @@ describe('injection', () => {
         padding: '5px'
       })
 
-      const css = '.div~tcorpq {\n  background: red;\n  padding: 5px;\n}'
+      const css = '.div-tcorpq {\n  background: red;\n  padding: 5px;\n}'
 
       styleNode.innerHTML.should.equal(css)
       mount(<Wrapper />)
@@ -59,7 +59,7 @@ describe('injection', () => {
           padding: '5px'
         })
 
-        styleNode.innerHTML.should.equal('.div~1y8a5z5 {\n  background: red;\n  padding: 5px;\n}')
+        styleNode.innerHTML.should.equal('.div-1y8a5z5 {\n  background: red;\n  padding: 5px;\n}')
       })
     })
 
@@ -77,7 +77,7 @@ describe('injection', () => {
           }
         })
 
-        styleNode.innerHTML.should.equal('.div~10ip45p {\n  background: red;\n}\n\n.div~10ip45p--active~1o2wtm6 {\n  background: blue;\n  color: white;\n}\n\n.div~10ip45p--disabled~cyntia {\n  background: red;\n  opacity: 0.5;\n}\n\n.div~10ip45p--active~1o2wtm6--disabled~cyntia {\n  background: blue;\n  color: white;\n  opacity: 0.5;\n}')
+        styleNode.innerHTML.should.equal('.div-10ip45p {\n  background: red;\n}\n\n.div-10ip45p--active-1o2wtm6 {\n  background: blue;\n  color: white;\n}\n\n.div-10ip45p--disabled-cyntia {\n  background: red;\n  opacity: 0.5;\n}\n\n.div-10ip45p--active-1o2wtm6--disabled-cyntia {\n  background: blue;\n  color: white;\n  opacity: 0.5;\n}')
       })
     })
 
@@ -91,7 +91,7 @@ describe('injection', () => {
           background: 'blue'
         })
 
-        styleNode.innerHTML.should.equal('.div~tcorpq {\n  background: red;\n  padding: 5px;\n}\n\n.div~tcorpq__AdonisComponent~1nxhvta {\n  background: blue;\n  padding: 5px;\n}')
+        styleNode.innerHTML.should.equal('.div-tcorpq {\n  background: red;\n  padding: 5px;\n}\n\n.div-tcorpq__AdonisComponent-1nxhvta {\n  background: blue;\n  padding: 5px;\n}')
       })
     })
 
@@ -112,7 +112,7 @@ describe('injection', () => {
           background: 'blue'
         })
 
-        styleNode.innerHTML.should.equal('.div~tcorpq {\n  background: red;\n  padding: 5px;\n}\n\n.div~tcorpq__Component~1nxhvta {\n  background: blue;\n  padding: 5px;\n}')
+        styleNode.innerHTML.should.equal('.div-tcorpq {\n  background: red;\n  padding: 5px;\n}\n\n.div-tcorpq__Component-1nxhvta {\n  background: blue;\n  padding: 5px;\n}')
       })
     })
   })
@@ -142,7 +142,7 @@ describe('injection', () => {
 
       styleNode.innerHTML.should.equal('')
       mount(<Wrapper />)
-      styleNode.innerHTML.should.equal('.div~tcorpq {\n  background: red;\n  padding: 5px;\n}')
+      styleNode.innerHTML.should.equal('.div-tcorpq {\n  background: red;\n  padding: 5px;\n}')
     })
   })
 

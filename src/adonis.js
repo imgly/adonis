@@ -15,7 +15,7 @@ export default class Adonis {
    * @param {Boolean} [options.autoPrefix = true] Should adonis automatically add vendor prefixes to
    *                                       CSS properties when necessary?
    * @param {String} [options.selectorPrefix = ''] The selector prepended to all CSS rules
-   * @param {String} [options.hashSeparator = '~'] The string that is used to separate element names
+   * @param {String} [options.hashSeparator = '-'] The string that is used to separate element names
    *                                         from their hashes
    * @param {String} [options.nameSeparator = '__'] The string that is used to separate multiple
    *                                        styled elements
@@ -37,7 +37,7 @@ export default class Adonis {
       minified: false,
       autoPrefix: true,
       selectorPrefix: '',
-      hashSeparator: '~',
+      hashSeparator: '-',
       nameSeparator: '__',
       variationSeparator: '--',
       styleNode: null,

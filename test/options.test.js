@@ -24,8 +24,8 @@ describe('options', () => {
         })
         const { html, css } = render(adonis, <Button />)
 
-        html.should.equal(`<button class="baseStyles~1b2uzpk__button~ro0g1e"></button>`)
-        css.content.should.equal(`.baseStyles~1b2uzpk__button~ro0g1e{background-color:blue;cursor:pointer;}`)
+        html.should.equal(`<button class="baseStyles-1b2uzpk__button-ro0g1e"></button>`)
+        css.content.should.equal(`.baseStyles-1b2uzpk__button-ro0g1e{background-color:blue;cursor:pointer;}`)
       })
     })
   })
@@ -49,7 +49,7 @@ describe('options', () => {
         })
         const { html, css } = render(adonis, <Button />)
 
-        html.should.equal(`<button class="baseStyles~1b2uzpk__button~ro0g1e"></button>`)
+        html.should.equal(`<button class="baseStyles-1b2uzpk__button-ro0g1e"></button>`)
         css.content.should.equal('')
       })
     })
@@ -71,8 +71,8 @@ describe('options', () => {
 
         const { html, css } = render(adonis, <UserSelectTest />)
 
-        html.should.equal(`<div class="div~smhzgc"></div>`)
-        css.content.should.equal('.div~smhzgc {\n  user-select: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n}')
+        html.should.equal(`<div class="div-smhzgc"></div>`)
+        css.content.should.equal('.div-smhzgc {\n  user-select: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n}')
       })
     })
   })
@@ -96,8 +96,8 @@ describe('options', () => {
         })
         const { html, css } = render(adonis, <Button />)
 
-        html.should.equal(`<button class="adonis-baseStyles~1b2uzpk__button~ro0g1e"></button>`)
-        css.content.should.equal('.adonis-baseStyles~1b2uzpk__button~ro0g1e {\n  background-color: blue;\n  cursor: pointer;\n}')
+        html.should.equal(`<button class="adonis-baseStyles-1b2uzpk__button-ro0g1e"></button>`)
+        css.content.should.equal('.adonis-baseStyles-1b2uzpk__button-ro0g1e {\n  background-color: blue;\n  cursor: pointer;\n}')
       })
     })
   })
@@ -146,8 +146,8 @@ describe('options', () => {
         })
         const { html, css } = render(adonis, <Button />)
 
-        html.should.equal(`<button class="baseStyles~1b2uzpkfoobutton~ro0g1e"></button>`)
-        css.content.should.equal('.baseStyles~1b2uzpkfoobutton~ro0g1e {\n  background-color: blue;\n  cursor: pointer;\n}')
+        html.should.equal(`<button class="baseStyles-1b2uzpkfoobutton-ro0g1e"></button>`)
+        css.content.should.equal('.baseStyles-1b2uzpkfoobutton-ro0g1e {\n  background-color: blue;\n  cursor: pointer;\n}')
       })
     })
   })
@@ -172,8 +172,8 @@ describe('options', () => {
 
         const { html, css } = render(adonis, <Button active />)
 
-        html.should.equal(`<button class="button~1b2uzpkfooactive~1wtftbl"></button>`)
-        css.content.should.equal('.button~1b2uzpkfooactive~1wtftbl {\n  background-color: red;\n}')
+        html.should.equal(`<button class="button-1b2uzpkfooactive-1wtftbl"></button>`)
+        css.content.should.equal('.button-1b2uzpkfooactive-1wtftbl {\n  background-color: red;\n}')
       })
     })
   })
@@ -205,7 +205,7 @@ describe('options', () => {
 
           const { html } = render(adonis, <Button active />)
 
-          html.should.equal(`<button class="button~1b2uzpk--active~1wtftbl"></button>`)
+          html.should.equal(`<button class="button-1b2uzpk--active-1wtftbl"></button>`)
         })
       })
 
