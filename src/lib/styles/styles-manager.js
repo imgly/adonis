@@ -19,6 +19,7 @@ export default class StylesManager {
   generateCSS () {
     return this._rulesets
       .map(ruleset => ruleset.toCSS())
+      .filter(r => r)
   }
 
   /**

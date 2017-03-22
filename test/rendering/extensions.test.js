@@ -58,4 +58,17 @@ describe('extensions', () => {
       })
     })
   })
+
+  describe('media queries', () => {
+    it('should render correctly', () => {
+      const Wrapper = adonis.div({
+        '@media (max-width: 600px)': {
+          background: 'red'
+        }
+      })
+
+      const { css } = render(adonis, <Wrapper />)
+      css.content.should.equal(`@media (max-width: 600px) {\n  .div~1o5ezx {\n    background: red;\n  }\n}`)
+    })
+  })
 })
