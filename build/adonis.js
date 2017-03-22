@@ -860,7 +860,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var stylesChanged = props.styles !== this.props.styles;
 
 	            var variationsChanged = false;
-	            Object.keys(variations).forEach(function (variation) {
+	            Object.keys(variations || {}).forEach(function (variation) {
 	              if (props[variation] !== _this2.props[variation]) {
 	                variationsChanged = true;
 	              }
