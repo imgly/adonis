@@ -197,7 +197,7 @@ const Button = adonis.div(theme => {
 
 # License (MIT)
 
-Copyright (c) 2016 [PhotoEditorSDK.com] (www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=Side_Projects&utm_content=Adonis&utm_term=HTML5) / 9elements GmbH / Sascha Gehlich
+Copyright (c) 2016 [PhotoEditorSDK.com](www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=Side_Projects&utm_content=Adonis&utm_term=HTML5) / 9elements GmbH / Sascha Gehlich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
