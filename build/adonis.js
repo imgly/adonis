@@ -7,7 +7,7 @@
 		exports["adonis"] = factory(require("react"));
 	else
 		root["adonis"] = factory(root["react"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_5__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_6__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -180,11 +180,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _stylesBuffer2 = _interopRequireDefault(_stylesBuffer);
 
-	var _componentFactory = __webpack_require__(4);
+	var _componentFactory = __webpack_require__(5);
 
 	var _componentFactory2 = _interopRequireDefault(_componentFactory);
 
-	var _utils = __webpack_require__(6);
+	var _utils = __webpack_require__(4);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -198,6 +198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param  {Boolean|String} [options.injection = true] If `true`, styles will be injected on render,
 	   *                                              if `false`, they will not be injected. If set to
 	   *                                              `pre`, styles are injected before rendering.
+	   * @param {Boolean} [options.batchInjection = true] Should CSS injections be batched?
 	   * @param {Boolean} [options.minified = false] Should the resulting CSS be minified?
 	   * @param {Boolean} [options.autoPrefix = true] Should adonis automatically add vendor prefixes to
 	   *                                       CSS properties when necessary?
@@ -223,6 +224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this._options = (0, _utils.defaults)(options, {
 	      injection: true,
+	      batchInjection: true,
 	      minified: false,
 	      autoPrefix: true,
 	      selectorPrefix: '',
@@ -264,7 +266,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var html = renderFn();
 
-	      var output = this._stylesBuffer.flushToString();
+	      var output = this._stylesBuffer.flushToString(true);
 	      this._stylesBuffer.enableInjection();
 
 	      return { css: { content: output }, html: html };
@@ -487,7 +489,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -495,7 +497,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _utils = __webpack_require__(4);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -505,6 +511,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this._adonis = adonis;
 	    this._injectionEnabled = true;
+	    this._bufferedSelectors = {};
 	    this._buffer = [];
 	    this._styleNode = this._findStyleNode();
 	    this._sheet = this._findSheet();
@@ -564,13 +571,39 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * Buffers the given array of css rulesets
-	     * @param  {String[]} rulesets
+	     * @param  {String[][]} rulesets
 	     */
 
 	  }, {
 	    key: 'bufferRulesets',
 	    value: function bufferRulesets(rulesets) {
-	      Array.prototype.push.apply(this._buffer, rulesets);
+	      var _this = this;
+
+	      rulesets.forEach(function (_ref) {
+	        var _ref2 = _slicedToArray(_ref, 2),
+	            selector = _ref2[0],
+	            css = _ref2[1];
+
+	        _this._bufferedSelectors[selector] = true;
+	      });
+	      Array.prototype.push.apply(this._buffer, rulesets.map(function (_ref3) {
+	        var _ref4 = _slicedToArray(_ref3, 2),
+	            css = _ref4[1];
+
+	        return css;
+	      }));
+	    }
+
+	    /**
+	     * Checks if the given selector has been buffered already
+	     * @param  {String}  selector
+	     * @return {Boolean}
+	     */
+
+	  }, {
+	    key: 'isSelectorBuffered',
+	    value: function isSelectorBuffered(selector) {
+	      return this._bufferedSelectors[selector];
 	    }
 
 	    /**
@@ -595,17 +628,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * Flushes the buffered CSS to a string and returns it
+	     * @param {Boolean} clearBufferedSelectors = false
 	     * @return {String}
 	     */
 
 	  }, {
 	    key: 'flushToString',
 	    value: function flushToString() {
+	      var clearBufferedSelectors = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
 	      var _adonis$getOptions2 = this._adonis.getOptions(),
 	          minified = _adonis$getOptions2.minified;
 
 	      var content = this._buffer.join(minified ? '' : '\n\n');
 	      this._buffer = [];
+	      if (clearBufferedSelectors) {
+	        this._bufferedSelectors = {};
+	      }
 	      return content;
 	    }
 
@@ -617,10 +656,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_injectFast',
 	    value: function _injectFast() {
-	      var _this = this;
+	      var _this2 = this;
 
 	      this._buffer.forEach(function (rule) {
-	        _this._sheet.insertRule(rule, _this._sheet.cssRules.length);
+	        _this2._sheet.insertRule(rule, _this2._sheet.cssRules.length);
 	      });
 	    }
 
@@ -633,6 +672,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '_injectDebug',
 	    value: function _injectDebug() {
 	      var css = this.flushToString();
+	      if (!css) return;
 
 	      var _adonis$getOptions3 = this._adonis.getOptions(),
 	          minified = _adonis$getOptions3.minified;
@@ -642,14 +682,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Flushes the buffered css rules to the style node
+	     * Actually flushes the css rules to the style node
+	     * @private
 	     */
 
 	  }, {
-	    key: 'flushToStyleTag',
-	    value: function flushToStyleTag() {
-	      if (!this._injectionEnabled) return;
-
+	    key: '_flushToStyleTag',
+	    value: function _flushToStyleTag() {
 	      var _adonis$getOptions4 = this._adonis.getOptions(),
 	          injectionMode = _adonis$getOptions4.injectionMode;
 
@@ -663,6 +702,30 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this._buffer = [];
 	    }
+
+	    /**
+	     * Schedules the injection of css rules into the style node
+	     */
+
+	  }, {
+	    key: 'flushToStyleTag',
+	    value: function flushToStyleTag() {
+	      var _this3 = this;
+
+	      if (!this._injectionEnabled) return;
+
+	      var _adonis$getOptions5 = this._adonis.getOptions(),
+	          batchInjection = _adonis$getOptions5.batchInjection;
+
+	      if (!this._nextTick && batchInjection) {
+	        this._nextTick = (0, _utils.requestAnimationFrame)(function () {
+	          _this3._nextTick = null;
+	          _this3._flushToStyleTag();
+	        });
+	      } else if (!batchInjection) {
+	        this._flushToStyleTag();
+	      }
+	    }
 	  }]);
 
 	  return StylesBuffer;
@@ -672,369 +735,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(5);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _utils = __webpack_require__(6);
-
-	var _baseAdonisComponent = __webpack_require__(7);
-
-	var _baseAdonisComponent2 = _interopRequireDefault(_baseAdonisComponent);
-
-	var _styles = __webpack_require__(8);
-
-	var _styles2 = _interopRequireDefault(_styles);
-
-	var _stylesManager = __webpack_require__(9);
-
-	var _stylesManager2 = _interopRequireDefault(_stylesManager);
-
-	var _preinjectionStylesManager = __webpack_require__(18);
-
-	var _preinjectionStylesManager2 = _interopRequireDefault(_preinjectionStylesManager);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var ComponentFactory = function () {
-	  function ComponentFactory(adonis, options) {
-	    _classCallCheck(this, ComponentFactory);
-
-	    this._adonis = adonis;
-	    this._options = options;
-	  }
-
-	  /**
-	   * Returns a string name for the given target
-	   * @param  {String|Object} target
-	   * @return {String}
-	   * @private
-	   */
-
-
-	  _createClass(ComponentFactory, [{
-	    key: '_getName',
-	    value: function _getName(target) {
-	      if (typeof target === 'string') return target;
-	      if (target.name) return target.name;
-	      return 'adonis';
-	    }
-
-	    /**
-	     * Returns the given target's styles. This function gets the styles recursively, meaning that
-	     * if the target has another target, it returns its styles as well.
-	     * @param  {ReactComponent|BaseAdonisComponent} target
-	     * @return {Styles[]}
-	     * @private
-	     */
-
-	  }, {
-	    key: '_getTargetStyles',
-	    value: function _getTargetStyles(target) {
-	      var styles = [target.adonisStyles, target.adonisBaseStyles];
-
-	      // Target has another target, get its styles
-	      if (target.adonisTarget && typeof target.adonisTarget === 'string') {
-	        styles.push(this._getTargetStyles(target.adonisTarget));
-	      }
-
-	      // Target has a RootElement that inherits styles
-	      if (target.RootElement) {
-	        styles.push(this._getTargetStyles(target.RootElement));
-	      }
-
-	      return (0, _utils.flatten)(styles).filter(function (s) {
-	        return s;
-	      });
-	    }
-
-	    /**
-	     * Creates an adonis component for the given target
-	     * @param  {String|React.Component|AdonisComponent} target
-	     * @param  {Object} options
-	     * @return {AdonisComponent}
-	     */
-
-	  }, {
-	    key: 'createComponent',
-	    value: function createComponent(target, options) {
-	      var adonis = this._adonis;
-	      var name = options.name;
-
-	      if (!name) name = this._getName(target);
-
-	      var isTag = typeof target === 'string';
-	      var isAdonisComponent = target.prototype instanceof _baseAdonisComponent2.default;
-	      var isComponent = !isAdonisComponent && target.prototype instanceof _react.Component;
-
-	      var styles = options.styles,
-	          variations = options.variations,
-	          baseStyles = options.baseStyles;
-
-	      var stylesObject = new _styles2.default(adonis, { styles: styles, variations: variations, name: name });
-
-	      var allStyles = void 0,
-	          stylesManager = void 0;
-
-	      var _adonis$getOptions = adonis.getOptions(),
-	          injection = _adonis$getOptions.injection,
-	          theme = _adonis$getOptions.theme,
-	          hashedStyles = _adonis$getOptions.hashedStyles;
-
-	      if (injection === 'pre' && !hashedStyles) {
-	        var targetStyles = this._getTargetStyles(target);
-	        allStyles = targetStyles.concat([baseStyles, stylesObject]).filter(function (s) {
-	          return s;
-	        });
-	        stylesManager = new _preinjectionStylesManager2.default(adonis, allStyles, theme);
-
-	        var stylesBuffer = adonis.getStylesBuffer();
-	        stylesBuffer.bufferRulesets(stylesManager.generateCSS());
-	        stylesBuffer.flushToStyleTag();
-	      }
-
-	      var AdonisComponent = function (_BaseAdonisComponent) {
-	        _inherits(AdonisComponent, _BaseAdonisComponent);
-
-	        function AdonisComponent() {
-	          var _ref;
-
-	          _classCallCheck(this, AdonisComponent);
-
-	          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	          }
-
-	          var _this = _possibleConstructorReturn(this, (_ref = AdonisComponent.__proto__ || Object.getPrototypeOf(AdonisComponent)).call.apply(_ref, [this].concat(args)));
-
-	          _this._updateStylesManager();
-	          _this._adonis = adonis;
-	          return _this;
-	        }
-
-	        /**
-	         * Updates the styles manager for the given props
-	         * @param  {Object} props
-	         * @private
-	         */
-
-
-	        _createClass(AdonisComponent, [{
-	          key: '_updateStylesManager',
-	          value: function _updateStylesManager() {
-	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
-
-	            var activeVariations = this._getActiveVariationsFromProps(props);
-	            allStyles = [baseStyles, stylesObject, props.styles].filter(function (s) {
-	              return s;
-	            });
-	            stylesManager = new _stylesManager2.default(adonis, allStyles, activeVariations, this.context.theme);
-	          }
-
-	          /**
-	           * Invoked before a mounted component receives new props
-	           * @param  {Object} props
-	           */
-
-	        }, {
-	          key: 'componentWillReceiveProps',
-	          value: function componentWillReceiveProps(props) {
-	            var _this2 = this;
-
-	            var stylesChanged = props.styles !== this.props.styles;
-
-	            var variationsChanged = false;
-	            Object.keys(variations || {}).forEach(function (variation) {
-	              if (props[variation] !== _this2.props[variation]) {
-	                variationsChanged = true;
-	              }
-	            });
-
-	            if (stylesChanged || variationsChanged) {
-	              this._updateStylesManager(props);
-	            }
-	          }
-
-	          /**
-	           * Returns a shallow clone of this component's props
-	           * @return {Object}
-	           * @private
-	           */
-
-	        }, {
-	          key: '_cloneProps',
-	          value: function _cloneProps() {
-	            var _this3 = this;
-
-	            var elementProps = {};
-	            Object.keys(this.props).forEach(function (prop) {
-	              elementProps[prop] = _this3.props[prop];
-	            });
-	            return elementProps;
-	          }
-
-	          /**
-	           * Returns an array containing the active variations for this component from the given props
-	           * @param {Object} props
-	           * @return {String[]}
-	           * @private
-	           */
-
-	        }, {
-	          key: '_getActiveVariationsFromProps',
-	          value: function _getActiveVariationsFromProps() {
-	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
-	            var variations = options.variations;
-
-	            return Object.keys(variations || {}).filter(function (variation) {
-	              return !!props[variation];
-	            }).sort();
-	          }
-
-	          /**
-	           * Builds the class name for this component
-	           * @return {String}
-	           * @private
-	           */
-
-	        }, {
-	          key: '_buildClassName',
-	          value: function _buildClassName() {
-	            var passedClassName = this.props.className;
-
-	            // We can pass additional class names to components
-
-	            var classNames = [];
-	            classNames.push(passedClassName);
-
-	            // Generate a class name for this component
-	            classNames.push(stylesManager.getClassName());
-
-	            return { className: classNames.filter(function (c) {
-	                return c;
-	              }).join(' ') };
-	          }
-
-	          /**
-	           * Checks if CSS injection for this component is required
-	           * @private
-	           */
-
-	        }, {
-	          key: '_shouldInjectCSS',
-	          value: function _shouldInjectCSS() {
-	            if (!injection || hashedStyles) return false;
-
-	            // Injection is only needed if the rendered child is a real tag
-	            return isTag || isComponent && !isAdonisComponent;
-	          }
-
-	          /**
-	           * Renders this component
-	           * @return {React.Element}
-	           */
-
-	        }, {
-	          key: 'render',
-	          value: function render() {
-	            var elementProps = this._cloneProps();
-
-	            var _buildClassName2 = this._buildClassName(),
-	                className = _buildClassName2.className;
-
-	            var stylesBuffer = this._adonis.getStylesBuffer();
-	            if (this._shouldInjectCSS()) {
-	              stylesBuffer.bufferRulesets(stylesManager.generateCSS());
-
-	              if (injection === true && !hashedStyles) {
-	                stylesBuffer.flushToStyleTag();
-	              }
-	            }
-
-	            // If an available variation is passed in as a property, we add the styles to the class and
-	            // remove the prop from the props we pass to our target element
-	            if (isTag) {
-	              var _variations = options.variations;
-
-	              Object.keys(_variations || {}).forEach(function (variation) {
-	                delete elementProps[variation];
-	              });
-	            }
-
-	            // We only need to pass the class name to tags, not to components
-	            if (isTag) {
-	              elementProps.className = className;
-	            } else {
-	              elementProps.styles = stylesObject;
-	            }
-
-	            // Pass ref
-	            var _props = this.props,
-	                children = _props.children,
-	                innerRef = _props.innerRef;
-
-	            if (innerRef) {
-	              if (isComponent || isTag) {
-	                elementProps.ref = innerRef;
-	              } else if (isAdonisComponent) {
-	                elementProps.innerRef = innerRef;
-	              }
-	            }
-
-	            // We don't want to pass invalid props to tags
-	            if (isTag) {
-	              delete elementProps.styles;
-	              delete elementProps.innerRef;
-	            }
-
-	            return _react2.default.createElement(target, elementProps, children);
-	          }
-	        }]);
-
-	        return AdonisComponent;
-	      }(_baseAdonisComponent2.default);
-
-	      AdonisComponent.contextTypes = _baseAdonisComponent2.default.contextTypes;
-	      AdonisComponent.adonisTarget = target;
-	      AdonisComponent.adonisStyles = stylesObject;
-	      AdonisComponent.adonisBaseStyles = baseStyles;
-
-	      return AdonisComponent;
-	    }
-	  }]);
-
-	  return ComponentFactory;
-	}();
-
-	exports.default = ComponentFactory;
-
-/***/ },
-/* 5 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -1232,6 +935,415 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }(set, [[]]).slice(1);
 	};
 
+	/**
+	 * Polyfill for window.requestAnimationFrame
+	 * @return {Function}
+	 */
+	var requestAnimationFrame = exports.requestAnimationFrame = function () {
+	  var lastAF = 0;
+	  var root = typeof global === 'undefined' ? window : global;
+	  var rAF = root.requestAnimationFrame;
+
+	  var vendors = ['ms', 'moz', 'webkit', 'o'];
+	  for (var x = 0; x < vendors.length && !rAF; ++x) {
+	    rAF = root[vendors[x] + 'RequestAnimationFrame'];
+	  }
+
+	  if (!rAF && typeof root !== 'undefined' && root.setImmediate) {
+	    rAF = root.setImmediate;
+	  }
+
+	  if (!rAF) {
+	    rAF = function rAF(callback) {
+	      var currTime = new Date().getTime();
+	      var timeToCall = Math.max(0, 16 - (currTime - lastAF));
+	      var id = setTimeout(function () {
+	        callback(currTime + timeToCall);
+	      }, timeToCall);
+	      lastAF = currTime + timeToCall;
+	      return id;
+	    };
+	  }
+
+	  return rAF;
+	}();
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(6);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _utils = __webpack_require__(4);
+
+	var _baseAdonisComponent = __webpack_require__(7);
+
+	var _baseAdonisComponent2 = _interopRequireDefault(_baseAdonisComponent);
+
+	var _styles = __webpack_require__(8);
+
+	var _styles2 = _interopRequireDefault(_styles);
+
+	var _stylesManager = __webpack_require__(9);
+
+	var _stylesManager2 = _interopRequireDefault(_stylesManager);
+
+	var _preinjectionStylesManager = __webpack_require__(18);
+
+	var _preinjectionStylesManager2 = _interopRequireDefault(_preinjectionStylesManager);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ComponentFactory = function () {
+	  function ComponentFactory(adonis, options) {
+	    _classCallCheck(this, ComponentFactory);
+
+	    this._adonis = adonis;
+	    this._options = options;
+	  }
+
+	  /**
+	   * Returns a string name for the given target
+	   * @param  {String|Object} target
+	   * @return {String}
+	   * @private
+	   */
+
+
+	  _createClass(ComponentFactory, [{
+	    key: '_getName',
+	    value: function _getName(target) {
+	      if (typeof target === 'string') return target;
+	      if (target.name) return target.name;
+	      return 'adonis';
+	    }
+
+	    /**
+	     * Returns the given target's styles. This function gets the styles recursively, meaning that
+	     * if the target has another target, it returns its styles as well.
+	     * @param  {ReactComponent|BaseAdonisComponent} target
+	     * @return {Styles[]}
+	     * @private
+	     */
+
+	  }, {
+	    key: '_getTargetStyles',
+	    value: function _getTargetStyles(target, name) {
+	      var styles = [target.adonisBaseStyles, target.adonisStyles];
+
+	      // Target has another target, get its styles
+	      if (target.adonisTarget) {
+	        styles.unshift(this._getTargetStyles(target.adonisTarget));
+	      }
+
+	      // Target has a RootElement that inherits styles
+	      if (target.RootElement) {
+	        styles.unshift(this._getTargetStyles(target.RootElement));
+	      }
+
+	      return (0, _utils.flatten)(styles).filter(function (s) {
+	        return s;
+	      });
+	    }
+
+	    /**
+	     * Creates an adonis component for the given target
+	     * @param  {String|React.Component|AdonisComponent} target
+	     * @param  {Object} options
+	     * @return {AdonisComponent}
+	     */
+
+	  }, {
+	    key: 'createComponent',
+	    value: function createComponent(target, options) {
+	      var adonis = this._adonis;
+	      var name = options.name;
+
+	      if (!name) name = this._getName(target);
+
+	      var isTag = typeof target === 'string';
+	      var isAdonisComponent = target.prototype instanceof _baseAdonisComponent2.default;
+	      var isComponent = !isAdonisComponent && target.prototype instanceof _react.Component;
+
+	      var styles = options.styles,
+	          variations = options.variations,
+	          baseStyles = options.baseStyles;
+
+	      variations = variations || {};
+	      var stylesObject = new _styles2.default(adonis, { styles: styles, variations: variations, name: name });
+
+	      var _adonis$getOptions = adonis.getOptions(),
+	          injection = _adonis$getOptions.injection,
+	          theme = _adonis$getOptions.theme,
+	          hashedStyles = _adonis$getOptions.hashedStyles;
+
+	      if (injection === 'pre' && !hashedStyles) {
+	        var targetStyles = this._getTargetStyles(target, name);
+	        var allStyles = void 0,
+	            stylesManager = void 0;
+	        allStyles = targetStyles.concat([baseStyles, stylesObject]).filter(function (s) {
+	          return s;
+	        });
+	        stylesManager = new _preinjectionStylesManager2.default(adonis, allStyles, theme);
+
+	        stylesManager.bufferRulesets();
+	        var stylesBuffer = adonis.getStylesBuffer();
+	        stylesBuffer.flushToStyleTag();
+	      }
+
+	      var AdonisComponent = function (_BaseAdonisComponent) {
+	        _inherits(AdonisComponent, _BaseAdonisComponent);
+
+	        function AdonisComponent() {
+	          var _ref;
+
+	          _classCallCheck(this, AdonisComponent);
+
+	          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	          }
+
+	          var _this = _possibleConstructorReturn(this, (_ref = AdonisComponent.__proto__ || Object.getPrototypeOf(AdonisComponent)).call.apply(_ref, [this].concat(args)));
+
+	          _this._updateStylesManager();
+	          _this._adonis = adonis;
+	          return _this;
+	        }
+
+	        _createClass(AdonisComponent, [{
+	          key: '_updateStylesManager',
+
+
+	          /**
+	           * Updates the styles manager for the given props
+	           * @param  {Object} props
+	           * @private
+	           */
+	          value: function _updateStylesManager() {
+	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+
+	            var activeVariations = this._getActiveVariationsFromProps(props);
+	            var allStyles = [baseStyles, stylesObject].concat(props.styles || []).filter(function (s) {
+	              return s;
+	            });
+	            this._stylesManager = new _stylesManager2.default(adonis, allStyles, activeVariations, this.context.theme);
+	          }
+
+	          /**
+	           * Invoked before a mounted component receives new props
+	           * @param  {Object} props
+	           */
+
+	        }, {
+	          key: 'componentWillReceiveProps',
+	          value: function componentWillReceiveProps(props) {
+	            var _this2 = this;
+
+	            var stylesChanged = props.styles !== this.props.styles;
+
+	            var variationsChanged = false;
+	            Object.keys(variations || {}).forEach(function (variation) {
+	              if (props[variation] !== _this2.props[variation]) {
+	                variationsChanged = true;
+	              }
+	            });
+
+	            if (stylesChanged || variationsChanged) {
+	              this._updateStylesManager(props);
+	            }
+	          }
+
+	          /**
+	           * Returns a shallow clone of this component's props
+	           * @return {Object}
+	           * @private
+	           */
+
+	        }, {
+	          key: '_cloneProps',
+	          value: function _cloneProps() {
+	            var _this3 = this;
+
+	            var elementProps = {};
+	            Object.keys(this.props).forEach(function (prop) {
+	              elementProps[prop] = _this3.props[prop];
+	            });
+	            return elementProps;
+	          }
+
+	          /**
+	           * Returns an array containing the active variations for this component from the given props
+	           * @param {Object} props
+	           * @return {String[]}
+	           * @private
+	           */
+
+	        }, {
+	          key: '_getActiveVariationsFromProps',
+	          value: function _getActiveVariationsFromProps() {
+	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+
+	            var passedVariations = this.props._activeParentVariations || [];
+	            return Object.keys(props).filter(function (p) {
+	              return props[p] === true;
+	            }).filter(function (p) {
+	              return variations[p] || passedVariations.indexOf(p) !== -1;
+	            }).sort();
+	          }
+
+	          /**
+	           * Builds the class name for this component
+	           * @return {String}
+	           * @private
+	           */
+
+	        }, {
+	          key: '_buildClassName',
+	          value: function _buildClassName() {
+	            var passedClassName = this.props.className;
+
+	            // We can pass additional class names to components
+
+	            var classNames = [];
+	            classNames.push(passedClassName);
+
+	            // Generate a class name for this component
+	            var generatedClassName = this._stylesManager.getClassName();
+	            classNames.push(generatedClassName);
+
+	            return { className: classNames.filter(function (c) {
+	                return c;
+	              }).join(' ') };
+	          }
+
+	          /**
+	           * Checks if CSS injection for this component is required
+	           * @private
+	           */
+
+	        }, {
+	          key: '_shouldInjectCSS',
+	          value: function _shouldInjectCSS() {
+	            if (!injection || hashedStyles) return false;
+
+	            // Injection is only needed if the rendered child is a real tag
+	            return isTag || isComponent && !isAdonisComponent;
+	          }
+
+	          /**
+	           * Renders this component
+	           * @return {React.Element}
+	           */
+
+	        }, {
+	          key: 'render',
+	          value: function render() {
+	            var elementProps = this._cloneProps();
+
+	            var _buildClassName2 = this._buildClassName(),
+	                className = _buildClassName2.className;
+
+	            var stylesBuffer = this._adonis.getStylesBuffer();
+	            if (this._shouldInjectCSS()) {
+	              this._stylesManager.bufferRulesets();
+
+	              if (injection === true && !hashedStyles) {
+	                stylesBuffer.flushToStyleTag();
+	              }
+	            }
+
+	            // If an available variation is passed in as a property, we add the styles to the class and
+	            // remove the prop from the props we pass to our target element
+	            if (isTag) {
+	              var _variations = options.variations;
+
+	              Object.keys(_variations || {}).forEach(function (variation) {
+	                delete elementProps[variation];
+	              });
+
+	              // Remove variations passed from parent
+	              (this.props._activeParentVariations || []).forEach(function (variation) {
+	                delete elementProps[variation];
+	              });
+	            }
+
+	            // We only need to pass the class name to tags, not to components
+	            if (isTag) {
+	              elementProps.className = className;
+	            } else {
+	              elementProps.styles = (0, _utils.flatten)([stylesObject].concat(this.props.styles || []));
+	              elementProps._activeParentVariations = Object.keys(variations || {}).concat(this.props._activeParentVariations || []);
+	            }
+
+	            // Pass ref
+	            var _props = this.props,
+	                children = _props.children,
+	                innerRef = _props.innerRef;
+
+	            if (innerRef) {
+	              if (isComponent || isTag) {
+	                elementProps.ref = innerRef;
+	              } else if (isAdonisComponent) {
+	                elementProps.innerRef = innerRef;
+	              }
+	            }
+
+	            // We don't want to pass invalid props to tags
+	            if (isTag) {
+	              delete elementProps.styles;
+	              delete elementProps.innerRef;
+	              delete elementProps._activeParentVariations;
+	            }
+
+	            return _react2.default.createElement(target, elementProps, children);
+	          }
+	        }], [{
+	          key: 'name',
+	          get: function get() {
+	            return name;
+	          }
+	        }]);
+
+	        return AdonisComponent;
+	      }(_baseAdonisComponent2.default);
+
+	      AdonisComponent.contextTypes = _baseAdonisComponent2.default.contextTypes;
+	      AdonisComponent.adonisTarget = target;
+	      AdonisComponent.adonisStyles = stylesObject;
+	      AdonisComponent.adonisBaseStyles = baseStyles;
+
+	      return AdonisComponent;
+	    }
+	  }]);
+
+	  return ComponentFactory;
+	}();
+
+	exports.default = ComponentFactory;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
+
 /***/ },
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
@@ -1242,7 +1354,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _react = __webpack_require__(5);
+	var _react = __webpack_require__(6);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1280,7 +1392,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _utils = __webpack_require__(6);
+	var _utils = __webpack_require__(4);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1289,7 +1401,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _classCallCheck(this, Styles);
 
 	    this._adonis = adonis;
-	    this._options = options;
+	    this._options = (0, _utils.defaults)(options, {
+	      variations: [],
+	      styles: {},
+	      name: 'Unnamed'
+	    });
 
 	    var _adonis$getOptions = this._adonis.getOptions(),
 	        hashedStyles = _adonis$getOptions.hashedStyles;
@@ -1407,7 +1523,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _utils = __webpack_require__(6);
+	var _utils = __webpack_require__(4);
 
 	var _ruleset = __webpack_require__(10);
 
@@ -1444,6 +1560,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }).filter(function (r) {
 	        return r;
 	      });
+	    }
+
+	    /**
+	     * Buffers the rulesets that have not been buffered yet
+	     */
+
+	  }, {
+	    key: 'bufferRulesets',
+	    value: function bufferRulesets() {
+	      var stylesBuffer = this._adonis.getStylesBuffer();
+	      var rulesets = this._rulesets.filter(function (ruleset) {
+	        return !stylesBuffer.isSelectorBuffered(ruleset.getSelector()) && ruleset.hasDeclarations();
+	      }).map(function (ruleset) {
+	        return [ruleset.getSelector(), ruleset.toCSS()];
+	      });
+	      stylesBuffer.bufferRulesets(rulesets);
 	    }
 
 	    /**
@@ -1530,7 +1662,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _utils = __webpack_require__(6);
+	var _utils = __webpack_require__(4);
 
 	var _declaration = __webpack_require__(11);
 
@@ -1665,6 +1797,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'getSubRulesets',
 	    value: function getSubRulesets() {
 	      return this._subRulesets;
+	    }
+
+	    /**
+	     * Checks if this ruleset has declarations
+	     * @return {Boolean}
+	     */
+
+	  }, {
+	    key: 'hasDeclarations',
+	    value: function hasDeclarations() {
+	      return this._declarations.length !== 0;
+	    }
+
+	    /**
+	     * Returns the selector
+	     * @return {String}
+	     */
+
+	  }, {
+	    key: 'getSelector',
+	    value: function getSelector() {
+	      return this._selector;
 	    }
 	  }]);
 
@@ -2040,7 +2194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _utils = __webpack_require__(6);
+	var _utils = __webpack_require__(4);
 
 	var _ruleset = __webpack_require__(10);
 
@@ -2179,7 +2333,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(5);
+	var _react = __webpack_require__(6);
 
 	var _react2 = _interopRequireDefault(_react);
 
@@ -2262,7 +2416,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(5);
+	var _react = __webpack_require__(6);
 
 	var _react2 = _interopRequireDefault(_react);
 
