@@ -87,12 +87,16 @@ export default class StylesBuffer {
 
   /**
    * Flushes the buffered CSS to a string and returns it
+   * @param {Boolean} clearBufferedSelectors = false
    * @return {String}
    */
-  flushToString () {
+  flushToString (clearBufferedSelectors = false) {
     const { minified } = this._adonis.getOptions()
     const content = this._buffer.join(minified ? '' : '\n\n')
     this._buffer = []
+    if (clearBufferedSelectors) {
+      this._bufferedSelectors = {}
+    }
     return content
   }
 

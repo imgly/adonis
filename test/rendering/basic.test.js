@@ -3,7 +3,9 @@ import React from 'react'
 import jsdom from 'mocha-jsdom'
 import { render } from '../utils'
 
-const adonis = new Adonis()
+const adonis = new Adonis({
+  batchInjection: false
+})
 describe('adonis.tag({})', () => {
   jsdom()
   it('should render correctly', () => {

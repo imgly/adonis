@@ -70,7 +70,7 @@ export default class Adonis {
 
     const html = renderFn()
 
-    const output = this._stylesBuffer.flushToString()
+    const output = this._stylesBuffer.flushToString(true)
     this._stylesBuffer.enableInjection()
 
     return { css: { content: output }, html }
