@@ -16,6 +16,7 @@ describe('injection', () => {
     beforeEach(() => {
       adonis = new Adonis({
         injection: 'pre',
+        batchInjection: false,
         styleNode
       })
     })
@@ -49,7 +50,8 @@ describe('injection', () => {
           theme: {
             redColor: 'red'
           },
-          styleNode
+          styleNode,
+          batchInjection: false
         })
       })
 
@@ -121,7 +123,8 @@ describe('injection', () => {
     beforeEach(() => {
       adonis = new Adonis({
         injection: true,
-        styleNode
+        styleNode,
+        batchInjection: false
       })
     })
 
@@ -146,11 +149,36 @@ describe('injection', () => {
     })
   })
 
+  describe('when rendering multiple components', () => {
+    beforeEach(() => {
+      adonis = new Adonis({
+        styleNode
+      })
+    })
+
+    it('should batch style injections', (done) => {
+      const ButtonA = adonis.div({
+        background: 'red'
+      }, 'ButtonA')
+      const ButtonB = adonis.div({
+        background: 'blue'
+      }, 'ButtonB')
+
+      mount(<div><ButtonA /><ButtonB /></div>)
+      global.setImmediate(() => {
+        styleNode.innerHTML.should.equal('.ButtonA-10ip45p {\n  background: red;\n}\n\n.ButtonB-1nxhvta {\n  background: blue;\n}')
+        styleNode.childNodes.length.should.equal(1)
+        done()
+      })
+    })
+  })
+
   describe('set to `false`', () => {
     beforeEach(() => {
       adonis = new Adonis({
         injection: false,
-        styleNode
+        styleNode,
+        batchInjection: false
       })
     })
 

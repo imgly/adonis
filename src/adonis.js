@@ -11,6 +11,7 @@ export default class Adonis {
    * @param  {Boolean|String} [options.injection = true] If `true`, styles will be injected on render,
    *                                              if `false`, they will not be injected. If set to
    *                                              `pre`, styles are injected before rendering.
+   * @param {Boolean} [options.batchInjection = true] Should CSS injections be batched?
    * @param {Boolean} [options.minified = false] Should the resulting CSS be minified?
    * @param {Boolean} [options.autoPrefix = true] Should adonis automatically add vendor prefixes to
    *                                       CSS properties when necessary?
@@ -34,6 +35,7 @@ export default class Adonis {
   constructor (options) {
     this._options = defaults(options, {
       injection: true,
+      batchInjection: true,
       minified: false,
       autoPrefix: true,
       selectorPrefix: '',

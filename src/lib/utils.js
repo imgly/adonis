@@ -183,3 +183,34 @@ export const findAllCombinations = (set) =>
     }
     return acc(xs.slice(1), set)
   })(set, [[]]).slice(1)
+
+let lastAF = 0
+/**
+ * Polyfill for window.requestAnimationFrame
+ * @return {Function}
+ */
+export const requestAnimationFrame = (() => {
+  const root = typeof global === 'undefined' ? window : global
+  let rAF = root.requestAnimationFrame
+
+  const vendors = ['ms', 'moz', 'webkit', 'o']
+  for (let x = 0; x < vendors.length && !rAF; ++x) {
+    rAF = root[vendors[x] + 'RequestAnimationFrame']
+  }
+
+  if (!rAF && typeof root !== 'undefined' && root.setImmediate) {
+    rAF = root.setImmediate
+  }
+
+  if (!rAF) {
+    rAF = (callback) => {
+      const currTime = new Date().getTime()
+      const timeToCall = Math.max(0, 16 - (currTime - lastAF))
+      const id = setTimeout(function () { callback(currTime + timeToCall) }, timeToCall)
+      lastAF = currTime + timeToCall
+      return id
+    }
+  }
+
+  return rAF
+})()
