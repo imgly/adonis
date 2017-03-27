@@ -72,8 +72,8 @@ export default class ComponentFactory {
       allStyles = targetStyles.concat([baseStyles, stylesObject]).filter(s => s)
       stylesManager = new PreinjectionStylesManager(adonis, allStyles, theme)
 
+      stylesManager.bufferRulesets()
       const stylesBuffer = adonis.getStylesBuffer()
-      stylesBuffer.bufferRulesets(stylesManager.generateCSS())
       stylesBuffer.flushToStyleTag()
     }
 
@@ -185,7 +185,7 @@ export default class ComponentFactory {
         const { className } = this._buildClassName()
         const stylesBuffer = this._adonis.getStylesBuffer()
         if (this._shouldInjectCSS()) {
-          stylesBuffer.bufferRulesets(this._stylesManager.generateCSS())
+          this._stylesManager.bufferRulesets()
 
           if (injection === true && !hashedStyles) {
             stylesBuffer.flushToStyleTag()

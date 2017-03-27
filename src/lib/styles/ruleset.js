@@ -100,4 +100,20 @@ export default class Ruleset {
   getSubRulesets () {
     return this._subRulesets
   }
+
+  /**
+   * Checks if this ruleset has declarations
+   * @return {Boolean}
+   */
+  hasDeclarations () {
+    return this._declarations.length !== 0
+  }
+
+  /**
+   * Returns the selector
+   * @return {String}
+   */
+  getSelector () {
+    return this._selector
+  }
 }

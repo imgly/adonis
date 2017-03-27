@@ -4,6 +4,7 @@ export default class StylesBuffer {
   constructor (adonis) {
     this._adonis = adonis
     this._injectionEnabled = true
+    this._bufferedSelectors = {}
     this._buffer = []
     this._styleNode = this._findStyleNode()
     this._sheet = this._findSheet()
@@ -52,10 +53,22 @@ export default class StylesBuffer {
 
   /**
    * Buffers the given array of css rulesets
-   * @param  {String[]} rulesets
+   * @param  {String[][]} rulesets
    */
   bufferRulesets (rulesets) {
-    Array.prototype.push.apply(this._buffer, rulesets)
+    rulesets.forEach(([selector, css]) => {
+      this._bufferedSelectors[selector] = true
+    })
+    Array.prototype.push.apply(this._buffer, rulesets.map(([, css]) => css))
+  }
+
+  /**
+   * Checks if the given selector has been buffered already
+   * @param  {String}  selector
+   * @return {Boolean}
+   */
+  isSelectorBuffered (selector) {
+    return this._bufferedSelectors[selector]
   }
 
   /**
@@ -99,6 +112,7 @@ export default class StylesBuffer {
    */
   _injectDebug () {
     const css = this.flushToString()
+    if (!css) return
 
     const { minified } = this._adonis.getOptions()
     const hasContent = this._styleNode.innerHTML.length > 0

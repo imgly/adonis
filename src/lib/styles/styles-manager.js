@@ -23,6 +23,20 @@ export default class StylesManager {
   }
 
   /**
+   * Buffers the rulesets that have not been buffered yet
+   */
+  bufferRulesets () {
+    const stylesBuffer = this._adonis.getStylesBuffer()
+    const rulesets = this._rulesets
+      .filter(ruleset =>
+        !stylesBuffer.isSelectorBuffered(ruleset.getSelector()) &&
+        ruleset.hasDeclarations()
+      )
+      .map(ruleset => [ruleset.getSelector(), ruleset.toCSS()])
+    stylesBuffer.bufferRulesets(rulesets)
+  }
+
+  /**
    * Returns the deeply merged styles object
    * @param {String[]} activeVariations = []
    * @return {Object}
