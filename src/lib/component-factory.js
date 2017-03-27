@@ -30,17 +30,17 @@ export default class ComponentFactory {
    * @return {Styles[]}
    * @private
    */
-  _getTargetStyles (target) {
-    const styles = [target.adonisStyles, target.adonisBaseStyles]
+  _getTargetStyles (target, name) {
+    const styles = [target.adonisBaseStyles, target.adonisStyles]
 
     // Target has another target, get its styles
-    if (target.adonisTarget && typeof target.adonisTarget === 'string') {
-      styles.push(this._getTargetStyles(target.adonisTarget))
+    if (target.adonisTarget) {
+      styles.unshift(this._getTargetStyles(target.adonisTarget))
     }
 
     // Target has a RootElement that inherits styles
     if (target.RootElement) {
-      styles.push(this._getTargetStyles(target.RootElement))
+      styles.unshift(this._getTargetStyles(target.RootElement))
     }
 
     return flatten(styles).filter(s => s)
@@ -67,7 +67,7 @@ export default class ComponentFactory {
 
     const { injection, theme, hashedStyles } = adonis.getOptions()
     if (injection === 'pre' && !hashedStyles) {
-      const targetStyles = this._getTargetStyles(target)
+      const targetStyles = this._getTargetStyles(target, name)
       let allStyles, stylesManager
       allStyles = targetStyles.concat([baseStyles, stylesObject]).filter(s => s)
       stylesManager = new PreinjectionStylesManager(adonis, allStyles, theme)
@@ -212,7 +212,7 @@ export default class ComponentFactory {
         if (isTag) {
           elementProps.className = className
         } else {
-          elementProps.styles = flatten((this.props.styles || []).concat([stylesObject]))
+          elementProps.styles = flatten([stylesObject].concat(this.props.styles || []))
           elementProps._activeParentVariations = Object.keys(variations || {})
             .concat(this.props._activeParentVariations || [])
         }
