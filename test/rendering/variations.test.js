@@ -106,8 +106,8 @@ describe('passing variations to extended components', () => {
 
       const { html, css } = render(adonis, <MoreExtended variation />)
 
-      html.should.equal('<div class="div-120drhm__div-120drhm--variation-1y3uwt9__div-120drhm--variation-1ffa41k"></div>')
-      css.content.should.equal('.div-120drhm__div-120drhm--variation-1y3uwt9__div-120drhm--variation-1ffa41k {\n  color: blue;\n  background-color: blue;\n  border: 1px solid red;\n}')
+      html.should.equal('<div class="div-120drhm__div-120drhm--variation-1ffa41k__div-120drhm--variation-1y3uwt9"></div>')
+      css.content.should.equal('.div-120drhm__div-120drhm--variation-1ffa41k__div-120drhm--variation-1y3uwt9 {\n  color: red;\n  border: 1px solid red;\n  background-color: blue;\n}')
     })
   })
 
