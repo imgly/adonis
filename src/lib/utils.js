@@ -184,12 +184,12 @@ export const findAllCombinations = (set) =>
     return acc(xs.slice(1), set)
   })(set, [[]]).slice(1)
 
-let lastAF = 0
 /**
  * Polyfill for window.requestAnimationFrame
  * @return {Function}
  */
 export const requestAnimationFrame = (() => {
+  let lastAF = 0
   const root = typeof global === 'undefined' ? window : global
   let rAF = root.requestAnimationFrame
 
