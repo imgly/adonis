@@ -1,9 +1,13 @@
-import { hashObject } from '../utils'
+import { hashObject, defaults } from '../utils'
 
 export default class Styles {
   constructor (adonis, options) {
     this._adonis = adonis
-    this._options = options
+    this._options = defaults(options, {
+      variations: [],
+      styles: {},
+      name: 'Unnamed'
+    })
 
     const { hashedStyles } = this._adonis.getOptions()
     if (hashedStyles && typeof this._options.styles !== 'string') {
