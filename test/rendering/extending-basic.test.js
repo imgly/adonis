@@ -16,8 +16,8 @@ describe('extending an adonis component', () => {
     })
     const { html, css } = render(adonis, <OverriddenWrapper />)
 
-    html.should.equal('<div class="div-tcorpq__AdonisComponent-1nxhvta"></div>')
-    css.content.should.equal(`.div-tcorpq__AdonisComponent-1nxhvta {\n  background: blue;\n  padding: 5px;\n}`)
+    html.should.equal('<div class="div-tcorpq__div-1nxhvta"></div>')
+    css.content.should.equal(`.div-tcorpq__div-1nxhvta {\n  background: blue;\n  padding: 5px;\n}`)
   })
 
   describe('when passing a name', () => {

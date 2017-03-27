@@ -91,7 +91,7 @@ describe('injection', () => {
           background: 'blue'
         })
 
-        styleNode.innerHTML.should.equal('.div-tcorpq {\n  background: red;\n  padding: 5px;\n}\n\n.div-tcorpq__AdonisComponent-1nxhvta {\n  background: blue;\n  padding: 5px;\n}')
+        styleNode.innerHTML.should.equal('.div-tcorpq {\n  background: red;\n  padding: 5px;\n}\n\n.div-tcorpq__div-1nxhvta {\n  background: blue;\n  padding: 5px;\n}')
       })
     })
 

@@ -1,6 +1,7 @@
 import Adonis from '../../src'
 import React from 'react'
 import jsdom from 'mocha-jsdom'
+import sinon from 'sinon'
 import { render } from '../utils'
 import { mount } from 'enzyme'
 
@@ -9,12 +10,6 @@ let styleNode
 describe('with variations', () => {
   jsdom()
   it('should render correctly', () => {
-    class App extends React.Component {
-      render () {
-        return <Button primary red={false} />
-      }
-    }
-
     const Button = adonis.div({
       border: '1px solid black',
       padding: '10px 5px'
@@ -26,7 +21,7 @@ describe('with variations', () => {
         background: 'red'
       }
     })
-    const { html, css } = render(adonis, <App />)
+    const { html, css } = render(adonis, <Button primary red={false} />)
 
     html.should.equal('<div class="div-18550lg--primary-1nxhvta"></div>')
     css.content.should.equal(`.div-18550lg--primary-1nxhvta {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: blue;\n}`)
@@ -34,12 +29,6 @@ describe('with variations', () => {
 
   describe('when passing a name', () => {
     it('should render correctly', () => {
-      class App extends React.Component {
-        render () {
-          return <Button primary red={false} />
-        }
-      }
-
       const Button = adonis.div({
         border: '1px solid black',
         padding: '10px 5px'
@@ -52,7 +41,7 @@ describe('with variations', () => {
         }
       }, 'Button')
 
-      const { html, css } = render(adonis, <App />)
+      const { html, css } = render(adonis, <Button primary red={false} />)
 
       html.should.equal('<div class="Button-18550lg--primary-1nxhvta"></div>')
       css.content.should.equal(`.Button-18550lg--primary-1nxhvta {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: blue;\n}`)
@@ -63,12 +52,6 @@ describe('with variations', () => {
 describe('with multiple variations passed to component', () => {
   jsdom()
   it('should render variations in alphabetical order', () => {
-    class App extends React.Component {
-      render () {
-        return <Button red primary />
-      }
-    }
-
     const Button = adonis.div({
       border: '1px solid black',
       padding: '10px 5px'
@@ -80,10 +63,89 @@ describe('with multiple variations passed to component', () => {
         background: 'blue'
       }
     })
-    const { html, css } = render(adonis, <App />)
+    const { html, css } = render(adonis, <Button red primary />)
 
     html.should.equal('<div class="div-18550lg--primary-1nxhvta--red-10ip45p"></div>')
     css.content.should.equal(`.div-18550lg--primary-1nxhvta--red-10ip45p {\n  border: 1px solid black;\n  padding: 10px 5px;\n  background: red;\n}`)
+  })
+})
+
+describe('passing variations to extended components', () => {
+  it('should apply variations of inherited objects', () => {
+    const Base = adonis.div({}, {
+      variation: {
+        color: 'blue',
+        border: '1px solid red'
+      }
+    })
+    const Extended = adonis(Base)({}, {
+      variation: {
+        color: 'red',
+        backgroundColor: 'blue'
+      }
+    })
+
+    const { html, css } = render(adonis, <Extended variation />)
+  })
+
+  describe('with multiple levels of inheritance', () => {
+    it('should apply variations of inherited objects', () => {
+      const Base = adonis.div({})
+      const Extended = adonis(Base)({}, {
+        variation: {
+          color: 'blue',
+          border: '1px solid red'
+        }
+      })
+      const MoreExtended = adonis(Extended)({}, {
+        variation: {
+          color: 'red',
+          backgroundColor: 'blue'
+        }
+      })
+
+      const { html, css } = render(adonis, <MoreExtended variation />)
+
+      html.should.equal('<div class="div-120drhm__div-120drhm--variation-1y3uwt9__div-120drhm--variation-1ffa41k"></div>')
+      css.content.should.equal('.div-120drhm__div-120drhm--variation-1y3uwt9__div-120drhm--variation-1ffa41k {\n  color: blue;\n  background-color: blue;\n  border: 1px solid red;\n}')
+    })
+  })
+
+  describe('when variation does not exist on extended component', () => {
+    beforeEach(() => {
+      sinon.spy(console, 'error')
+    })
+
+    afterEach(() => {
+      console.error.restore()
+    })
+
+    it('should not pass the variation to the tag', () => {
+      const Base = adonis.div({})
+      const Extended = adonis(Base)({}, {
+        variation: {}
+      })
+
+      render(adonis, <Extended variation />)
+
+      // React prints a warning when an invalid prop is passed to an element / tag
+      console.error.should.not.be.called()
+    })
+
+    describe('with multiple levels of inheritance', () => {
+      it('should not pass the variation to the tag', () => {
+        const Base = adonis.div({})
+        const Extended = adonis(Base)({})
+        const MoreExtended = adonis(Extended)({}, {
+          variation: {}
+        })
+
+        render(adonis, <MoreExtended variation />)
+
+        // React prints a warning when an invalid prop is passed to an element / tag
+        console.error.should.not.be.called()
+      })
+    })
   })
 })
 
