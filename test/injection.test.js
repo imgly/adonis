@@ -173,6 +173,24 @@ describe('injection', () => {
     })
   })
 
+  describe('when rendering the same component multiple times', () => {
+    beforeEach(() => {
+      adonis = new Adonis({
+        styleNode,
+        batchInjection: false
+      })
+    })
+
+    it('should not inject the same class twice', () => {
+      const ButtonA = adonis.div({
+        background: 'red'
+      }, 'ButtonA')
+
+      mount(<div><ButtonA /><ButtonA /></div>)
+      styleNode.innerHTML.should.equal('.ButtonA-10ip45p {\n  background: red;\n}')
+    })
+  })
+
   describe('set to `false`', () => {
     beforeEach(() => {
       adonis = new Adonis({
