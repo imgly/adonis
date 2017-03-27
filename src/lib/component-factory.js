@@ -61,13 +61,14 @@ export default class ComponentFactory {
     const isAdonisComponent = target.prototype instanceof BaseAdonisComponent
     const isComponent = !isAdonisComponent && target.prototype instanceof Component
 
-    const { styles, variations, baseStyles } = options
+    let { styles, variations, baseStyles } = options
+    variations = variations || {}
     const stylesObject = new Styles(adonis, { styles, variations, name })
 
-    let allStyles, stylesManager
     const { injection, theme, hashedStyles } = adonis.getOptions()
     if (injection === 'pre' && !hashedStyles) {
       const targetStyles = this._getTargetStyles(target)
+      let allStyles, stylesManager
       allStyles = targetStyles.concat([baseStyles, stylesObject]).filter(s => s)
       stylesManager = new PreinjectionStylesManager(adonis, allStyles, theme)
 
@@ -84,6 +85,8 @@ export default class ComponentFactory {
         this._adonis = adonis
       }
 
+      static get name () { return name }
+
       /**
        * Updates the styles manager for the given props
        * @param  {Object} props
@@ -91,8 +94,8 @@ export default class ComponentFactory {
        */
       _updateStylesManager (props = this.props) {
         const activeVariations = this._getActiveVariationsFromProps(props)
-        allStyles = [baseStyles, stylesObject, props.styles].filter(s => s)
-        stylesManager = new StylesManager(adonis, allStyles, activeVariations, this.context.theme)
+        let allStyles = [baseStyles, stylesObject].concat(props.styles || []).filter(s => s)
+        this._stylesManager = new StylesManager(adonis, allStyles, activeVariations, this.context.theme)
       }
 
       /**
@@ -136,9 +139,10 @@ export default class ComponentFactory {
        * @private
        */
       _getActiveVariationsFromProps (props = this.props) {
-        const { variations } = options
-        return Object.keys(variations || {})
-          .filter((variation) => !!props[variation])
+        const passedVariations = this.props._activeParentVariations || []
+        return Object.keys(props)
+          .filter(p => props[p] === true)
+          .filter((p) => variations[p] || passedVariations.indexOf(p) !== -1)
           .sort()
       }
 
@@ -155,7 +159,8 @@ export default class ComponentFactory {
         classNames.push(passedClassName)
 
         // Generate a class name for this component
-        classNames.push(stylesManager.getClassName())
+        const generatedClassName = this._stylesManager.getClassName()
+        classNames.push(generatedClassName)
 
         return { className: classNames.filter(c => c).join(' ') }
       }
@@ -180,7 +185,7 @@ export default class ComponentFactory {
         const { className } = this._buildClassName()
         const stylesBuffer = this._adonis.getStylesBuffer()
         if (this._shouldInjectCSS()) {
-          stylesBuffer.bufferRulesets(stylesManager.generateCSS())
+          stylesBuffer.bufferRulesets(this._stylesManager.generateCSS())
 
           if (injection === true && !hashedStyles) {
             stylesBuffer.flushToStyleTag()
@@ -194,6 +199,12 @@ export default class ComponentFactory {
           Object.keys(variations || {})
             .forEach((variation) => {
               delete elementProps[variation]
+            });
+
+          // Remove variations passed from parent
+          (this.props._activeParentVariations || [])
+            .forEach((variation) => {
+              delete elementProps[variation]
             })
         }
 
@@ -201,7 +212,9 @@ export default class ComponentFactory {
         if (isTag) {
           elementProps.className = className
         } else {
-          elementProps.styles = stylesObject
+          elementProps.styles = flatten((this.props.styles || []).concat([stylesObject]))
+          elementProps._activeParentVariations = Object.keys(variations || {})
+            .concat(this.props._activeParentVariations || [])
         }
 
         // Pass ref
@@ -218,6 +231,7 @@ export default class ComponentFactory {
         if (isTag) {
           delete elementProps.styles
           delete elementProps.innerRef
+          delete elementProps._activeParentVariations
         }
 
         return React.createElement(target, elementProps, children)
