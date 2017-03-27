@@ -1,3 +1,5 @@
+import { requestAnimationFrame } from './utils'
+
 export default class StylesBuffer {
   constructor (adonis) {
     this._adonis = adonis
@@ -106,10 +108,10 @@ export default class StylesBuffer {
   }
 
   /**
-   * Flushes the buffered css rules to the style node
+   * Actually flushes the css rules to the style node
+   * @private
    */
-  flushToStyleTag () {
-    if (!this._injectionEnabled) return
+  _flushToStyleTag () {
     const { injectionMode } = this._adonis.getOptions()
 
     if (injectionMode === 'fast' && this._sheet.insertRule) {
@@ -121,5 +123,22 @@ export default class StylesBuffer {
     }
 
     this._buffer = []
+  }
+
+  /**
+   * Schedules the injection of css rules into the style node
+   */
+  flushToStyleTag () {
+    if (!this._injectionEnabled) return
+    const { batchInjection } = this._adonis.getOptions()
+
+    if (!this._nextTick && batchInjection) {
+      this._nextTick = requestAnimationFrame(() => {
+        this._nextTick = null
+        this._flushToStyleTag()
+      })
+    } else if (!batchInjection) {
+      this._flushToStyleTag()
+    }
   }
 }
