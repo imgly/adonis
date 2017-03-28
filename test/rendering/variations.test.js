@@ -71,23 +71,6 @@ describe('with multiple variations passed to component', () => {
 })
 
 describe('passing variations to extended components', () => {
-  it('should apply variations of inherited objects', () => {
-    const Base = adonis.div({}, {
-      variation: {
-        color: 'blue',
-        border: '1px solid red'
-      }
-    })
-    const Extended = adonis(Base)({}, {
-      variation: {
-        color: 'red',
-        backgroundColor: 'blue'
-      }
-    })
-
-    const { html, css } = render(adonis, <Extended variation />)
-  })
-
   describe('with multiple levels of inheritance', () => {
     it('should apply variations of inherited objects', () => {
       const Base = adonis.div({})

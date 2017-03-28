@@ -26,9 +26,10 @@ export default class PreinjectionStylesManager extends StylesManager {
     return allCombinations.map((variations) => {
       const className = this._generateClassName(variations)
       const selector = `.${className}`
-      return new Ruleset(this._adonis, selector, this._getCombinedStyles(variations), {
+      const ruleset = new Ruleset(this._adonis, selector, this._getCombinedStyles(variations), {
         theme: this._theme
       })
+      return [ruleset, ruleset.getSubRulesets()]
     })
   }
 
