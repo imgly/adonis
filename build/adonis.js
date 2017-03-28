@@ -2245,9 +2245,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return allCombinations.map(function (variations) {
 	        var className = _this2._generateClassName(variations);
 	        var selector = '.' + className;
-	        return new _ruleset2.default(_this2._adonis, selector, _this2._getCombinedStyles(variations), {
+	        var ruleset = new _ruleset2.default(_this2._adonis, selector, _this2._getCombinedStyles(variations), {
 	          theme: _this2._theme
 	        });
+	        return [ruleset, ruleset.getSubRulesets()];
 	      });
 	    }
 
