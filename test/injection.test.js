@@ -43,6 +43,25 @@ describe('injection', () => {
       styleNode.innerHTML.should.equal(css)
     })
 
+    describe('sub-trees', () => {
+      it('should also be applied to variations', () => {
+        const Knob = adonis.div({
+          ':before': {
+            display: 'block'
+          }
+        }, 'Knob')
+
+        adonis(Knob)({}, {
+          'top-left': {
+            top: 0,
+            left: 0
+          }
+        }, 'CornerKnob')
+
+        styleNode.innerHTML.should.equal('.Knob-hljvbz:before {\n  display: block;\n}\n\n.Knob-hljvbz__CornerKnob-120drhm:before {\n  display: block;\n}\n\n.Knob-hljvbz__CornerKnob-120drhm--top-left-idqzrk {\n  top: 0;\n  left: 0;\n}\n\n.Knob-hljvbz__CornerKnob-120drhm--top-left-idqzrk:before {\n  display: block;\n}')
+      })
+    })
+
     describe('with theme', () => {
       beforeEach(() => {
         adonis = new Adonis({
