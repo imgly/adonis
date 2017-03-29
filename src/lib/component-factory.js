@@ -140,9 +140,10 @@ export default class ComponentFactory {
        */
       _getActiveVariationsFromProps (props = this.props) {
         const passedVariations = this.props._activeParentVariations || []
+        const baseStyleVariations = (baseStyles && baseStyles.getVariationStyles()) || {}
         return Object.keys(props)
           .filter(p => props[p] === true)
-          .filter((p) => variations[p] || passedVariations.indexOf(p) !== -1)
+          .filter((p) => variations[p] || baseStyleVariations[p] || passedVariations.indexOf(p) !== -1)
           .sort()
       }
 
@@ -196,16 +197,28 @@ export default class ComponentFactory {
         // remove the prop from the props we pass to our target element
         if (isTag) {
           const { variations } = options
-          Object.keys(variations || {})
-            .forEach((variation) => {
-              delete elementProps[variation]
-            });
+          if (variations) {
+            Object.keys(variations)
+              .forEach((variation) => {
+                delete elementProps[variation]
+              })
+          }
 
           // Remove variations passed from parent
-          (this.props._activeParentVariations || [])
-            .forEach((variation) => {
-              delete elementProps[variation]
-            })
+          if (this.props._activeParentVariations) {
+            this.props._activeParentVariations
+              .forEach((variation) => {
+                delete elementProps[variation]
+              })
+          }
+
+          // Remove variations from base styles
+          if (baseStyles) {
+            baseStyles.getVariations()
+              .forEach(variation => {
+                delete elementProps[variation]
+              })
+          }
         }
 
         // We only need to pass the class name to tags, not to components

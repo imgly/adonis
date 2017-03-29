@@ -66,6 +66,8 @@ export default class Styles {
    */
   getVariationStyles (variations) {
     const { variations: allVariations } = this._options
+    if (!variations) return allVariations
+
     return variations
       .map(variation => allVariations[variation])
   }
