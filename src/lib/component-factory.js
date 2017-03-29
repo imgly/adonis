@@ -93,9 +93,10 @@ export default class ComponentFactory {
        * @private
        */
       _updateStylesManager (props = this.props) {
+        this._allStyles = [baseStyles, stylesObject].concat(props.styles || []).filter(s => s)
+
         const activeVariations = this._getActiveVariationsFromProps(props)
-        let allStyles = [baseStyles, stylesObject].concat(props.styles || []).filter(s => s)
-        this._stylesManager = new StylesManager(adonis, allStyles, activeVariations, this.context.theme)
+        this._stylesManager = new StylesManager(adonis, this._allStyles, activeVariations, this.context.theme)
       }
 
       /**
@@ -106,7 +107,10 @@ export default class ComponentFactory {
         const stylesChanged = props.styles !== this.props.styles
 
         let variationsChanged = false
-        Object.keys(variations || {})
+        const allVariations = flatten(this._allStyles
+          .map(s => s.getVariations()))
+
+        allVariations
           .forEach((variation) => {
             if (props[variation] !== this.props[variation]) {
               variationsChanged = true
@@ -139,11 +143,15 @@ export default class ComponentFactory {
        * @private
        */
       _getActiveVariationsFromProps (props = this.props) {
-        const passedVariations = this.props._activeParentVariations || []
-        const baseStyleVariations = (baseStyles && baseStyles.getVariationStyles()) || {}
-        return Object.keys(props)
+        const variationsSet = {}
+        this._allStyles
+          .forEach(s =>
+            s.getVariations()
+              .forEach(variation => variationsSet[variation] = true)
+          )
+
+        return Object.keys(variationsSet)
           .filter(p => props[p] === true)
-          .filter((p) => variations[p] || baseStyleVariations[p] || passedVariations.indexOf(p) !== -1)
           .sort()
       }
 
