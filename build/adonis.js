@@ -1139,11 +1139,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	          value: function _updateStylesManager() {
 	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
-	            var activeVariations = this._getActiveVariationsFromProps(props);
-	            var allStyles = [baseStyles, stylesObject].concat(props.styles || []).filter(function (s) {
+	            this._allStyles = [baseStyles, stylesObject].concat(props.styles || []).filter(function (s) {
 	              return s;
 	            });
-	            this._stylesManager = new _stylesManager2.default(adonis, allStyles, activeVariations, this.context.theme);
+
+	            var activeVariations = this._getActiveVariationsFromProps(props);
+	            this._stylesManager = new _stylesManager2.default(adonis, this._allStyles, activeVariations, this.context.theme);
 	          }
 
 	          /**
@@ -1159,7 +1160,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var stylesChanged = props.styles !== this.props.styles;
 
 	            var variationsChanged = false;
-	            Object.keys(variations || {}).forEach(function (variation) {
+	            var allVariations = (0, _utils.flatten)(this._allStyles.map(function (s) {
+	              return s.getVariations();
+	            }));
+
+	            allVariations.forEach(function (variation) {
 	              if (props[variation] !== _this2.props[variation]) {
 	                variationsChanged = true;
 	              }
@@ -1200,12 +1205,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	          value: function _getActiveVariationsFromProps() {
 	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
-	            var passedVariations = this.props._activeParentVariations || [];
-	            var baseStyleVariations = baseStyles && baseStyles.getVariationStyles() || {};
-	            return Object.keys(props).filter(function (p) {
+	            var variationsSet = {};
+	            this._allStyles.forEach(function (s) {
+	              return s.getVariations().forEach(function (variation) {
+	                return variationsSet[variation] = true;
+	              });
+	            });
+
+	            return Object.keys(variationsSet).filter(function (p) {
 	              return props[p] === true;
-	            }).filter(function (p) {
-	              return variations[p] || baseStyleVariations[p] || passedVariations.indexOf(p) !== -1;
 	            }).sort();
 	          }
 
