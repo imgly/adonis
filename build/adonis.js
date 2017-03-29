@@ -1201,10 +1201,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
 	            var passedVariations = this.props._activeParentVariations || [];
+	            var baseStyleVariations = baseStyles && baseStyles.getVariationStyles() || {};
 	            return Object.keys(props).filter(function (p) {
 	              return props[p] === true;
 	            }).filter(function (p) {
-	              return variations[p] || passedVariations.indexOf(p) !== -1;
+	              return variations[p] || baseStyleVariations[p] || passedVariations.indexOf(p) !== -1;
 	            }).sort();
 	          }
 
@@ -1274,14 +1275,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (isTag) {
 	              var _variations = options.variations;
 
-	              Object.keys(_variations || {}).forEach(function (variation) {
-	                delete elementProps[variation];
-	              });
+	              if (_variations) {
+	                Object.keys(_variations).forEach(function (variation) {
+	                  delete elementProps[variation];
+	                });
+	              }
 
 	              // Remove variations passed from parent
-	              (this.props._activeParentVariations || []).forEach(function (variation) {
-	                delete elementProps[variation];
-	              });
+	              if (this.props._activeParentVariations) {
+	                this.props._activeParentVariations.forEach(function (variation) {
+	                  delete elementProps[variation];
+	                });
+	              }
+
+	              // Remove variations from base styles
+	              if (baseStyles) {
+	                baseStyles.getVariations().forEach(function (variation) {
+	                  delete elementProps[variation];
+	                });
+	              }
 	            }
 
 	            // We only need to pass the class name to tags, not to components
@@ -1488,6 +1500,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'getVariationStyles',
 	    value: function getVariationStyles(variations) {
 	      var allVariations = this._options.variations;
+
+	      if (!variations) return allVariations;
 
 	      return variations.map(function (variation) {
 	        return allVariations[variation];
