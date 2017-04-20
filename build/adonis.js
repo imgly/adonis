@@ -143,6 +143,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	  });
 
+	  // adonis.global(css)
+	  factory.global = function (css) {
+	    var _adonis$getOptions = adonis.getOptions(),
+	        injection = _adonis$getOptions.injection,
+	        theme = _adonis$getOptions.theme;
+
+	    if (!injection) return;
+
+	    if (typeof css === 'function') {
+	      css = css(theme);
+	    }
+
+	    var stylesBuffer = adonis.getStylesBuffer();
+	    stylesBuffer.bufferCSS(css);
+	    stylesBuffer.flushToStyleTag();
+	  };
+
 	  // adonis.css(styles, variations, name)
 	  factory.css = function (styles, variations, name) {
 	    if (typeof variations === 'string') {
@@ -567,6 +584,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      styleNode.setAttribute('data-adonis', true);
 	      document.head.appendChild(styleNode);
 	      return styleNode;
+	    }
+	  }, {
+	    key: 'bufferCSS',
+	    value: function bufferCSS(css) {
+	      this._buffer.push(css);
 	    }
 
 	    /**
