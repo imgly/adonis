@@ -51,6 +51,10 @@ export default class StylesBuffer {
     return styleNode
   }
 
+  bufferCSS (css) {
+    this._buffer.push(css)
+  }
+
   /**
    * Buffers the given array of css rulesets
    * @param  {String[][]} rulesets
