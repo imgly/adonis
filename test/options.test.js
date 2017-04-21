@@ -77,12 +77,12 @@ describe('options', () => {
     })
   })
 
-  describe('`selectorPrefix` option', () => {
+  describe('`classNamePrefix` option', () => {
     jsdom()
     describe('when set to `adonis-`', () => {
       beforeEach(() => {
         adonis = new Adonis({
-          selectorPrefix: 'adonis-'
+          classNamePrefix: 'adonis-'
         })
       })
 
@@ -98,6 +98,31 @@ describe('options', () => {
 
         html.should.equal(`<button class="adonis-baseStyles-1b2uzpk__button-ro0g1e"></button>`)
         css.content.should.equal('.adonis-baseStyles-1b2uzpk__button-ro0g1e {\n  background-color: blue;\n  cursor: pointer;\n}')
+      })
+    })
+  })
+
+  describe('`cssSelectorPrefix` option', () => {
+    jsdom()
+    describe('when set to `adonis-`', () => {
+      beforeEach(() => {
+        adonis = new Adonis({
+          cssSelectorPrefix: '.adonis-tests '
+        })
+      })
+
+      it('should prefix css selectors', () => {
+        const PrimaryBackgroundColor = adonis.css({
+          backgroundColor: 'blue'
+        })
+
+        const Button = adonis(PrimaryBackgroundColor).button({
+          cursor: 'pointer'
+        })
+        const { html, css } = render(adonis, <Button />)
+
+        html.should.equal(`<button class="baseStyles-1b2uzpk__button-ro0g1e"></button>`)
+        css.content.should.equal('.adonis-tests .baseStyles-1b2uzpk__button-ro0g1e {\n  background-color: blue;\n  cursor: pointer;\n}')
       })
     })
   })

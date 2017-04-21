@@ -219,7 +219,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param {Boolean} [options.minified = false] Should the resulting CSS be minified?
 	   * @param {Boolean} [options.autoPrefix = true] Should adonis automatically add vendor prefixes to
 	   *                                       CSS properties when necessary?
-	   * @param {String} [options.selectorPrefix = ''] The selector prepended to all CSS rules
+	   * @param {String} [options.cssSelectorPrefix = ''] The selector prepended to all CSS rules
+	   * @param {String} [options.classNamePrefix = ''] The string prepended to all class names
 	   * @param {String} [options.hashSeparator = '-'] The string that is used to separate element names
 	   *                                         from their hashes
 	   * @param {String} [options.nameSeparator = '__'] The string that is used to separate multiple
@@ -244,7 +245,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      batchInjection: true,
 	      minified: false,
 	      autoPrefix: true,
-	      selectorPrefix: '',
+	      cssSelectorPrefix: '',
+	      classNamePrefix: '',
 	      hashSeparator: '-',
 	      nameSeparator: '__',
 	      variationSeparator: '--',
@@ -1655,9 +1657,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var _adonis$getOptions = this._adonis.getOptions(),
 	          nameSeparator = _adonis$getOptions.nameSeparator,
-	          selectorPrefix = _adonis$getOptions.selectorPrefix;
+	          classNamePrefix = _adonis$getOptions.classNamePrefix;
 
-	      return selectorPrefix + this._styles.map(function (style) {
+	      return classNamePrefix + this._styles.map(function (style) {
 	        return style.getIdentifierForVariations(activeVariations);
 	      }).join(nameSeparator);
 	    }
@@ -1809,11 +1811,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'toCSS',
 	    value: function toCSS() {
 	      var _adonis$getOptions3 = this._adonis.getOptions(),
-	          minified = _adonis$getOptions3.minified;
+	          minified = _adonis$getOptions3.minified,
+	          cssSelectorPrefix = _adonis$getOptions3.cssSelectorPrefix;
 
 	      if (this._declarations.length === 0) return null;
 
-	      var css = '';
+	      var css = cssSelectorPrefix;
 	      var indentation = '';
 	      if (this._options.parentSelector) {
 	        css += this._options.parentSelector + (minified ? '{' : ' {\n');
