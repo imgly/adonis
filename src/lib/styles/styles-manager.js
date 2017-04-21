@@ -58,8 +58,8 @@ export default class StylesManager {
    * @private
    */
   _generateClassName (activeVariations = []) {
-    const { nameSeparator, selectorPrefix } = this._adonis.getOptions()
-    return selectorPrefix + this._styles
+    const { nameSeparator, classNamePrefix } = this._adonis.getOptions()
+    return classNamePrefix + this._styles
       .map((style) => style.getIdentifierForVariations(activeVariations))
       .join(nameSeparator)
   }

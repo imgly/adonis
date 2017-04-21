@@ -15,7 +15,8 @@ export default class Adonis {
    * @param {Boolean} [options.minified = false] Should the resulting CSS be minified?
    * @param {Boolean} [options.autoPrefix = true] Should adonis automatically add vendor prefixes to
    *                                       CSS properties when necessary?
-   * @param {String} [options.selectorPrefix = ''] The selector prepended to all CSS rules
+   * @param {String} [options.cssSelectorPrefix = ''] The selector prepended to all CSS rules
+   * @param {String} [options.classNamePrefix = ''] The string prepended to all class names
    * @param {String} [options.hashSeparator = '-'] The string that is used to separate element names
    *                                         from their hashes
    * @param {String} [options.nameSeparator = '__'] The string that is used to separate multiple
@@ -38,7 +39,8 @@ export default class Adonis {
       batchInjection: true,
       minified: false,
       autoPrefix: true,
-      selectorPrefix: '',
+      cssSelectorPrefix: '',
+      classNamePrefix: '',
       hashSeparator: '-',
       nameSeparator: '__',
       variationSeparator: '--',

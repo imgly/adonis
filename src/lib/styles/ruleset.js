@@ -70,11 +70,11 @@ export default class Ruleset {
    * @return {String}
    */
   toCSS () {
-    const { minified } = this._adonis.getOptions()
+    const { minified, cssSelectorPrefix } = this._adonis.getOptions()
 
     if (this._declarations.length === 0) return null
 
-    let css = ''
+    let css = cssSelectorPrefix
     let indentation = ''
     if (this._options.parentSelector) {
       css += this._options.parentSelector + (minified ? '{' : ' {\n')
