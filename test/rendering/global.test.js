@@ -40,6 +40,14 @@ describe('adonis.global(\'...\')', () => {
 
       styleNode.innerHTML.should.equal('')
     })
+
+    describe('and second argument (force) is `true`', () => {
+      it('should inject the rule', () => {
+        adonis.global('body, html {\n  background: red;\n}', true)
+
+        styleNode.innerHTML.should.equal('body, html {\n  background: red;\n}')
+      })
+    })
   })
 })
 

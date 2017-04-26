@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["react"], factory);
 	else if(typeof exports === 'object')
-		exports["adonis"] = factory(require("react"));
+		exports["Adonis"] = factory(require("react"));
 	else
-		root["adonis"] = factory(root["react"]);
+		root["Adonis"] = factory(root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_6__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -143,13 +143,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	  });
 
-	  // adonis.global(css)
+	  // adonis.global(css, force = false)
 	  factory.global = function (css) {
+	    var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
 	    var _adonis$getOptions = adonis.getOptions(),
 	        injection = _adonis$getOptions.injection,
 	        theme = _adonis$getOptions.theme;
 
-	    if (!injection) return;
+	    if (!injection && !force) return;
 
 	    if (typeof css === 'function') {
 	      css = css(theme);
@@ -157,7 +159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var stylesBuffer = adonis.getStylesBuffer();
 	    stylesBuffer.bufferCSS(css);
-	    stylesBuffer.flushToStyleTag();
+	    stylesBuffer.flushToStyleTag(force);
 	  };
 
 	  // adonis.css(styles, variations, name)
