@@ -56,10 +56,10 @@ export default (options) => {
     }
   })
 
-  // adonis.global(css)
-  factory.global = (css) => {
+  // adonis.global(css, force = false)
+  factory.global = (css, force = false) => {
     const { injection, theme } = adonis.getOptions()
-    if (!injection) return
+    if (!injection && !force) return
 
     if (typeof css === 'function') {
       css = css(theme)
@@ -67,7 +67,7 @@ export default (options) => {
 
     const stylesBuffer = adonis.getStylesBuffer()
     stylesBuffer.bufferCSS(css)
-    stylesBuffer.flushToStyleTag()
+    stylesBuffer.flushToStyleTag(force)
   }
 
   // adonis.css(styles, variations, name)
