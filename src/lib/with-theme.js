@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export default (ThemableComponent) => {
   class ComponentWithTheme extends React.Component {
@@ -34,7 +35,7 @@ export default (ThemableComponent) => {
   }
 
   ComponentWithTheme.contextTypes = {
-    theme: React.PropTypes.object
+    theme: PropTypes.object
   }
 
   return ComponentWithTheme
