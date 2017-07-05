@@ -50,7 +50,6 @@
     "mocha-jsdom": "^1.1.0",
     "mocha-sinon": "^1.1.6",
     "preprocess-loader": "^0.2.0",
-    "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "rimraf": "^2.5.1",
     "should": "^11.1.2",
@@ -60,6 +59,8 @@
   },
   "dependencies": {
     "aphrodite": "^1.1.0",
+    "react": "^15.4.2",
+    "prop-types": "^15.4.2",
     "react-dom": "^15.4.2"
   }
 }
