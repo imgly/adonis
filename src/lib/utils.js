@@ -137,7 +137,7 @@ export const deepMerge = (target, source) => {
 export const deepMergeAll = arr => arr.reduce(
   (prev, next) => {
     return deepMerge(prev, next)
-  }
+  }, {}
 )
 
 /**

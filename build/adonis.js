@@ -909,7 +909,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var deepMergeAll = exports.deepMergeAll = function deepMergeAll(arr) {
 	  return arr.reduce(function (prev, next) {
 	    return deepMerge(prev, next);
-	  });
+	  }, {});
 	};
 
 	/**
