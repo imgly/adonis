@@ -70,6 +70,7 @@ export default class Styles {
 
     return variations
       .map(variation => allVariations[variation])
+      .filter(v => v)
   }
 
   /**
