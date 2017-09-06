@@ -70,24 +70,38 @@ export default class Ruleset {
    * @return {String}
    */
   toCSS () {
+    const { parentSelector } = this._options
     const { minified, cssSelectorPrefix } = this._adonis.getOptions()
 
     if (this._declarations.length === 0) return null
 
-    let css = cssSelectorPrefix
+    const parentIsAtRule = parentSelector && parentSelector.match(/^@/)
+
+    let css = ''
     let indentation = ''
-    if (this._options.parentSelector) {
-      css += this._options.parentSelector + (minified ? '{' : ' {\n')
+    if (parentSelector) {
+      if (cssSelectorPrefix && !parentIsAtRule) {
+        css += cssSelectorPrefix
+      }
+      css += parentSelector + (minified ? '{' : ' {\n')
       indentation = '  '
+    } else {
+      css += cssSelectorPrefix
     }
 
-    css += indentation + this._selector + (minified ? '{' : ' {\n')
+    let selector = ''
+    if (cssSelectorPrefix && parentIsAtRule) {
+      selector += cssSelectorPrefix
+    }
+    selector += this._selector
+
+    css += indentation + selector + (minified ? '{' : ' {\n')
     this._declarations.forEach(rule => {
       css += indentation + rule.toCSS() + (minified ? '' : '\n')
     })
     css += indentation + '}'
 
-    if (this._options.parentSelector) {
+    if (parentSelector) {
       css += minified ? '}' : '\n}'
     }
     return css
