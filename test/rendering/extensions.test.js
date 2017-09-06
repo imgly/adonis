@@ -3,7 +3,7 @@ import React from 'react'
 import jsdom from 'mocha-jsdom'
 import { render } from '../utils'
 
-const adonis = new Adonis()
+let adonis = new Adonis()
 
 describe('extensions', () => {
   jsdom()
@@ -69,6 +69,25 @@ describe('extensions', () => {
 
       const { css } = render(adonis, <Wrapper />)
       css.content.should.equal(`@media (max-width: 600px) {\n  .div-1o5ezx {\n    background: red;\n  }\n}`)
+    })
+
+    describe('when `cssSelectorPrefix` is specified', () => {
+      beforeEach(() => {
+        adonis = new Adonis({
+          cssSelectorPrefix: '.foo '
+        })
+      })
+
+      it('should render correctly', () => {
+        const Wrapper = adonis.div({
+          '@media (max-width: 600px)': {
+            background: 'red'
+          }
+        })
+
+        const { css } = render(adonis, <Wrapper />)
+        css.content.should.equal(`@media (max-width: 600px) {\n  .foo .div-1o5ezx {\n    background: red;\n  }\n}`)
+      })
     })
   })
 })
