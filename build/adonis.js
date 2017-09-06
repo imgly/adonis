@@ -2701,26 +2701,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'toCSS',
 	    value: function toCSS() {
+	      var parentSelector = this._options.parentSelector;
+
 	      var _adonis$getOptions3 = this._adonis.getOptions(),
 	          minified = _adonis$getOptions3.minified,
 	          cssSelectorPrefix = _adonis$getOptions3.cssSelectorPrefix;
 
 	      if (this._declarations.length === 0) return null;
 
-	      var css = cssSelectorPrefix;
+	      var parentIsAtRule = parentSelector && parentSelector.match(/^@/);
+
+	      var css = '';
 	      var indentation = '';
-	      if (this._options.parentSelector) {
-	        css += this._options.parentSelector + (minified ? '{' : ' {\n');
+	      if (parentSelector) {
+	        if (cssSelectorPrefix && !parentIsAtRule) {
+	          css += cssSelectorPrefix;
+	        }
+	        css += parentSelector + (minified ? '{' : ' {\n');
 	        indentation = '  ';
+	      } else {
+	        css += cssSelectorPrefix;
 	      }
 
-	      css += indentation + this._selector + (minified ? '{' : ' {\n');
+	      var selector = '';
+	      if (cssSelectorPrefix && parentIsAtRule) {
+	        selector += cssSelectorPrefix;
+	      }
+	      selector += this._selector;
+
+	      css += indentation + selector + (minified ? '{' : ' {\n');
 	      this._declarations.forEach(function (rule) {
 	        css += indentation + rule.toCSS() + (minified ? '' : '\n');
 	      });
 	      css += indentation + '}';
 
-	      if (this._options.parentSelector) {
+	      if (parentSelector) {
 	        css += minified ? '}' : '\n}';
 	      }
 	      return css;
