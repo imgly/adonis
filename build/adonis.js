@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"));
+		module.exports = factory(require("react"), require("prop-types"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react"], factory);
+		define(["react", "prop-types"], factory);
 	else if(typeof exports === 'object')
-		exports["adonis"] = factory(require("react"));
+		exports["Adonis"] = factory(require("react"), require("prop-types"));
 	else
-		root["adonis"] = factory(root["react"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_3__) {
+		root["Adonis"] = factory(root["React"], root["PropTypes"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_6__, __WEBPACK_EXTERNAL_MODULE_8__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -52,110 +52,948 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.hashObject = exports.ThemeProvider = exports.withTheme = exports.preRenderCSS = exports.StyleSheetServer = exports.StyleSheetTestUtils = exports.StyleSheet = exports.css = exports.defaultExport = undefined;
+	exports.ThemeProvider = exports.withTheme = undefined;
 
-	var _exports = __webpack_require__(1);
+	var _adonis = __webpack_require__(1);
 
-	var _exports2 = _interopRequireDefault(_exports);
+	var _adonis2 = _interopRequireDefault(_adonis);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _domElements = __webpack_require__(20);
 
-	var _buildExports = (0, _exports2.default)({
-	  noInjection: (undefined),
-	  noObjectStyles: (undefined),
-	  preInjection: (undefined)
-	}),
-	    defaultExport = _buildExports.defaultExport,
-	    css = _buildExports.css,
-	    StyleSheet = _buildExports.StyleSheet,
-	    StyleSheetTestUtils = _buildExports.StyleSheetTestUtils,
-	    StyleSheetServer = _buildExports.StyleSheetServer,
-	    preRenderCSS = _buildExports.preRenderCSS,
-	    withTheme = _buildExports.withTheme,
-	    ThemeProvider = _buildExports.ThemeProvider,
-	    hashObject = _buildExports.hashObject;
+	var _domElements2 = _interopRequireDefault(_domElements);
 
-	exports.default = defaultExport;
-	exports.defaultExport = defaultExport;
-	exports.css = css;
-	exports.StyleSheet = StyleSheet;
-	exports.StyleSheetTestUtils = StyleSheetTestUtils;
-	exports.StyleSheetServer = StyleSheetServer;
-	exports.preRenderCSS = preRenderCSS;
-	exports.withTheme = withTheme;
-	exports.ThemeProvider = ThemeProvider;
-	exports.hashObject = hashObject;
+	var _baseStyles = __webpack_require__(21);
 
-/***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
+	var _baseStyles2 = _interopRequireDefault(_baseStyles);
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _themeProvider = __webpack_require__(2);
-
-	var _themeProvider2 = _interopRequireDefault(_themeProvider);
-
-	var _withTheme = __webpack_require__(4);
+	var _withTheme = __webpack_require__(22);
 
 	var _withTheme2 = _interopRequireDefault(_withTheme);
 
-	var _prerenderCss = __webpack_require__(5);
+	var _themeProvider = __webpack_require__(23);
 
-	var _prerenderCss2 = _interopRequireDefault(_prerenderCss);
+	var _themeProvider2 = _interopRequireDefault(_themeProvider);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = function () {
-	  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	exports.default = function (options) {
+	  var adonis = new _adonis2.default(options);
 
-	  var StyleSheet = void 0,
-	      css = void 0,
-	      StyleSheetServer = void 0,
-	      StyleSheetTestUtils = void 0;
+	  // adonis()
+	  var factory = function factory(target) {
+	    if (target instanceof _baseStyles2.default) {
+	      // adonis(BaseStyles).div(styles, variations, name)
+	      var baseStyles = target;
+	      var _factory = {};
+	      _domElements2.default.forEach(function (domElement) {
+	        _factory[domElement] = function (styles, variations, name) {
+	          if (typeof variations === 'string') {
+	            name = variations;
+	            variations = undefined;
+	          }
 
-	  if (!options.noObjectStyles) {
-	    var OriginalStyleSheet = __webpack_require__(6).StyleSheet;
+	          return adonis.createComponent(domElement, {
+	            styles: styles, variations: variations, name: name, baseStyles: baseStyles
+	          });
+	        };
+	      });
+	      return _factory;
+	    } else {
+	      // adonis(Component)(styles, variations, name)
+	      // adonis(AdonisComponent)(styles, variations, name)
+	      return function (styles, variations, name) {
+	        if (typeof variations === 'string') {
+	          name = variations;
+	          variations = undefined;
+	        }
 
-	    // Extensions
-	    var ImmediateChildExtension = __webpack_require__(32).default;
-	    var ExtendedStyleSheet = OriginalStyleSheet.extend([ImmediateChildExtension]);
-
-	    StyleSheet = ExtendedStyleSheet.StyleSheet;
-	    css = ExtendedStyleSheet.css;
-	    StyleSheetServer = ExtendedStyleSheet.StyleSheetServer;
-	    StyleSheetTestUtils = ExtendedStyleSheet.StyleSheetTestUtils;
-	  }
-	  //
-
-	  var adonis = __webpack_require__(33)(options, { StyleSheet: StyleSheet, StyleSheetTestUtils: StyleSheetTestUtils, css: css });
-
-	  return {
-	    defaultExport: adonis,
-	    StyleSheet: StyleSheet,
-	    StyleSheetServer: StyleSheetServer,
-	    StyleSheetTestUtils: StyleSheetTestUtils,
-	    css: css,
-	    ThemeProvider: _themeProvider2.default,
-	    preRenderCSS: (0, _prerenderCss2.default)(adonis, options, StyleSheetServer),
-	    withTheme: _withTheme2.default
+	        return adonis.createComponent(target, {
+	          styles: styles, variations: variations, name: name
+	        });
+	      };
+	    }
 	  };
+
+	  // adonis.div(styles, variations, name)
+	  _domElements2.default.forEach(function (domElement) {
+	    factory[domElement] = function (styles, variations, name) {
+	      if (typeof variations === 'string') {
+	        name = variations;
+	        variations = undefined;
+	      }
+
+	      return adonis.createComponent(domElement, {
+	        styles: styles, variations: variations, name: name
+	      });
+	    };
+	  });
+
+	  // adonis.global(css, force = false)
+	  factory.global = function (css) {
+	    var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+	    var _adonis$getOptions = adonis.getOptions(),
+	        injection = _adonis$getOptions.injection,
+	        theme = _adonis$getOptions.theme;
+
+	    if (!injection && !force) return;
+
+	    if (typeof css === 'function') {
+	      css = css(theme);
+	    }
+
+	    var stylesBuffer = adonis.getStylesBuffer();
+	    stylesBuffer.bufferCSS(css);
+	    stylesBuffer.flushToStyleTag(force);
+	  };
+
+	  // adonis.css(styles, variations, name)
+	  factory.css = function (styles, variations, name) {
+	    if (typeof variations === 'string') {
+	      name = variations;
+	      variations = undefined;
+	    }
+
+	    return new _baseStyles2.default(adonis, { styles: styles, variations: variations, name: name || 'baseStyles' });
+	  };
+
+	  // Proxy some methods
+	  ['renderToStatic'].forEach(function (prop) {
+	    factory[prop] = adonis[prop].bind(adonis);
+	  });
+
+	  return factory;
 	};
 
-/***/ },
+	exports.withTheme = _withTheme2.default;
+	exports.ThemeProvider = _themeProvider2.default;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _stylesBuffer = __webpack_require__(3);
+
+	var _stylesBuffer2 = _interopRequireDefault(_stylesBuffer);
+
+	var _componentFactory = __webpack_require__(5);
+
+	var _componentFactory2 = _interopRequireDefault(_componentFactory);
+
+	var _utils = __webpack_require__(4);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var production = typeof process !== 'undefined' && process.env.NODE_ENV === 'production';
+
+	var Adonis = function () {
+	  /**
+	   * @param  {Object} [options]
+	   * @param  {Boolean|String} [options.injection = true] If `true`, styles will be injected on render,
+	   *                                              if `false`, they will not be injected. If set to
+	   *                                              `pre`, styles are injected before rendering.
+	   * @param {Boolean} [options.batchInjection = true] Should CSS injections be batched?
+	   * @param {Boolean} [options.minified = false] Should the resulting CSS be minified?
+	   * @param {Boolean} [options.autoPrefix = true] Should adonis automatically add vendor prefixes to
+	   *                                       CSS properties when necessary?
+	   * @param {String} [options.cssSelectorPrefix = ''] The selector prepended to all CSS rules
+	   * @param {String} [options.classNamePrefix = ''] The string prepended to all class names
+	   * @param {String} [options.hashSeparator = '-'] The string that is used to separate element names
+	   *                                         from their hashes
+	   * @param {String} [options.nameSeparator = '__'] The string that is used to separate multiple
+	   *                                        styled elements
+	   * @param {String} [options.variationSeparator = '--'] The string that is used to separate element
+	   *                                             identifiers from variation identifiers
+	   * @param {DOMElement} [options.styleNode] The <style> node that the CSS should be appended to
+	   * @param {String} [options.injectionMode] `fast` injects the css using a browser-backed stylesheet
+	   *                                         while `debug` injects it using text nodes, which makes
+	   *                                         the styles debuggable and editable in the browser.
+	   *                                         Default is `fast` for production, `debug` otherwise.
+	   * @param {Boolean} [options.hashedStyles = false] When set to true, adonis expects string hashes
+	   *                                        instead of style objects. This is useful when you are
+	   *                                        using external CSS files and don't want your production
+	   *                                        code to be full of style objects
+	   */
+	  function Adonis(options) {
+	    _classCallCheck(this, Adonis);
+
+	    this._options = (0, _utils.defaults)(options, {
+	      injection: true,
+	      batchInjection: true,
+	      minified: false,
+	      autoPrefix: true,
+	      cssSelectorPrefix: '',
+	      classNamePrefix: '',
+	      hashSeparator: '-',
+	      nameSeparator: '__',
+	      variationSeparator: '--',
+	      styleNode: null,
+	      injectionMode: production ? 'fast' : 'debug',
+	      hashedStyles: false
+	    });
+	    this._stylesBuffer = new _stylesBuffer2.default(this);
+	    this._componentFactory = new _componentFactory2.default(this, this._options);
+	  }
+
+	  /**
+	   * Creates an adonis component for the given target
+	   * @param  {String|React.Component|AdonisComponent} target
+	   * @param  {Object} options
+	   * @return {AdonisComponent}
+	   */
+
+
+	  _createClass(Adonis, [{
+	    key: 'createComponent',
+	    value: function createComponent(target, options) {
+	      return this._componentFactory.createComponent(target, options);
+	    }
+
+	    /**
+	     * Renders the styles created in `renderFn` to a string and returns it
+	     * @param  {Function} renderFn
+	     * @return {String}
+	     */
+
+	  }, {
+	    key: 'renderToStatic',
+	    value: function renderToStatic(renderFn) {
+	      this._stylesBuffer.disableInjection();
+
+	      var html = renderFn();
+
+	      var output = this._stylesBuffer.flushToString(true);
+	      this._stylesBuffer.enableInjection();
+
+	      return { css: { content: output }, html: html };
+	    }
+
+	    /**
+	     * Returns the styles buffer
+	     * @return {StylesBuffer}
+	     */
+
+	  }, {
+	    key: 'getStylesBuffer',
+	    value: function getStylesBuffer() {
+	      return this._stylesBuffer;
+	    }
+
+	    /**
+	     * Returns all options for this adonis instance
+	     * @return {Object}
+	     */
+
+	  }, {
+	    key: 'getOptions',
+	    value: function getOptions() {
+	      return this._options;
+	    }
+	  }]);
+
+	  return Adonis;
+	}();
+
+	exports.default = Adonis;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
+
+	// shim for using process in browser
+	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
+	(function () {
+	    try {
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
+	    }
+	    try {
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
+	    }
+	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+
+
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+
+
+
+	}
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = runTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    runClearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        runTimeout(drainQueue);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+	process.prependListener = noop;
+	process.prependOnceListener = noop;
+
+	process.listeners = function (name) { return [] }
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _utils = __webpack_require__(4);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var StylesBuffer = function () {
+	  function StylesBuffer(adonis) {
+	    _classCallCheck(this, StylesBuffer);
+
+	    this._adonis = adonis;
+	    this._injectionEnabled = true;
+	    this._bufferedSelectors = {};
+	    this._buffer = [];
+	    this._styleNode = this._findStyleNode();
+	    this._sheet = this._findSheet();
+	  }
+
+	  /**
+	   * Finds the Stylesheet for our style node
+	   * @return {CSSStyleSheet}
+	   * @private
+	   */
+
+
+	  _createClass(StylesBuffer, [{
+	    key: '_findSheet',
+	    value: function _findSheet() {
+	      if (!this._styleNode) return;
+
+	      if (this._styleNode.sheet) {
+	        return this._styleNode.sheet;
+	      }
+
+	      // Find stylesheet
+	      var _document = document,
+	          styleSheets = _document.styleSheets;
+
+	      for (var i = 0; i < styleSheets.length; i++) {
+	        var styleSheet = styleSheets[i];
+	        if (styleSheet.ownerNode === this._styleNode) {
+	          return styleSheet;
+	        }
+	      }
+	    }
+
+	    /**
+	     * Finds the style node
+	     * @return {DOMElement}
+	     * @private
+	     */
+
+	  }, {
+	    key: '_findStyleNode',
+	    value: function _findStyleNode() {
+	      var _adonis$getOptions = this._adonis.getOptions(),
+	          styleNode = _adonis$getOptions.styleNode;
+
+	      if (styleNode) {
+	        return styleNode;
+	      }
+
+	      if (typeof document === 'undefined') return null;
+
+	      styleNode = document.createElement('style');
+	      styleNode.setAttribute('data-adonis', true);
+	      document.head.appendChild(styleNode);
+	      return styleNode;
+	    }
+	  }, {
+	    key: 'bufferCSS',
+	    value: function bufferCSS(css) {
+	      this._buffer.push(css);
+	    }
+
+	    /**
+	     * Buffers the given array of css rulesets
+	     * @param  {String[][]} rulesets
+	     */
+
+	  }, {
+	    key: 'bufferRulesets',
+	    value: function bufferRulesets(rulesets) {
+	      var _this = this;
+
+	      rulesets.forEach(function (_ref) {
+	        var _ref2 = _slicedToArray(_ref, 2),
+	            selector = _ref2[0],
+	            css = _ref2[1];
+
+	        _this._bufferedSelectors[selector] = true;
+	      });
+	      Array.prototype.push.apply(this._buffer, rulesets.map(function (_ref3) {
+	        var _ref4 = _slicedToArray(_ref3, 2),
+	            css = _ref4[1];
+
+	        return css;
+	      }));
+	    }
+
+	    /**
+	     * Checks if the given selector has been buffered already
+	     * @param  {String}  selector
+	     * @return {Boolean}
+	     */
+
+	  }, {
+	    key: 'isSelectorBuffered',
+	    value: function isSelectorBuffered(selector) {
+	      return this._bufferedSelectors[selector];
+	    }
+
+	    /**
+	     * Disables the injection
+	     */
+
+	  }, {
+	    key: 'disableInjection',
+	    value: function disableInjection() {
+	      this._injectionEnabled = false;
+	    }
+
+	    /**
+	     * Enables the injection
+	     */
+
+	  }, {
+	    key: 'enableInjection',
+	    value: function enableInjection() {
+	      this._injectionEnabled = true;
+	    }
+
+	    /**
+	     * Flushes the buffered CSS to a string and returns it
+	     * @param {Boolean} clearBufferedSelectors = false
+	     * @return {String}
+	     */
+
+	  }, {
+	    key: 'flushToString',
+	    value: function flushToString() {
+	      var clearBufferedSelectors = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+	      var _adonis$getOptions2 = this._adonis.getOptions(),
+	          minified = _adonis$getOptions2.minified;
+
+	      var content = this._buffer.join(minified ? '' : '\n\n');
+	      this._buffer = [];
+	      if (clearBufferedSelectors) {
+	        this._bufferedSelectors = {};
+	      }
+	      return content;
+	    }
+
+	    /**
+	     * Injects the css rules using CSSStyleSheet#insertRule
+	     * @private
+	     */
+
+	  }, {
+	    key: '_injectFast',
+	    value: function _injectFast() {
+	      var _this2 = this;
+
+	      this._buffer.forEach(function (rule) {
+	        _this2._sheet.insertRule(rule, _this2._sheet.cssRules.length);
+	      });
+	    }
+
+	    /**
+	     * Injects the css rules by appending text nodes to the style node
+	     * @private
+	     */
+
+	  }, {
+	    key: '_injectDebug',
+	    value: function _injectDebug() {
+	      var css = this.flushToString();
+	      if (!css) return;
+
+	      var _adonis$getOptions3 = this._adonis.getOptions(),
+	          minified = _adonis$getOptions3.minified;
+
+	      var hasContent = this._styleNode.innerHTML.length > 0;
+	      this._styleNode.appendChild(document.createTextNode((minified || !hasContent ? '' : '\n\n') + css));
+	    }
+
+	    /**
+	     * Actually flushes the css rules to the style node
+	     * @private
+	     */
+
+	  }, {
+	    key: '_flushToStyleTag',
+	    value: function _flushToStyleTag() {
+	      var _adonis$getOptions4 = this._adonis.getOptions(),
+	          injectionMode = _adonis$getOptions4.injectionMode;
+
+	      if (injectionMode === 'fast' && this._sheet.insertRule) {
+	        this._injectFast();
+	      } else if (injectionMode === 'debug') {
+	        this._injectDebug();
+	      } else {
+	        throw new Error('Unknown CSS injection mode: `' + injectionMode + '`');
+	      }
+
+	      this._buffer = [];
+	    }
+
+	    /**
+	     * Schedules the injection of css rules into the style node
+	     */
+
+	  }, {
+	    key: 'flushToStyleTag',
+	    value: function flushToStyleTag() {
+	      var _this3 = this;
+
+	      if (!this._injectionEnabled) return;
+
+	      var _adonis$getOptions5 = this._adonis.getOptions(),
+	          batchInjection = _adonis$getOptions5.batchInjection;
+
+	      if (!this._nextTick && batchInjection) {
+	        this._nextTick = (0, _utils.requestAnimationFrame)(function () {
+	          _this3._nextTick = null;
+	          _this3._flushToStyleTag();
+	        });
+	      } else if (!batchInjection) {
+	        this._flushToStyleTag();
+	      }
+	    }
+	  }]);
+
+	  return StylesBuffer;
+	}();
+
+	exports.default = StylesBuffer;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+	/**
+	 * Assigns own enumerable properties of source object(s) to the destination
+	 * object for all destination properties that resolve to undefined. Once a
+	 * property is set, additional values of the same property are ignored.
+	 * @param  {Object} object
+	 * @param  {Object} ...sources
+	 * @return {Object}
+	 */
+	var defaults = exports.defaults = function defaults(object) {
+	  for (var _len = arguments.length, sources = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	    sources[_key - 1] = arguments[_key];
+	  }
+
+	  // Shallow clone
+	  var newObject = {};
+	  for (var key in object) {
+	    newObject[key] = object[key];
+	  }
+
+	  // Clone sources
+	  for (var i = 0; i < sources.length; i++) {
+	    var source = sources[i];
+	    for (var _key2 in source) {
+	      if (typeof newObject[_key2] === 'undefined') {
+	        newObject[_key2] = source[_key2];
+	      }
+	    }
+	  }
+
+	  return newObject;
+	};
+
+	/**
+	 * JS Implementation of MurmurHash2
+	 *
+	 * @author Gary Court <gary.court@gmail.com>
+	 * @see http://github.com/garycourt/murmurhash-js
+	 * @author Austin Appleby <aappleby@gmail.com>
+	 * @see http://sites.google.com/site/murmurhash/
+	 *
+	 * @param {Object}
+	 * @return {String} Base 36 encoded hash result
+	 */
+	var hashObject = exports.hashObject = function hashObject(object) {
+	  var str = JSON.stringify(object);
+	  var l = str.length;
+	  var h = l;
+	  var i = 0;
+	  var k = void 0;
+
+	  while (l >= 4) {
+	    k = str.charCodeAt(i) & 0xff | (str.charCodeAt(++i) & 0xff) << 8 | (str.charCodeAt(++i) & 0xff) << 16 | (str.charCodeAt(++i) & 0xff) << 24;
+
+	    k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+	    k ^= k >>> 24;
+	    k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+
+	    h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16) ^ k;
+
+	    l -= 4;
+	    ++i;
+	  }
+
+	  /* eslint-disable no-fallthrough */ // forgive existing code
+	  switch (l) {
+	    case 3:
+	      h ^= (str.charCodeAt(i + 2) & 0xff) << 16;
+	    case 2:
+	      h ^= (str.charCodeAt(i + 1) & 0xff) << 8;
+	    case 1:
+	      h ^= str.charCodeAt(i) & 0xff;
+	      h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+	  }
+	  /* eslint-enable no-fallthrough */
+
+	  h ^= h >>> 13;
+	  h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
+	  h ^= h >>> 15;
+
+	  return (h >>> 0).toString(36);
+	};
+
+	/**
+	 * Returns a flattened version of the given array
+	 * @param  {Array} arr
+	 * @return {Array}
+	 */
+	var flatten = exports.flatten = function flatten(arr) {
+	  return arr.reduce(function (acc, val) {
+	    return acc.concat(Array.isArray(val) ? flatten(val) : val);
+	  }, []);
+	};
+
+	/**
+	 * Returns a copy of the given object, removing all properties that point to functions`
+	 * @param  {Object} obj
+	 * @return {Object}
+	 */
+	var toStaticStyles = exports.toStaticStyles = function toStaticStyles(obj) {
+	  var newObject = {};
+	  for (var key in obj) {
+	    var value = obj[key];
+	    if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+	      newObject[key] = toStaticStyles(value);
+	    } else if (typeof value !== 'function') {
+	      newObject[key] = value;
+	    }
+	  }
+	  return newObject;
+	};
+
+	/**
+	 * Deep merges the given target and source
+	 * @param  {Object} target
+	 * @param  {Object} source
+	 * @return {Object}
+	 */
+	var deepMerge = exports.deepMerge = function deepMerge(target, source) {
+	  var destination = {};
+
+	  for (var key in target) {
+	    destination[key] = target[key];
+	  }
+
+	  for (var _key3 in source) {
+	    if (_typeof(source[_key3]) === 'object' && target[_key3]) {
+	      destination[_key3] = deepMerge(target[_key3], source[_key3]);
+	    } else {
+	      destination[_key3] = source[_key3];
+	    }
+	  }
+	  return destination;
+	};
+
+	/**
+	 * Deep merges the given objects
+	 * @param  {Object[]} arr
+	 * @return {Object}
+	 */
+	var deepMergeAll = exports.deepMergeAll = function deepMergeAll(arr) {
+	  return arr.reduce(function (prev, next) {
+	    return deepMerge(prev, next);
+	  }, {});
+	};
+
+	/**
+	 * Walks through the given object, if it finds a function, it calls it with the given `theme`
+	 * object and places the result at the same key
+	 * @param  {Object} object
+	 * @param  {Object} theme
+	 * @return {Object}
+	 */
+	var resolveStylesObject = exports.resolveStylesObject = function resolveStylesObject(object, theme) {
+	  var resolved = {};
+	  for (var key in object) {
+	    var value = object[key];
+	    if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+	      resolved[key] = resolveStylesObject(value, theme);
+	    } else if (typeof value === 'function') {
+	      if (!theme) {
+	        throw new Error('Trying to resolve a dynamic property without a `theme` given.');
+	      }
+	      resolved[key] = value(theme);
+	    } else {
+	      resolved[key] = value;
+	    }
+	  }
+	  return resolved;
+	};
+
+	/**
+	 * Returns all possible combinations for the given set of objects
+	 * @param  {*[]} set
+	 * @return {*[]}
+	 */
+	var findAllCombinations = exports.findAllCombinations = function findAllCombinations(set) {
+	  return function acc(xs, set) {
+	    var x = xs[0];
+
+	    if (typeof x === 'undefined') {
+	      return set;
+	    }
+
+	    for (var i = 0, l = set.length; i < l; ++i) {
+	      set.push(set[i].concat(x));
+	    }
+	    return acc(xs.slice(1), set);
+	  }(set, [[]]).slice(1);
+	};
+
+	/**
+	 * Polyfill for window.requestAnimationFrame
+	 * @return {Function}
+	 */
+	var requestAnimationFrame = exports.requestAnimationFrame = function () {
+	  var lastAF = 0;
+	  var root = typeof global === 'undefined' ? window : global;
+	  var rAF = root.requestAnimationFrame;
+
+	  var vendors = ['ms', 'moz', 'webkit', 'o'];
+	  for (var x = 0; x < vendors.length && !rAF; ++x) {
+	    rAF = root[vendors[x] + 'RequestAnimationFrame'];
+	  }
+
+	  if (!rAF && typeof root !== 'undefined' && root.setImmediate) {
+	    rAF = root.setImmediate;
+	  }
+
+	  if (!rAF) {
+	    rAF = function rAF(callback) {
+	      var currTime = new Date().getTime();
+	      var timeToCall = Math.max(0, 16 - (currTime - lastAF));
+	      var id = setTimeout(function () {
+	        callback(currTime + timeToCall);
+	      }, timeToCall);
+	      lastAF = currTime + timeToCall;
+	      return id;
+	    };
+	  }
+
+	  return rAF;
+	}();
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -165,9 +1003,1505 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _react = __webpack_require__(3);
+	var _react = __webpack_require__(6);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _utils = __webpack_require__(4);
+
+	var _baseAdonisComponent = __webpack_require__(7);
+
+	var _baseAdonisComponent2 = _interopRequireDefault(_baseAdonisComponent);
+
+	var _styles = __webpack_require__(9);
+
+	var _styles2 = _interopRequireDefault(_styles);
+
+	var _stylesManager = __webpack_require__(10);
+
+	var _stylesManager2 = _interopRequireDefault(_stylesManager);
+
+	var _preinjectionStylesManager = __webpack_require__(19);
+
+	var _preinjectionStylesManager2 = _interopRequireDefault(_preinjectionStylesManager);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var ComponentFactory = function () {
+	  function ComponentFactory(adonis, options) {
+	    _classCallCheck(this, ComponentFactory);
+
+	    this._adonis = adonis;
+	    this._options = options;
+	  }
+
+	  /**
+	   * Returns a string name for the given target
+	   * @param  {String|Object} target
+	   * @return {String}
+	   * @private
+	   */
+
+
+	  _createClass(ComponentFactory, [{
+	    key: '_getName',
+	    value: function _getName(target) {
+	      if (typeof target === 'string') return target;
+	      if (target.name) return target.name;
+	      return 'adonis';
+	    }
+
+	    /**
+	     * Returns the given target's styles. This function gets the styles recursively, meaning that
+	     * if the target has another target, it returns its styles as well.
+	     * @param  {ReactComponent|BaseAdonisComponent} target
+	     * @return {Styles[]}
+	     * @private
+	     */
+
+	  }, {
+	    key: '_getTargetStyles',
+	    value: function _getTargetStyles(target, name) {
+	      var styles = [target.adonisBaseStyles, target.adonisStyles];
+
+	      // Target has another target, get its styles
+	      if (target.adonisTarget) {
+	        styles.unshift(this._getTargetStyles(target.adonisTarget));
+	      }
+
+	      // Target has a RootElement that inherits styles
+	      if (target.RootElement) {
+	        styles.unshift(this._getTargetStyles(target.RootElement));
+	      }
+
+	      return (0, _utils.flatten)(styles).filter(function (s) {
+	        return s;
+	      });
+	    }
+
+	    /**
+	     * Creates an adonis component for the given target
+	     * @param  {String|React.Component|AdonisComponent} target
+	     * @param  {Object} options
+	     * @return {AdonisComponent}
+	     */
+
+	  }, {
+	    key: 'createComponent',
+	    value: function createComponent(target, options) {
+	      var adonis = this._adonis;
+	      var name = options.name;
+
+	      if (!name) name = this._getName(target);
+
+	      var isTag = typeof target === 'string';
+	      var isAdonisComponent = target.prototype instanceof _baseAdonisComponent2.default;
+	      var isComponent = !isAdonisComponent && target.prototype instanceof _react.Component;
+
+	      var styles = options.styles,
+	          variations = options.variations,
+	          baseStyles = options.baseStyles;
+
+	      variations = variations || {};
+	      var stylesObject = new _styles2.default(adonis, { styles: styles, variations: variations, name: name });
+
+	      var _adonis$getOptions = adonis.getOptions(),
+	          injection = _adonis$getOptions.injection,
+	          theme = _adonis$getOptions.theme,
+	          hashedStyles = _adonis$getOptions.hashedStyles;
+
+	      if (injection === 'pre' && !hashedStyles) {
+	        var targetStyles = this._getTargetStyles(target, name);
+	        var allStyles = void 0,
+	            stylesManager = void 0;
+	        allStyles = targetStyles.concat([baseStyles, stylesObject]).filter(function (s) {
+	          return s;
+	        });
+	        stylesManager = new _preinjectionStylesManager2.default(adonis, allStyles, theme);
+
+	        stylesManager.bufferRulesets();
+	        var stylesBuffer = adonis.getStylesBuffer();
+	        stylesBuffer.flushToStyleTag();
+	      }
+
+	      var AdonisComponent = function (_BaseAdonisComponent) {
+	        _inherits(AdonisComponent, _BaseAdonisComponent);
+
+	        function AdonisComponent() {
+	          var _ref;
+
+	          _classCallCheck(this, AdonisComponent);
+
+	          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	          }
+
+	          var _this = _possibleConstructorReturn(this, (_ref = AdonisComponent.__proto__ || Object.getPrototypeOf(AdonisComponent)).call.apply(_ref, [this].concat(args)));
+
+	          _this._updateStylesManager();
+	          _this._adonis = adonis;
+	          return _this;
+	        }
+
+	        _createClass(AdonisComponent, [{
+	          key: '_updateStylesManager',
+
+
+	          /**
+	           * Updates the styles manager for the given props
+	           * @param  {Object} props
+	           * @private
+	           */
+	          value: function _updateStylesManager() {
+	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+
+	            this._allStyles = [baseStyles, stylesObject].concat(props.styles || []).filter(function (s) {
+	              return s;
+	            });
+
+	            var activeVariations = this._getActiveVariationsFromProps(props);
+	            this._stylesManager = new _stylesManager2.default(adonis, this._allStyles, activeVariations, this.context.theme);
+	          }
+
+	          /**
+	           * Invoked before a mounted component receives new props
+	           * @param  {Object} props
+	           */
+
+	        }, {
+	          key: 'componentWillReceiveProps',
+	          value: function componentWillReceiveProps(props) {
+	            var _this2 = this;
+
+	            var stylesChanged = props.styles !== this.props.styles;
+
+	            var variationsChanged = false;
+	            var allVariations = (0, _utils.flatten)(this._allStyles.map(function (s) {
+	              return s.getVariations();
+	            }));
+
+	            allVariations.forEach(function (variation) {
+	              if (props[variation] !== _this2.props[variation]) {
+	                variationsChanged = true;
+	              }
+	            });
+
+	            if (stylesChanged || variationsChanged) {
+	              this._updateStylesManager(props);
+	            }
+	          }
+
+	          /**
+	           * Returns a shallow clone of this component's props
+	           * @return {Object}
+	           * @private
+	           */
+
+	        }, {
+	          key: '_cloneProps',
+	          value: function _cloneProps() {
+	            var _this3 = this;
+
+	            var elementProps = {};
+	            Object.keys(this.props).forEach(function (prop) {
+	              elementProps[prop] = _this3.props[prop];
+	            });
+	            return elementProps;
+	          }
+
+	          /**
+	           * Returns an array containing the active variations for this component from the given props
+	           * @param {Object} props
+	           * @return {String[]}
+	           * @private
+	           */
+
+	        }, {
+	          key: '_getActiveVariationsFromProps',
+	          value: function _getActiveVariationsFromProps() {
+	            var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+
+	            var variationsSet = {};
+	            this._allStyles.forEach(function (s) {
+	              return s.getVariations().forEach(function (variation) {
+	                return variationsSet[variation] = true;
+	              });
+	            });
+
+	            return Object.keys(variationsSet).filter(function (p) {
+	              return props[p] === true;
+	            }).sort();
+	          }
+
+	          /**
+	           * Builds the class name for this component
+	           * @return {String}
+	           * @private
+	           */
+
+	        }, {
+	          key: '_buildClassName',
+	          value: function _buildClassName() {
+	            var passedClassName = this.props.className;
+
+	            // We can pass additional class names to components
+
+	            var classNames = [];
+	            classNames.push(passedClassName);
+
+	            // Generate a class name for this component
+	            var generatedClassName = this._stylesManager.getClassName();
+	            classNames.push(generatedClassName);
+
+	            return { className: classNames.filter(function (c) {
+	                return c;
+	              }).join(' ') };
+	          }
+
+	          /**
+	           * Checks if CSS injection for this component is required
+	           * @private
+	           */
+
+	        }, {
+	          key: '_shouldInjectCSS',
+	          value: function _shouldInjectCSS() {
+	            if (!injection || hashedStyles) return false;
+
+	            // Injection is only needed if the rendered child is a real tag
+	            return isTag || isComponent && !isAdonisComponent;
+	          }
+
+	          /**
+	           * Renders this component
+	           * @return {React.Element}
+	           */
+
+	        }, {
+	          key: 'render',
+	          value: function render() {
+	            var elementProps = this._cloneProps();
+
+	            var _buildClassName2 = this._buildClassName(),
+	                className = _buildClassName2.className;
+
+	            var stylesBuffer = this._adonis.getStylesBuffer();
+	            if (this._shouldInjectCSS()) {
+	              this._stylesManager.bufferRulesets();
+
+	              if (injection === true && !hashedStyles) {
+	                stylesBuffer.flushToStyleTag();
+	              }
+	            }
+
+	            // If an available variation is passed in as a property, we add the styles to the class and
+	            // remove the prop from the props we pass to our target element
+	            if (isTag) {
+	              var _variations = options.variations;
+
+	              if (_variations) {
+	                Object.keys(_variations).forEach(function (variation) {
+	                  delete elementProps[variation];
+	                });
+	              }
+
+	              // Remove variations passed from parent
+	              if (this.props._activeParentVariations) {
+	                this.props._activeParentVariations.forEach(function (variation) {
+	                  delete elementProps[variation];
+	                });
+	              }
+
+	              // Remove variations from base styles
+	              if (baseStyles) {
+	                baseStyles.getVariations().forEach(function (variation) {
+	                  delete elementProps[variation];
+	                });
+	              }
+	            }
+
+	            // We only need to pass the class name to tags, not to components
+	            if (isTag) {
+	              elementProps.className = className;
+	            } else {
+	              elementProps.styles = (0, _utils.flatten)([stylesObject].concat(this.props.styles || []));
+	              elementProps._activeParentVariations = Object.keys(variations || {}).concat(this.props._activeParentVariations || []);
+	            }
+
+	            // Pass ref
+	            var _props = this.props,
+	                children = _props.children,
+	                innerRef = _props.innerRef;
+
+	            if (innerRef) {
+	              if (isComponent || isTag) {
+	                elementProps.ref = innerRef;
+	              } else if (isAdonisComponent) {
+	                elementProps.innerRef = innerRef;
+	              }
+	            }
+
+	            // We don't want to pass invalid props to tags
+	            if (isTag) {
+	              delete elementProps.styles;
+	              delete elementProps.innerRef;
+	              delete elementProps._activeParentVariations;
+	            }
+
+	            return _react2.default.createElement(target, elementProps, children);
+	          }
+	        }], [{
+	          key: 'name',
+	          get: function get() {
+	            return name;
+	          }
+	        }]);
+
+	        return AdonisComponent;
+	      }(_baseAdonisComponent2.default);
+
+	      AdonisComponent.contextTypes = _baseAdonisComponent2.default.contextTypes;
+	      AdonisComponent.adonisTarget = target;
+	      AdonisComponent.adonisStyles = stylesObject;
+	      AdonisComponent.adonisBaseStyles = baseStyles;
+
+	      return AdonisComponent;
+	    }
+	  }]);
+
+	  return ComponentFactory;
+	}();
+
+	exports.default = ComponentFactory;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_6__;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(6);
+
+	var _propTypes = __webpack_require__(8);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BaseAdonisComponent = function (_Component) {
+	  _inherits(BaseAdonisComponent, _Component);
+
+	  function BaseAdonisComponent() {
+	    _classCallCheck(this, BaseAdonisComponent);
+
+	    return _possibleConstructorReturn(this, (BaseAdonisComponent.__proto__ || Object.getPrototypeOf(BaseAdonisComponent)).apply(this, arguments));
+	  }
+
+	  return BaseAdonisComponent;
+	}(_react.Component);
+
+	exports.default = BaseAdonisComponent;
+
+	BaseAdonisComponent.contextTypes = {
+	  theme: _propTypes2.default.object
+	};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_8__;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _utils = __webpack_require__(4);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Styles = function () {
+	  function Styles(adonis, options) {
+	    _classCallCheck(this, Styles);
+
+	    this._adonis = adonis;
+	    this._options = (0, _utils.defaults)(options, {
+	      variations: [],
+	      styles: {},
+	      name: 'Unnamed'
+	    });
+
+	    var _adonis$getOptions = this._adonis.getOptions(),
+	        hashedStyles = _adonis$getOptions.hashedStyles;
+
+	    if (hashedStyles && typeof this._options.styles !== 'string') {
+	      throw new Error('Passing style objects with `hashedStyles` set to true is invalid.');
+	    }
+	    this._hash = hashedStyles ? this._options.styles : (0, _utils.hashObject)(this._options.styles);
+	    this._variationHashes = this._hashVariations();
+	  }
+
+	  /**
+	   * Generates hashes for all existing variations
+	   * @return {Object}
+	   * @private
+	   */
+
+
+	  _createClass(Styles, [{
+	    key: '_hashVariations',
+	    value: function _hashVariations() {
+	      var hashes = {};
+
+	      var _adonis$getOptions2 = this._adonis.getOptions(),
+	          hashedStyles = _adonis$getOptions2.hashedStyles;
+
+	      var variations = this._options.variations;
+
+	      for (var variation in variations) {
+	        var variationStyles = variations[variation];
+	        hashes[variation] = hashedStyles ? variationStyles : (0, _utils.hashObject)(variationStyles);
+	      }
+	      return hashes;
+	    }
+
+	    /**
+	     * Returns an identifier for the given active variations
+	     * @param  {String[]} variations
+	     * @return {String}
+	     */
+
+	  }, {
+	    key: 'getIdentifierForVariations',
+	    value: function getIdentifierForVariations(variations) {
+	      var _this = this;
+
+	      var name = this._options.name;
+
+	      var _adonis$getOptions3 = this._adonis.getOptions(),
+	          hashSeparator = _adonis$getOptions3.hashSeparator,
+	          variationSeparator = _adonis$getOptions3.variationSeparator;
+
+	      var identifier = '' + name + hashSeparator + this._hash;
+	      variations.sort().forEach(function (variation) {
+	        var hash = _this._variationHashes[variation];
+	        if (!hash) return;
+	        identifier += '' + variationSeparator + variation + hashSeparator + hash;
+	      });
+	      return identifier;
+	    }
+
+	    /**
+	     * Returns the styles object
+	     * @return {Object}
+	     */
+
+	  }, {
+	    key: 'getStyles',
+	    value: function getStyles() {
+	      return this._options.styles;
+	    }
+
+	    /**
+	     * Returns the styles for the given variations
+	     * @param  {String[]} variations
+	     * @return {Object[]}
+	     */
+
+	  }, {
+	    key: 'getVariationStyles',
+	    value: function getVariationStyles(variations) {
+	      var allVariations = this._options.variations;
+
+	      if (!variations) return allVariations;
+
+	      return variations.map(function (variation) {
+	        return allVariations[variation];
+	      }).filter(function (v) {
+	        return v;
+	      });
+	    }
+
+	    /**
+	     * Returns all available variations
+	     * @return {String[]}
+	     */
+
+	  }, {
+	    key: 'getVariations',
+	    value: function getVariations() {
+	      return Object.keys(this._options.variations || {});
+	    }
+	  }]);
+
+	  return Styles;
+	}();
+
+	exports.default = Styles;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _utils = __webpack_require__(4);
+
+	var _ruleset = __webpack_require__(11);
+
+	var _ruleset2 = _interopRequireDefault(_ruleset);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var StylesManager = function () {
+	  function StylesManager(adonis, styles, activeVariations, theme) {
+	    _classCallCheck(this, StylesManager);
+
+	    this._adonis = adonis;
+	    this._styles = styles;
+	    this._theme = theme;
+	    this._activeVariations = activeVariations;
+	    this._className = this._generateClassName(this._activeVariations);
+	    this._baseSelector = '.' + this._className;
+	    this._rulesets = this._generateRulesets();
+	  }
+
+	  /**
+	   * Generates the CSS of all rulesets
+	   * @return {String[]}
+	   */
+
+
+	  _createClass(StylesManager, [{
+	    key: 'generateCSS',
+	    value: function generateCSS() {
+	      return this._rulesets.map(function (ruleset) {
+	        return ruleset.toCSS();
+	      }).filter(function (r) {
+	        return r;
+	      });
+	    }
+
+	    /**
+	     * Buffers the rulesets that have not been buffered yet
+	     */
+
+	  }, {
+	    key: 'bufferRulesets',
+	    value: function bufferRulesets() {
+	      var stylesBuffer = this._adonis.getStylesBuffer();
+	      var rulesets = this._rulesets.filter(function (ruleset) {
+	        return !stylesBuffer.isSelectorBuffered(ruleset.getSelector()) && ruleset.hasDeclarations();
+	      }).map(function (ruleset) {
+	        return [ruleset.getSelector(), ruleset.toCSS()];
+	      });
+	      stylesBuffer.bufferRulesets(rulesets);
+	    }
+
+	    /**
+	     * Returns the deeply merged styles object
+	     * @param {String[]} activeVariations = []
+	     * @return {Object}
+	     * @private
+	     */
+
+	  }, {
+	    key: '_getCombinedStyles',
+	    value: function _getCombinedStyles() {
+	      var activeVariations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+	      var allStyles = (0, _utils.flatten)(this._styles.map(function (s) {
+	        return [s.getStyles(), s.getVariationStyles(activeVariations)];
+	      }));
+
+	      return (0, _utils.deepMergeAll)(allStyles);
+	    }
+
+	    /**
+	     * Generates the class name
+	     * @param {String[]} activeVariations = []
+	     * @return {String}
+	     * @private
+	     */
+
+	  }, {
+	    key: '_generateClassName',
+	    value: function _generateClassName() {
+	      var activeVariations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+	      var _adonis$getOptions = this._adonis.getOptions(),
+	          nameSeparator = _adonis$getOptions.nameSeparator,
+	          classNamePrefix = _adonis$getOptions.classNamePrefix;
+
+	      return classNamePrefix + this._styles.map(function (style) {
+	        return style.getIdentifierForVariations(activeVariations);
+	      }).join(nameSeparator);
+	    }
+
+	    /**
+	     * Generates the rulesets and sub rulesets
+	     * @return {Ruleset[]}
+	     * @private
+	     */
+
+	  }, {
+	    key: '_generateRulesets',
+	    value: function _generateRulesets() {
+	      var defaultRuleset = new _ruleset2.default(this._adonis, this._baseSelector, this._getCombinedStyles(this._activeVariations), {
+	        theme: this._theme
+	      });
+	      return (0, _utils.flatten)([defaultRuleset, defaultRuleset.getSubRulesets()]);
+	    }
+
+	    /**
+	     * Returns the class name
+	     * @return {String}
+	     */
+
+	  }, {
+	    key: 'getClassName',
+	    value: function getClassName() {
+	      return this._className;
+	    }
+	  }]);
+
+	  return StylesManager;
+	}();
+
+	exports.default = StylesManager;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _utils = __webpack_require__(4);
+
+	var _declaration = __webpack_require__(12);
+
+	var _declaration2 = _interopRequireDefault(_declaration);
+
+	var _extensions = __webpack_require__(14);
+
+	var _extensions2 = _interopRequireDefault(_extensions);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Ruleset = function () {
+	  function Ruleset(adonis, selector, styles, options) {
+	    _classCallCheck(this, Ruleset);
+
+	    this._options = options;
+
+	    this._adonis = adonis;
+	    this._selector = selector;
+	    this._styles = styles;
+	    this._resolvedStyles = (0, _utils.resolveStylesObject)(this._styles, this._options.theme);
+
+	    var _adonis$getOptions = this._adonis.getOptions(),
+	        hashedStyles = _adonis$getOptions.hashedStyles;
+
+	    this._hash = hashedStyles ? this._styles : (0, _utils.hashObject)(this._styles);
+
+	    var _parseStyles2 = this._parseStyles(),
+	        subRulesets = _parseStyles2.subRulesets,
+	        declarations = _parseStyles2.declarations;
+
+	    this._subRulesets = subRulesets;
+	    this._declarations = declarations;
+	  }
+
+	  /**
+	   * If any registered extension resolves the given key to a sub ruleset, this method
+	   * returns the new Ruleset
+	   * @param  {String} key
+	   * @param  {String|Object} value
+	   * @return {Ruleset}
+	   * @private
+	   */
+
+
+	  _createClass(Ruleset, [{
+	    key: '_getSubRuleset',
+	    value: function _getSubRuleset(key, value) {
+	      var _this = this;
+
+	      var _adonis$getOptions2 = this._adonis.getOptions(),
+	          minified = _adonis$getOptions2.minified;
+
+	      var subRuleset = null;
+	      var generateSubRuleset = function generateSubRuleset(newSelector, parentSelector) {
+	        var options = (0, _utils.deepMerge)(_this._options, {
+	          parentSelector: parentSelector
+	        });
+	        subRuleset = new Ruleset(_this._adonis, newSelector, value, options);
+	      };
+
+	      for (var i = 0; i < _extensions2.default.length; i++) {
+	        var extension = _extensions2.default[i];
+	        extension(key, this._selector, generateSubRuleset, minified);
+	        if (subRuleset) return subRuleset;
+	      }
+	    }
+
+	    /**
+	     * Parses this ruleset's styles object and returns the parsed declarations and sub rulesets
+	     * @return {Object}
+	     * @private
+	     */
+
+	  }, {
+	    key: '_parseStyles',
+	    value: function _parseStyles() {
+	      var subRulesets = [];
+	      var declarations = [];
+	      for (var key in this._resolvedStyles) {
+	        var value = this._resolvedStyles[key];
+	        var subRuleset = this._getSubRuleset(key, value);
+	        if (subRuleset) {
+	          subRulesets.push(subRuleset, subRuleset.getSubRulesets());
+	        } else {
+	          declarations.push(new _declaration2.default(this._adonis, key, value));
+	        }
+	      }
+	      return { subRulesets: subRulesets, declarations: declarations };
+	    }
+
+	    /**
+	     * Returns the CSS string for this ruleset
+	     * @return {String}
+	     */
+
+	  }, {
+	    key: 'toCSS',
+	    value: function toCSS() {
+	      var parentSelector = this._options.parentSelector;
+
+	      var _adonis$getOptions3 = this._adonis.getOptions(),
+	          minified = _adonis$getOptions3.minified,
+	          cssSelectorPrefix = _adonis$getOptions3.cssSelectorPrefix;
+
+	      if (this._declarations.length === 0) return null;
+
+	      var parentIsAtRule = parentSelector && parentSelector.match(/^@/);
+
+	      var css = '';
+	      var indentation = '';
+	      if (parentSelector) {
+	        if (cssSelectorPrefix && !parentIsAtRule) {
+	          css += cssSelectorPrefix;
+	        }
+	        css += parentSelector + (minified ? '{' : ' {\n');
+	        indentation = '  ';
+	      } else {
+	        css += cssSelectorPrefix;
+	      }
+
+	      var selector = '';
+	      if (cssSelectorPrefix && parentIsAtRule) {
+	        selector += cssSelectorPrefix;
+	      }
+	      selector += this._selector;
+
+	      css += indentation + selector + (minified ? '{' : ' {\n');
+	      this._declarations.forEach(function (rule) {
+	        css += indentation + rule.toCSS() + (minified ? '' : '\n');
+	      });
+	      css += indentation + '}';
+
+	      if (parentSelector) {
+	        css += minified ? '}' : '\n}';
+	      }
+	      return css;
+	    }
+
+	    /**
+	     * Returns this ruleset's sub rulesets
+	     * @return {Ruleset[]}
+	     */
+
+	  }, {
+	    key: 'getSubRulesets',
+	    value: function getSubRulesets() {
+	      return this._subRulesets;
+	    }
+
+	    /**
+	     * Checks if this ruleset has declarations
+	     * @return {Boolean}
+	     */
+
+	  }, {
+	    key: 'hasDeclarations',
+	    value: function hasDeclarations() {
+	      return this._declarations.length !== 0;
+	    }
+
+	    /**
+	     * Returns the selector
+	     * @return {String}
+	     */
+
+	  }, {
+	    key: 'getSelector',
+	    value: function getSelector() {
+	      return this._selector;
+	    }
+	  }]);
+
+	  return Ruleset;
+	}();
+
+	exports.default = Ruleset;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _cssPrefixes = __webpack_require__(13);
+
+	var _cssPrefixes2 = _interopRequireDefault(_cssPrefixes);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Declaration = function () {
+	  function Declaration(adonis, key, value) {
+	    _classCallCheck(this, Declaration);
+
+	    this._adonis = adonis;
+	    this.key = key;
+	    this.value = value;
+	    this.cssKey = this.key.replace(/([A-Z])/g, function (g) {
+	      return '-' + g[0].toLowerCase();
+	    });
+	  }
+
+	  /**
+	   * If this declaration's key requires vendor prefixes, this function returns an array of [key, value]
+	   * pairs with prefixed keys.
+	   * @return {Array[]}
+	   * @private
+	   */
+
+
+	  _createClass(Declaration, [{
+	    key: '_getAutoPrefixedKeyPairs',
+	    value: function _getAutoPrefixedKeyPairs() {
+	      var _this = this;
+
+	      var prefixes = _cssPrefixes2.default[this.key];
+	      var keyPairs = [];
+	      if (prefixes) {
+	        prefixes.forEach(function (prefix) {
+	          keyPairs.push(['-' + prefix + '-' + _this.cssKey, _this.value]);
+	        });
+	      }
+	      return keyPairs;
+	    }
+
+	    /**
+	     * Returns the CSS string for this declaration
+	     * @return {String}
+	     */
+
+	  }, {
+	    key: 'toCSS',
+	    value: function toCSS() {
+	      var _adonis$getOptions = this._adonis.getOptions(),
+	          minified = _adonis$getOptions.minified,
+	          autoPrefix = _adonis$getOptions.autoPrefix;
+
+	      var keyPairs = [[this.cssKey, this.value]];
+	      if (autoPrefix) {
+	        keyPairs = keyPairs.concat(this._getAutoPrefixedKeyPairs());
+	      }
+
+	      return keyPairs.map(function (_ref) {
+	        var _ref2 = _slicedToArray(_ref, 2),
+	            key = _ref2[0],
+	            value = _ref2[1];
+
+	        return '' + (minified ? '' : '  ') + key + ':' + (minified ? '' : ' ') + value + ';';
+	      }).join(minified ? '' : '\n');
+	    }
+	  }]);
+
+	  return Declaration;
+	}();
+
+	exports.default = Declaration;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var wk = 'webkit';
+	var mz = 'moz';
+	var ms = 'ms';
+	exports.default = {
+	  appearance: [wk, mz],
+	  userSelect: [wk, mz, ms],
+	  textEmphasisPosition: [wk],
+	  textEmphasis: [wk],
+	  textEmphasisStyle: [wk],
+	  textEmphasisColor: [wk],
+	  boxDecorationBreak: [wk],
+	  clipPath: [wk],
+	  maskImage: [wk],
+	  maskMode: [wk],
+	  maskRepeat: [wk],
+	  maskPosition: [wk],
+	  maskClip: [wk],
+	  maskOrigin: [wk],
+	  maskSize: [wk],
+	  maskComposite: [wk],
+	  mask: [wk],
+	  maskBorderSource: [wk],
+	  maskBorderMode: [wk],
+	  maskBorderSlice: [wk],
+	  maskBorderWidth: [wk],
+	  maskBorderOutset: [wk],
+	  maskBorderRepeat: [wk],
+	  maskBorder: [wk],
+	  maskType: [wk],
+	  textDecorationStyle: [wk],
+	  textDecorationSkip: [wk],
+	  textDecorationLine: [wk],
+	  textDecorationColor: [wk],
+	  filter: [wk],
+	  fontFeatureSettings: [wk],
+	  breakAfter: [wk, mz, ms],
+	  breakBefore: [wk, mz, ms],
+	  breakInside: [wk, mz, ms],
+	  columnCount: [wk, mz],
+	  columnFill: [wk, mz],
+	  columnGap: [wk, mz],
+	  columnRule: [wk, mz],
+	  columnRuleColor: [wk, mz],
+	  columnRuleStyle: [wk, mz],
+	  columnRuleWidth: [wk, mz],
+	  columns: [wk, mz],
+	  columnSpan: [wk, mz],
+	  columnWidth: [wk, mz],
+	  flex: [wk],
+	  flexBasis: [wk],
+	  flexDirection: [wk],
+	  flexGrow: [wk],
+	  flexFlow: [wk],
+	  flexShrink: [wk],
+	  flexWrap: [wk],
+	  alignContent: [wk],
+	  alignItems: [wk],
+	  alignSelf: [wk],
+	  justifyContent: [wk],
+	  order: [wk],
+	  transform: [wk],
+	  transformOrigin: [wk],
+	  transformOriginX: [wk],
+	  transformOriginY: [wk],
+	  backfaceVisibility: [wk],
+	  perspective: [wk],
+	  perspectiveOrigin: [wk],
+	  transformStyle: [wk],
+	  transformOriginZ: [wk],
+	  animation: [wk],
+	  animationDelay: [wk],
+	  animationDirection: [wk],
+	  animationFillMode: [wk],
+	  animationDuration: [wk],
+	  animationIterationCount: [wk],
+	  animationName: [wk],
+	  animationPlayState: [wk],
+	  animationTimingFunction: [wk],
+	  backdropFilter: [wk],
+	  fontKerning: [wk],
+	  scrollSnapType: [wk, ms],
+	  scrollSnapPointsX: [wk, ms],
+	  scrollSnapPointsY: [wk, ms],
+	  scrollSnapDestination: [wk, ms],
+	  scrollSnapCoordinate: [wk, ms],
+	  shapeImageThreshold: [wk],
+	  shapeImageMargin: [wk],
+	  shapeImageOutside: [wk],
+	  hyphens: [wk, mz, ms],
+	  flowInto: [wk, ms],
+	  flowFrom: [wk, ms],
+	  regionFragment: [wk, ms],
+	  textAlignLast: [mz],
+	  tabSize: [mz],
+	  wrapFlow: [ms],
+	  wrapThrough: [ms],
+	  wrapMargin: [ms],
+	  gridTemplateColumns: [ms],
+	  gridTemplateRows: [ms],
+	  gridTemplateAreas: [ms],
+	  gridTemplate: [ms],
+	  gridAutoColumns: [ms],
+	  gridAutoRows: [ms],
+	  gridAutoFlow: [ms],
+	  grid: [ms],
+	  gridRowStart: [ms],
+	  gridColumnStart: [ms],
+	  gridRowEnd: [ms],
+	  gridRow: [ms],
+	  gridColumn: [ms],
+	  gridColumnEnd: [ms],
+	  gridColumnGap: [ms],
+	  gridRowGap: [ms],
+	  gridArea: [ms],
+	  gridGap: [ms],
+	  textSizeAdjust: [wk, ms],
+	  transitionDelay: [wk],
+	  transitionDuration: [wk],
+	  transitionProperty: [wk],
+	  transitionTimingFunction: [wk]
+	};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _immediateChildSelectorExtension = __webpack_require__(15);
+
+	var _immediateChildSelectorExtension2 = _interopRequireDefault(_immediateChildSelectorExtension);
+
+	var _selfSelectorExtension = __webpack_require__(16);
+
+	var _selfSelectorExtension2 = _interopRequireDefault(_selfSelectorExtension);
+
+	var _pseudoClassesExtension = __webpack_require__(17);
+
+	var _pseudoClassesExtension2 = _interopRequireDefault(_pseudoClassesExtension);
+
+	var _mediaQueryExtension = __webpack_require__(18);
+
+	var _mediaQueryExtension2 = _interopRequireDefault(_mediaQueryExtension);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = [_immediateChildSelectorExtension2.default, _selfSelectorExtension2.default, _pseudoClassesExtension2.default, _mediaQueryExtension2.default];
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	/**
+	 * Creates a sub ruleset every time an immediate child selector (e.g. '> h1') is found
+	 */
+	exports.default = function (selector, baseSelector, generateSubRuleset, minified) {
+	  selector = selector.trim();
+	  if (selector[0] !== '>') {
+	    return null;
+	  }
+	  selector = selector.slice(1).trim();
+	  var newSelector = baseSelector;
+	  if (!minified) newSelector += ' ';
+	  newSelector += '>';
+	  if (!minified) newSelector += ' ';
+	  newSelector += selector;
+
+	  return generateSubRuleset(newSelector);
+	};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	/**
+	 * Creates a sub ruleset every time a self selector (e.g. '& h1, h2, h3') is found
+	 */
+	exports.default = function (selector, baseSelector, generateSubRuleset, minified) {
+	  selector = selector.trim();
+	  if (selector[0] !== '&') {
+	    return null;
+	  }
+
+	  var extendingSelector = !selector.match(/^&\s+/); // `&.foo` (extending) vs. `& .foo` (non extending)
+	  selector = selector.replace(/^&/, ''); // `& h1, h2, h3` => ` h1, h2, h3`
+
+	  var newSelector = selector.split(',').map(function (s) {
+	    return s.trim();
+	  }) // h1, h2, h3 => [h1, h2, h3]
+	  .map(function (s, i) {
+	    return '' + baseSelector + (i === 0 && extendingSelector ? '' : ' ') + s;
+	  }) // [h1, h2, h3] => [.base h1, .base h2, .base h3]
+	  .join(', '); // [.base h1, .base h2, .base h3] => `.base h1, .base h2, .base h3`
+	  return generateSubRuleset(newSelector);
+	};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	/**
+	 * Creates a sub ruleset every time an pseudo class (e.g. ':last-child') is found
+	 */
+	exports.default = function (selector, baseSelector, generateSubRuleset, minified) {
+	  selector = selector.trim();
+	  if (selector[0] !== ':') {
+	    return null;
+	  }
+
+	  var newSelector = baseSelector + selector;
+	  return generateSubRuleset(newSelector);
+	};
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	/**
+	 * Creates a sub ruleset every time a media query is found
+	 */
+	exports.default = function (selector, baseSelector, generateSubRuleset, minified) {
+	  selector = selector.trim();
+	  if (selector[0] !== '@') {
+	    return null;
+	  }
+
+	  return generateSubRuleset(baseSelector, selector);
+	};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _utils = __webpack_require__(4);
+
+	var _ruleset = __webpack_require__(11);
+
+	var _ruleset2 = _interopRequireDefault(_ruleset);
+
+	var _stylesManager = __webpack_require__(10);
+
+	var _stylesManager2 = _interopRequireDefault(_stylesManager);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	/**
+	 * The PreinjectionStylesManager is similar to StylesManager, except that it creates styles for
+	 * every possible combination of active variations
+	 */
+	var PreinjectionStylesManager = function (_StylesManager) {
+	  _inherits(PreinjectionStylesManager, _StylesManager);
+
+	  function PreinjectionStylesManager(adonis, styles, theme) {
+	    _classCallCheck(this, PreinjectionStylesManager);
+
+	    return _possibleConstructorReturn(this, (PreinjectionStylesManager.__proto__ || Object.getPrototypeOf(PreinjectionStylesManager)).call(this, adonis, styles, [], theme));
+	  }
+
+	  /**
+	   * Generates rulesets for all possible variation combinations
+	   * @return {Ruleset[]}
+	   * @private
+	   */
+
+
+	  _createClass(PreinjectionStylesManager, [{
+	    key: '_generateVariationRulesets',
+	    value: function _generateVariationRulesets() {
+	      var _this2 = this;
+
+	      var allVariations = (0, _utils.flatten)(this._styles.map(function (s) {
+	        return s.getVariations();
+	      }));
+	      var allCombinations = (0, _utils.findAllCombinations)(allVariations);
+
+	      return allCombinations.map(function (variations) {
+	        var className = _this2._generateClassName(variations);
+	        var selector = '.' + className;
+	        var ruleset = new _ruleset2.default(_this2._adonis, selector, _this2._getCombinedStyles(variations), {
+	          theme: _this2._theme
+	        });
+	        return [ruleset, ruleset.getSubRulesets()];
+	      });
+	    }
+
+	    /**
+	     * Generates the rulesets and sub rulesets
+	     * @return {Ruleset[]}
+	     * @private
+	     */
+
+	  }, {
+	    key: '_generateRulesets',
+	    value: function _generateRulesets() {
+	      var defaultRuleset = new _ruleset2.default(this._adonis, this._baseSelector, this._getCombinedStyles(), {
+	        theme: this._theme
+	      });
+	      var rulesets = [defaultRuleset, defaultRuleset.getSubRulesets()];
+	      rulesets.push(this._generateVariationRulesets());
+	      return (0, _utils.flatten)(rulesets);
+	    }
+	  }]);
+
+	  return PreinjectionStylesManager;
+	}(_stylesManager2.default);
+
+	exports.default = PreinjectionStylesManager;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'main', 'map', 'mark', 'menu', 'menuitem', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr', 'circle', 'clipPath', 'defs', 'ellipse', 'g', 'image', 'line', 'linearGradient', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'text', 'tspan'];
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _styles = __webpack_require__(9);
+
+	var _styles2 = _interopRequireDefault(_styles);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BaseStyles = function (_Styles) {
+	  _inherits(BaseStyles, _Styles);
+
+	  function BaseStyles() {
+	    _classCallCheck(this, BaseStyles);
+
+	    return _possibleConstructorReturn(this, (BaseStyles.__proto__ || Object.getPrototypeOf(BaseStyles)).apply(this, arguments));
+	  }
+
+	  return BaseStyles;
+	}(_styles2.default);
+
+	exports.default = BaseStyles;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(6);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(8);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	exports.default = function (ThemableComponent) {
+	  var ComponentWithTheme = function (_React$Component) {
+	    _inherits(ComponentWithTheme, _React$Component);
+
+	    function ComponentWithTheme() {
+	      _classCallCheck(this, ComponentWithTheme);
+
+	      return _possibleConstructorReturn(this, (ComponentWithTheme.__proto__ || Object.getPrototypeOf(ComponentWithTheme)).apply(this, arguments));
+	    }
+
+	    _createClass(ComponentWithTheme, [{
+	      key: '_cloneProps',
+
+	      /**
+	       * Returns a shallow clone of this component's props
+	       * @return {Object}
+	       * @private
+	       */
+	      value: function _cloneProps() {
+	        var _this2 = this;
+
+	        var elementProps = {};
+	        Object.keys(this.props).forEach(function (prop) {
+	          elementProps[prop] = _this2.props[prop];
+	        });
+	        return elementProps;
+	      }
+
+	      /**
+	       * Renders the component
+	       * @return {React.Element|React.Component}
+	       */
+
+	    }, {
+	      key: 'render',
+	      value: function render() {
+	        var elementProps = this._cloneProps();
+
+	        var innerRef = elementProps.innerRef;
+
+	        if (innerRef) {
+	          elementProps.ref = innerRef;
+	        }
+	        delete elementProps.innerRef;
+
+	        return _react2.default.createElement(ThemableComponent, elementProps);
+	      }
+	    }]);
+
+	    return ComponentWithTheme;
+	  }(_react2.default.Component);
+
+	  ComponentWithTheme.contextTypes = {
+	    theme: _propTypes2.default.object
+	  };
+
+	  return ComponentWithTheme;
+	};
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(6);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(8);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -213,2894 +2547,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	ThemeProvider.childContextTypes = {
-	  theme: _react.PropTypes.object.isRequired
+	  theme: _propTypes2.default.object.isRequired
 	};
 
 	ThemeProvider.contextTypes = {
-	  theme: _react.PropTypes.object
+	  theme: _propTypes2.default.object
 	};
 
-/***/ },
-/* 3 */
-/***/ function(module, exports) {
-
-	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	exports.default = function (Component) {
-	  var ComponentWithTheme = function (_React$Component) {
-	    _inherits(ComponentWithTheme, _React$Component);
-
-	    function ComponentWithTheme() {
-	      _classCallCheck(this, ComponentWithTheme);
-
-	      return _possibleConstructorReturn(this, (ComponentWithTheme.__proto__ || Object.getPrototypeOf(ComponentWithTheme)).apply(this, arguments));
-	    }
-
-	    _createClass(ComponentWithTheme, [{
-	      key: 'render',
-	      value: function render() {
-	        return _react2.default.createElement(Component, this.props);
-	      }
-	    }]);
-
-	    return ComponentWithTheme;
-	  }(_react2.default.Component);
-
-	  ComponentWithTheme.contextTypes = {
-	    theme: _react2.default.PropTypes.object
-	  };
-
-	  return ComponentWithTheme;
-	};
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (adonis, options, StyleSheetServer) {
-	  return function (theme, renderFunction) {
-	    if (!StyleSheetServer && options.noObjectStyles) {
-	      throw new Error("adonis can't pre-render CSS if `noObjectStyles` is set to `true`.");
-	    }
-
-	    if (typeof renderFunction === 'undefined') {
-	      renderFunction = theme;
-	      theme = null;
-	    }
-
-	    adonis.enablePreRenderInjection(theme);
-
-	    var _StyleSheetServer$ren = StyleSheetServer.renderStatic(function () {
-	      renderFunction();
-	      adonis.disablePreRenderInjection();
-	    }),
-	        css = _StyleSheetServer$ren.css;
-
-	    return css;
-	  };
-	};
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(7);
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// Module with the same interface as the core aphrodite module,
-	// except that styles injected do not automatically have !important
-	// appended to them.
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _generate = __webpack_require__(8);
-
-	var _exports2 = __webpack_require__(28);
-
-	var _exports3 = _interopRequireDefault(_exports2);
-
-	var useImportant = false; // Don't add !important to style definitions
-	exports['default'] = (0, _exports3['default'])(useImportant, _generate.defaultSelectorHandlers);
-	module.exports = exports['default'];
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _inlineStylePrefixerStatic = __webpack_require__(9);
-
-	var _inlineStylePrefixerStatic2 = _interopRequireDefault(_inlineStylePrefixerStatic);
-
-	var _util = __webpack_require__(27);
-
-	/**
-	 * `selectorHandlers` are functions which handle special selectors which act
-	 * differently than normal style definitions. These functions look at the
-	 * current selector and can generate CSS for the styles in their subtree by
-	 * calling the callback with a new selector.
-	 *
-	 * For example, when generating styles with a base selector of '.foo' and the
-	 * following styles object:
-	 *
-	 *   {
-	 *     ':nth-child(2n)': {
-	 *       ':hover': {
-	 *         color: 'red'
-	 *       }
-	 *     }
-	 *   }
-	 *
-	 * when we reach the ':hover' style, we would call our selector handlers like
-	 *
-	 *   handler(':hover', '.foo:nth-child(2n)', callback)
-	 *
-	 * Since our `pseudoSelectors` handles ':hover' styles, that handler would call
-	 * the callback like
-	 *
-	 *   callback('.foo:nth-child(2n):hover')
-	 *
-	 * to generate its subtree `{ color: 'red' }` styles with a
-	 * '.foo:nth-child(2n):hover' selector. The callback would return CSS like
-	 *
-	 *   '.foo:nth-child(2n):hover{color:red !important;}'
-	 *
-	 * and the handler would then return that resulting CSS.
-	 *
-	 * `defaultSelectorHandlers` is the list of default handlers used in a call to
-	 * `generateCSS`.
-	 *
-	 * @name SelectorHandler
-	 * @function
-	 * @param {string} selector: The currently inspected selector. ':hover' in the
-	 *     example above.
-	 * @param {string} baseSelector: The selector of the parent styles.
-	 *     '.foo:nth-child(2n)' in the example above.
-	 * @param {function} generateSubtreeStyles: A function which can be called to
-	 *     generate CSS for the subtree of styles corresponding to the selector.
-	 *     Accepts a new baseSelector to use for generating those styles.
-	 * @returns {?string} The generated CSS for this selector, or null if we don't
-	 *     handle this selector.
-	 */
-	var defaultSelectorHandlers = [
-	// Handle pseudo-selectors, like :hover and :nth-child(3n)
-	function pseudoSelectors(selector, baseSelector, generateSubtreeStyles) {
-	    if (selector[0] !== ":") {
-	        return null;
-	    }
-	    return generateSubtreeStyles(baseSelector + selector);
-	},
-
-	// Handle media queries (or font-faces)
-	function mediaQueries(selector, baseSelector, generateSubtreeStyles) {
-	    if (selector[0] !== "@") {
-	        return null;
-	    }
-	    // Generate the styles normally, and then wrap them in the media query.
-	    var generated = generateSubtreeStyles(baseSelector);
-	    return selector + '{' + generated + '}';
-	}];
-
-	exports.defaultSelectorHandlers = defaultSelectorHandlers;
-	/**
-	 * Generate CSS for a selector and some styles.
-	 *
-	 * This function handles the media queries, pseudo selectors, and descendant
-	 * styles that can be used in aphrodite styles.
-	 *
-	 * @param {string} selector: A base CSS selector for the styles to be generated
-	 *     with.
-	 * @param {Object} styleTypes: A list of properties of the return type of
-	 *     StyleSheet.create, e.g. [styles.red, styles.blue].
-	 * @param {Array.<SelectorHandler>} selectorHandlers: A list of selector
-	 *     handlers to use for handling special selectors. See
-	 *     `defaultSelectorHandlers`.
-	 * @param stringHandlers: See `generateCSSRuleset`
-	 * @param useImportant: See `generateCSSRuleset`
-	 *
-	 * To actually generate the CSS special-construct-less styles are passed to
-	 * `generateCSSRuleset`.
-	 *
-	 * For instance, a call to
-	 *
-	 *     generateCSS(".foo", {
-	 *       color: "red",
-	 *       "@media screen": {
-	 *         height: 20,
-	 *         ":hover": {
-	 *           backgroundColor: "black"
-	 *         }
-	 *       },
-	 *       ":active": {
-	 *         fontWeight: "bold",
-	 *         ">>bar": {
-	 *           _names: { "foo_bar": true },
-	 *           height: 10,
-	 *         }
-	 *       }
-	 *     });
-	 *
-	 * with the default `selectorHandlers` will make 5 calls to
-	 * `generateCSSRuleset`:
-	 *
-	 *     generateCSSRuleset(".foo", { color: "red" }, ...)
-	 *     generateCSSRuleset(".foo:active", { fontWeight: "bold" }, ...)
-	 *     generateCSSRuleset(".foo:active .foo_bar", { height: 10 }, ...)
-	 *     // These 2 will be wrapped in @media screen {}
-	 *     generateCSSRuleset(".foo", { height: 20 }, ...)
-	 *     generateCSSRuleset(".foo:hover", { backgroundColor: "black" }, ...)
-	 */
-	var generateCSS = function generateCSS(selector, styleTypes) {
-	    var selectorHandlers = arguments.length <= 2 || arguments[2] === undefined ? [] : arguments[2];
-	    var stringHandlers = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
-	    var useImportant = arguments.length <= 4 || arguments[4] === undefined ? true : arguments[4];
-
-	    var merged = styleTypes.reduce(_util.recursiveMerge);
-
-	    var plainDeclarations = {};
-	    var generatedStyles = "";
-
-	    Object.keys(merged).forEach(function (key) {
-	        // For each key, see if one of the selector handlers will handle these
-	        // styles.
-	        var foundHandler = selectorHandlers.some(function (handler) {
-	            var result = handler(key, selector, function (newSelector) {
-	                return generateCSS(newSelector, [merged[key]], selectorHandlers, stringHandlers, useImportant);
-	            });
-	            if (result != null) {
-	                // If the handler returned something, add it to the generated
-	                // CSS and stop looking for another handler.
-	                generatedStyles += result;
-	                return true;
-	            }
-	        });
-	        // If none of the handlers handled it, add it to the list of plain
-	        // style declarations.
-	        if (!foundHandler) {
-	            plainDeclarations[key] = merged[key];
-	        }
-	    });
-
-	    return generateCSSRuleset(selector, plainDeclarations, stringHandlers, useImportant, selectorHandlers) + generatedStyles;
-	};
-
-	exports.generateCSS = generateCSS;
-	/**
-	 * Helper method of generateCSSRuleset to facilitate custom handling of certain
-	 * CSS properties. Used for e.g. font families.
-	 *
-	 * See generateCSSRuleset for usage and documentation of paramater types.
-	 */
-	var runStringHandlers = function runStringHandlers(declarations, stringHandlers, selectorHandlers) {
-	    var result = {};
-
-	    Object.keys(declarations).forEach(function (key) {
-	        // If a handler exists for this particular key, let it interpret
-	        // that value first before continuing
-	        if (stringHandlers && stringHandlers.hasOwnProperty(key)) {
-	            // TODO(emily): Pass in a callback which generates CSS, similar to
-	            // how our selector handlers work, instead of passing in
-	            // `selectorHandlers` and have them make calls to `generateCSS`
-	            // themselves. Right now, this is impractical because our string
-	            // handlers are very specialized and do complex things.
-	            result[key] = stringHandlers[key](declarations[key], selectorHandlers);
-	        } else {
-	            result[key] = declarations[key];
-	        }
-	    });
-
-	    return result;
-	};
-
-	/**
-	 * Generate a CSS ruleset with the selector and containing the declarations.
-	 *
-	 * This function assumes that the given declarations don't contain any special
-	 * children (such as media queries, pseudo-selectors, or descendant styles).
-	 *
-	 * Note that this method does not deal with nesting used for e.g.
-	 * psuedo-selectors or media queries. That responsibility is left to  the
-	 * `generateCSS` function.
-	 *
-	 * @param {string} selector: the selector associated with the ruleset
-	 * @param {Object} declarations: a map from camelCased CSS property name to CSS
-	 *     property value.
-	 * @param {Object.<string, function>} stringHandlers: a map from camelCased CSS
-	 *     property name to a function which will map the given value to the value
-	 *     that is output.
-	 * @param {bool} useImportant: A boolean saying whether to append "!important"
-	 *     to each of the CSS declarations.
-	 * @returns {string} A string of raw CSS.
-	 *
-	 * Examples:
-	 *
-	 *    generateCSSRuleset(".blah", { color: "red" })
-	 *    -> ".blah{color: red !important;}"
-	 *    generateCSSRuleset(".blah", { color: "red" }, {}, false)
-	 *    -> ".blah{color: red}"
-	 *    generateCSSRuleset(".blah", { color: "red" }, {color: c => c.toUpperCase})
-	 *    -> ".blah{color: RED}"
-	 *    generateCSSRuleset(".blah:hover", { color: "red" })
-	 *    -> ".blah:hover{color: red}"
-	 */
-	var generateCSSRuleset = function generateCSSRuleset(selector, declarations, stringHandlers, useImportant, selectorHandlers) {
-	    var handledDeclarations = runStringHandlers(declarations, stringHandlers, selectorHandlers);
-
-	    var prefixedDeclarations = (0, _inlineStylePrefixerStatic2['default'])(handledDeclarations);
-
-	    var prefixedRules = (0, _util.flatten)((0, _util.objectToPairs)(prefixedDeclarations).map(function (_ref) {
-	        var _ref2 = _slicedToArray(_ref, 2);
-
-	        var key = _ref2[0];
-	        var value = _ref2[1];
-
-	        if (Array.isArray(value)) {
-	            var _ret = (function () {
-	                // inline-style-prefix-all returns an array when there should be
-	                // multiple rules, we will flatten to single rules
-
-	                var prefixedValues = [];
-	                var unprefixedValues = [];
-
-	                value.forEach(function (v) {
-	                    if (v.indexOf('-') === 0) {
-	                        prefixedValues.push(v);
-	                    } else {
-	                        unprefixedValues.push(v);
-	                    }
-	                });
-
-	                prefixedValues.sort();
-	                unprefixedValues.sort();
-
-	                return {
-	                    v: prefixedValues.concat(unprefixedValues).map(function (v) {
-	                        return [key, v];
-	                    })
-	                };
-	            })();
-
-	            if (typeof _ret === 'object') return _ret.v;
-	        }
-	        return [[key, value]];
-	    }));
-
-	    var rules = prefixedRules.map(function (_ref3) {
-	        var _ref32 = _slicedToArray(_ref3, 2);
-
-	        var key = _ref32[0];
-	        var value = _ref32[1];
-
-	        var stringValue = (0, _util.stringifyValue)(key, value);
-	        var ret = (0, _util.kebabifyStyleName)(key) + ':' + stringValue + ';';
-	        return useImportant === false ? ret : (0, _util.importantify)(ret);
-	    }).join("");
-
-	    if (rules) {
-	        return selector + '{' + rules + '}';
-	    } else {
-	        return "";
-	    }
-	};
-	exports.generateCSSRuleset = generateCSSRuleset;
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(10)
-
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = prefixAll;
-
-	var _prefixProps = __webpack_require__(11);
-
-	var _prefixProps2 = _interopRequireDefault(_prefixProps);
-
-	var _capitalizeString = __webpack_require__(12);
-
-	var _capitalizeString2 = _interopRequireDefault(_capitalizeString);
-
-	var _sortPrefixedStyle = __webpack_require__(13);
-
-	var _sortPrefixedStyle2 = _interopRequireDefault(_sortPrefixedStyle);
-
-	var _position = __webpack_require__(15);
-
-	var _position2 = _interopRequireDefault(_position);
-
-	var _calc = __webpack_require__(16);
-
-	var _calc2 = _interopRequireDefault(_calc);
-
-	var _cursor = __webpack_require__(19);
-
-	var _cursor2 = _interopRequireDefault(_cursor);
-
-	var _flex = __webpack_require__(20);
-
-	var _flex2 = _interopRequireDefault(_flex);
-
-	var _sizing = __webpack_require__(21);
-
-	var _sizing2 = _interopRequireDefault(_sizing);
-
-	var _gradient = __webpack_require__(22);
-
-	var _gradient2 = _interopRequireDefault(_gradient);
-
-	var _transition = __webpack_require__(23);
-
-	var _transition2 = _interopRequireDefault(_transition);
-
-	var _flexboxIE = __webpack_require__(25);
-
-	var _flexboxIE2 = _interopRequireDefault(_flexboxIE);
-
-	var _flexboxOld = __webpack_require__(26);
-
-	var _flexboxOld2 = _interopRequireDefault(_flexboxOld);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// special flexbox specifications
-
-
-	var plugins = [_position2.default, _calc2.default, _cursor2.default, _sizing2.default, _gradient2.default, _transition2.default, _flexboxIE2.default, _flexboxOld2.default, _flex2.default];
-
-	/**
-	 * Returns a prefixed version of the style object using all vendor prefixes
-	 * @param {Object} styles - Style object that gets prefixed properties added
-	 * @returns {Object} - Style object with prefixed properties and values
-	 */
-	function prefixAll(styles) {
-	  Object.keys(styles).forEach(function (property) {
-	    var value = styles[property];
-	    if (value instanceof Object && !Array.isArray(value)) {
-	      // recurse through nested style objects
-	      styles[property] = prefixAll(value);
-	    } else {
-	      Object.keys(_prefixProps2.default).forEach(function (prefix) {
-	        var properties = _prefixProps2.default[prefix];
-	        // add prefixes if needed
-	        if (properties[property]) {
-	          styles[prefix + (0, _capitalizeString2.default)(property)] = value;
-	        }
-	      });
-	    }
-	  });
-
-	  Object.keys(styles).forEach(function (property) {
-	    [].concat(styles[property]).forEach(function (value, index) {
-	      // resolve every special plugins
-	      plugins.forEach(function (plugin) {
-	        return assignStyles(styles, plugin(property, value));
-	      });
-	    });
-	  });
-
-	  return (0, _sortPrefixedStyle2.default)(styles);
-	}
-
-	function assignStyles(base) {
-	  var extend = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
-	  Object.keys(extend).forEach(function (property) {
-	    var baseValue = base[property];
-	    if (Array.isArray(baseValue)) {
-	      [].concat(extend[property]).forEach(function (value) {
-	        var valueIndex = baseValue.indexOf(value);
-	        if (valueIndex > -1) {
-	          base[property].splice(valueIndex, 1);
-	        }
-	        base[property].push(value);
-	      });
-	    } else {
-	      base[property] = extend[property];
-	    }
-	  });
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = { "Webkit": { "transform": true, "transformOrigin": true, "transformOriginX": true, "transformOriginY": true, "backfaceVisibility": true, "perspective": true, "perspectiveOrigin": true, "transformStyle": true, "transformOriginZ": true, "animation": true, "animationDelay": true, "animationDirection": true, "animationFillMode": true, "animationDuration": true, "animationIterationCount": true, "animationName": true, "animationPlayState": true, "animationTimingFunction": true, "appearance": true, "userSelect": true, "fontKerning": true, "textEmphasisPosition": true, "textEmphasis": true, "textEmphasisStyle": true, "textEmphasisColor": true, "boxDecorationBreak": true, "clipPath": true, "maskImage": true, "maskMode": true, "maskRepeat": true, "maskPosition": true, "maskClip": true, "maskOrigin": true, "maskSize": true, "maskComposite": true, "mask": true, "maskBorderSource": true, "maskBorderMode": true, "maskBorderSlice": true, "maskBorderWidth": true, "maskBorderOutset": true, "maskBorderRepeat": true, "maskBorder": true, "maskType": true, "textDecorationStyle": true, "textDecorationSkip": true, "textDecorationLine": true, "textDecorationColor": true, "filter": true, "fontFeatureSettings": true, "breakAfter": true, "breakBefore": true, "breakInside": true, "columnCount": true, "columnFill": true, "columnGap": true, "columnRule": true, "columnRuleColor": true, "columnRuleStyle": true, "columnRuleWidth": true, "columns": true, "columnSpan": true, "columnWidth": true, "flex": true, "flexBasis": true, "flexDirection": true, "flexGrow": true, "flexFlow": true, "flexShrink": true, "flexWrap": true, "alignContent": true, "alignItems": true, "alignSelf": true, "justifyContent": true, "order": true, "transition": true, "transitionDelay": true, "transitionDuration": true, "transitionProperty": true, "transitionTimingFunction": true, "backdropFilter": true, "scrollSnapType": true, "scrollSnapPointsX": true, "scrollSnapPointsY": true, "scrollSnapDestination": true, "scrollSnapCoordinate": true, "shapeImageThreshold": true, "shapeImageMargin": true, "shapeImageOutside": true, "hyphens": true, "flowInto": true, "flowFrom": true, "regionFragment": true, "textSizeAdjust": true }, "Moz": { "appearance": true, "userSelect": true, "boxSizing": true, "textAlignLast": true, "textDecorationStyle": true, "textDecorationSkip": true, "textDecorationLine": true, "textDecorationColor": true, "tabSize": true, "hyphens": true, "fontFeatureSettings": true, "breakAfter": true, "breakBefore": true, "breakInside": true, "columnCount": true, "columnFill": true, "columnGap": true, "columnRule": true, "columnRuleColor": true, "columnRuleStyle": true, "columnRuleWidth": true, "columns": true, "columnSpan": true, "columnWidth": true }, "ms": { "flex": true, "flexBasis": false, "flexDirection": true, "flexGrow": false, "flexFlow": true, "flexShrink": false, "flexWrap": true, "alignContent": false, "alignItems": false, "alignSelf": false, "justifyContent": false, "order": false, "transform": true, "transformOrigin": true, "transformOriginX": true, "transformOriginY": true, "userSelect": true, "wrapFlow": true, "wrapThrough": true, "wrapMargin": true, "scrollSnapType": true, "scrollSnapPointsX": true, "scrollSnapPointsY": true, "scrollSnapDestination": true, "scrollSnapCoordinate": true, "touchAction": true, "hyphens": true, "flowInto": true, "flowFrom": true, "breakBefore": true, "breakAfter": true, "breakInside": true, "regionFragment": true, "gridTemplateColumns": true, "gridTemplateRows": true, "gridTemplateAreas": true, "gridTemplate": true, "gridAutoColumns": true, "gridAutoRows": true, "gridAutoFlow": true, "grid": true, "gridRowStart": true, "gridColumnStart": true, "gridRowEnd": true, "gridRow": true, "gridColumn": true, "gridColumnEnd": true, "gridColumnGap": true, "gridRowGap": true, "gridArea": true, "gridGap": true, "textSizeAdjust": true } };
-	module.exports = exports["default"];
-
-/***/ },
-/* 12 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	// helper to capitalize strings
-
-	exports.default = function (str) {
-	  return str.charAt(0).toUpperCase() + str.slice(1);
-	};
-
-	module.exports = exports["default"];
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = sortPrefixedStyle;
-
-	var _isPrefixedProperty = __webpack_require__(14);
-
-	var _isPrefixedProperty2 = _interopRequireDefault(_isPrefixedProperty);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function sortPrefixedStyle(style) {
-	  return Object.keys(style).sort(function (left, right) {
-	    if ((0, _isPrefixedProperty2.default)(left) && !(0, _isPrefixedProperty2.default)(right)) {
-	      return -1;
-	    } else if (!(0, _isPrefixedProperty2.default)(left) && (0, _isPrefixedProperty2.default)(right)) {
-	      return 1;
-	    }
-	    return 0;
-	  }).reduce(function (sortedStyle, prop) {
-	    sortedStyle[prop] = style[prop];
-	    return sortedStyle;
-	  }, {});
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (property) {
-	  return property.match(/^(Webkit|Moz|O|ms)/) !== null;
-	};
-
-	module.exports = exports["default"];
-
-/***/ },
-/* 15 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = position;
-	function position(property, value) {
-	  if (property === 'position' && value === 'sticky') {
-	    return { position: ['-webkit-sticky', 'sticky'] };
-	  }
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = calc;
-
-	var _joinPrefixedValue = __webpack_require__(17);
-
-	var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
-
-	var _isPrefixedValue = __webpack_require__(18);
-
-	var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function calc(property, value) {
-	  if (typeof value === 'string' && !(0, _isPrefixedValue2.default)(value) && value.indexOf('calc(') > -1) {
-	    return (0, _joinPrefixedValue2.default)(property, value, function (prefix, value) {
-	      return value.replace(/calc\(/g, prefix + 'calc(');
-	    });
-	  }
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	// returns a style object with a single concated prefixed value string
-
-	exports.default = function (property, value) {
-	  var replacer = arguments.length <= 2 || arguments[2] === undefined ? function (prefix, value) {
-	    return prefix + value;
-	  } : arguments[2];
-	  return _defineProperty({}, property, ['-webkit-', '-moz-', ''].map(function (prefix) {
-	    return replacer(prefix, value);
-	  }));
-	};
-
-	module.exports = exports['default'];
-
-/***/ },
-/* 18 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (value) {
-	  if (Array.isArray(value)) value = value.join(',');
-
-	  return value.match(/-webkit-|-moz-|-ms-/) !== null;
-	};
-
-	module.exports = exports['default'];
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = cursor;
-
-	var _joinPrefixedValue = __webpack_require__(17);
-
-	var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var values = {
-	  'zoom-in': true,
-	  'zoom-out': true,
-	  grab: true,
-	  grabbing: true
-	};
-
-	function cursor(property, value) {
-	  if (property === 'cursor' && values[value]) {
-	    return (0, _joinPrefixedValue2.default)(property, value);
-	  }
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 20 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = flex;
-	var values = { flex: true, 'inline-flex': true };
-
-	function flex(property, value) {
-	  if (property === 'display' && values[value]) {
-	    return {
-	      display: ['-webkit-box', '-moz-box', '-ms-' + value + 'box', '-webkit-' + value, value]
-	    };
-	  }
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 21 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = sizing;
-
-	var _joinPrefixedValue = __webpack_require__(17);
-
-	var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var properties = {
-	  maxHeight: true,
-	  maxWidth: true,
-	  width: true,
-	  height: true,
-	  columnWidth: true,
-	  minWidth: true,
-	  minHeight: true
-	};
-	var values = {
-	  'min-content': true,
-	  'max-content': true,
-	  'fill-available': true,
-	  'fit-content': true,
-	  'contain-floats': true
-	};
-
-	function sizing(property, value) {
-	  if (properties[property] && values[value]) {
-	    return (0, _joinPrefixedValue2.default)(property, value);
-	  }
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = gradient;
-
-	var _joinPrefixedValue = __webpack_require__(17);
-
-	var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
-
-	var _isPrefixedValue = __webpack_require__(18);
-
-	var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/;
-
-	function gradient(property, value) {
-	  if (typeof value === 'string' && !(0, _isPrefixedValue2.default)(value) && value.match(values) !== null) {
-	    return (0, _joinPrefixedValue2.default)(property, value);
-	  }
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 23 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = transition;
-
-	var _hyphenateStyleName = __webpack_require__(24);
-
-	var _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);
-
-	var _capitalizeString = __webpack_require__(12);
-
-	var _capitalizeString2 = _interopRequireDefault(_capitalizeString);
-
-	var _isPrefixedValue = __webpack_require__(18);
-
-	var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
-
-	var _prefixProps = __webpack_require__(11);
-
-	var _prefixProps2 = _interopRequireDefault(_prefixProps);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	var properties = {
-	  transition: true,
-	  transitionProperty: true,
-	  WebkitTransition: true,
-	  WebkitTransitionProperty: true
-	};
-
-	function transition(property, value) {
-	  // also check for already prefixed transitions
-	  if (typeof value === 'string' && properties[property]) {
-	    var _ref2;
-
-	    var outputValue = prefixValue(value);
-	    var webkitOutput = outputValue.split(/,(?![^()]*(?:\([^()]*\))?\))/g).filter(function (value) {
-	      return value.match(/-moz-|-ms-/) === null;
-	    }).join(',');
-
-	    // if the property is already prefixed
-	    if (property.indexOf('Webkit') > -1) {
-	      return _defineProperty({}, property, webkitOutput);
-	    }
-
-	    return _ref2 = {}, _defineProperty(_ref2, 'Webkit' + (0, _capitalizeString2.default)(property), webkitOutput), _defineProperty(_ref2, property, outputValue), _ref2;
-	  }
-	}
-
-	function prefixValue(value) {
-	  if ((0, _isPrefixedValue2.default)(value)) {
-	    return value;
-	  }
-
-	  // only split multi values, not cubic beziers
-	  var multipleValues = value.split(/,(?![^()]*(?:\([^()]*\))?\))/g);
-
-	  // iterate each single value and check for transitioned properties
-	  // that need to be prefixed as well
-	  multipleValues.forEach(function (val, index) {
-	    multipleValues[index] = Object.keys(_prefixProps2.default).reduce(function (out, prefix) {
-	      var dashCasePrefix = '-' + prefix.toLowerCase() + '-';
-
-	      Object.keys(_prefixProps2.default[prefix]).forEach(function (prop) {
-	        var dashCaseProperty = (0, _hyphenateStyleName2.default)(prop);
-
-	        if (val.indexOf(dashCaseProperty) > -1 && dashCaseProperty !== 'order') {
-	          // join all prefixes and create a new value
-	          out = val.replace(dashCaseProperty, dashCasePrefix + dashCaseProperty) + ',' + out;
-	        }
-	      });
-	      return out;
-	    }, val);
-	  });
-
-	  return multipleValues.join(',');
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 24 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	var uppercasePattern = /[A-Z]/g;
-	var msPattern = /^ms-/;
-	var cache = {};
-
-	function hyphenateStyleName(string) {
-	    return string in cache
-	    ? cache[string]
-	    : cache[string] = string
-	      .replace(uppercasePattern, '-$&')
-	      .toLowerCase()
-	      .replace(msPattern, '-ms-');
-	}
-
-	module.exports = hyphenateStyleName;
-
-
-/***/ },
-/* 25 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = flexboxIE;
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	var alternativeValues = {
-	  'space-around': 'distribute',
-	  'space-between': 'justify',
-	  'flex-start': 'start',
-	  'flex-end': 'end'
-	};
-	var alternativeProps = {
-	  alignContent: 'msFlexLinePack',
-	  alignSelf: 'msFlexItemAlign',
-	  alignItems: 'msFlexAlign',
-	  justifyContent: 'msFlexPack',
-	  order: 'msFlexOrder',
-	  flexGrow: 'msFlexPositive',
-	  flexShrink: 'msFlexNegative',
-	  flexBasis: 'msPreferredSize'
-	};
-
-	function flexboxIE(property, value) {
-	  if (alternativeProps[property]) {
-	    return _defineProperty({}, alternativeProps[property], alternativeValues[value] || value);
-	  }
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 26 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = flexboxOld;
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	var alternativeValues = {
-	  'space-around': 'justify',
-	  'space-between': 'justify',
-	  'flex-start': 'start',
-	  'flex-end': 'end',
-	  'wrap-reverse': 'multiple',
-	  wrap: 'multiple'
-	};
-
-	var alternativeProps = {
-	  alignItems: 'WebkitBoxAlign',
-	  justifyContent: 'WebkitBoxPack',
-	  flexWrap: 'WebkitBoxLines'
-	};
-
-	function flexboxOld(property, value) {
-	  if (property === 'flexDirection' && typeof value === 'string') {
-	    return {
-	      WebkitBoxOrient: value.indexOf('column') > -1 ? 'vertical' : 'horizontal',
-	      WebkitBoxDirection: value.indexOf('reverse') > -1 ? 'reverse' : 'normal'
-	    };
-	  }
-	  if (alternativeProps[property]) {
-	    return _defineProperty({}, alternativeProps[property], alternativeValues[value] || value);
-	  }
-	}
-	module.exports = exports['default'];
-
-/***/ },
-/* 27 */
-/***/ function(module, exports) {
-
-	// {K1: V1, K2: V2, ...} -> [[K1, V1], [K2, V2]]
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var objectToPairs = function objectToPairs(obj) {
-	    return Object.keys(obj).map(function (key) {
-	        return [key, obj[key]];
-	    });
-	};
-
-	exports.objectToPairs = objectToPairs;
-	// [[K1, V1], [K2, V2]] -> {K1: V1, K2: V2, ...}
-	var pairsToObject = function pairsToObject(pairs) {
-	    var result = {};
-	    pairs.forEach(function (_ref) {
-	        var _ref2 = _slicedToArray(_ref, 2);
-
-	        var key = _ref2[0];
-	        var val = _ref2[1];
-
-	        result[key] = val;
-	    });
-	    return result;
-	};
-
-	var mapObj = function mapObj(obj, fn) {
-	    return pairsToObject(objectToPairs(obj).map(fn));
-	};
-
-	exports.mapObj = mapObj;
-	// Flattens an array one level
-	// [[A], [B, C, [D]]] -> [A, B, C, [D]]
-	var flatten = function flatten(list) {
-	    return list.reduce(function (memo, x) {
-	        return memo.concat(x);
-	    }, []);
-	};
-
-	exports.flatten = flatten;
-	var flattenDeep = function flattenDeep(list) {
-	    return list.reduce(function (memo, x) {
-	        return memo.concat(Array.isArray(x) ? flattenDeep(x) : x);
-	    }, []);
-	};
-
-	exports.flattenDeep = flattenDeep;
-	var UPPERCASE_RE = /([A-Z])/g;
-	var MS_RE = /^ms-/;
-
-	var kebabify = function kebabify(string) {
-	    return string.replace(UPPERCASE_RE, '-$1').toLowerCase();
-	};
-	var kebabifyStyleName = function kebabifyStyleName(string) {
-	    return kebabify(string).replace(MS_RE, '-ms-');
-	};
-
-	exports.kebabifyStyleName = kebabifyStyleName;
-	var recursiveMerge = function recursiveMerge(a, b) {
-	    // TODO(jlfwong): Handle malformed input where a and b are not the same
-	    // type.
-
-	    if (typeof a !== 'object') {
-	        return b;
-	    }
-
-	    var ret = _extends({}, a);
-
-	    Object.keys(b).forEach(function (key) {
-	        if (ret.hasOwnProperty(key)) {
-	            ret[key] = recursiveMerge(a[key], b[key]);
-	        } else {
-	            ret[key] = b[key];
-	        }
-	    });
-
-	    return ret;
-	};
-
-	exports.recursiveMerge = recursiveMerge;
-	/**
-	 * CSS properties which accept numbers but are not in units of "px".
-	 * Taken from React's CSSProperty.js
-	 */
-	var isUnitlessNumber = {
-	    animationIterationCount: true,
-	    borderImageOutset: true,
-	    borderImageSlice: true,
-	    borderImageWidth: true,
-	    boxFlex: true,
-	    boxFlexGroup: true,
-	    boxOrdinalGroup: true,
-	    columnCount: true,
-	    flex: true,
-	    flexGrow: true,
-	    flexPositive: true,
-	    flexShrink: true,
-	    flexNegative: true,
-	    flexOrder: true,
-	    gridRow: true,
-	    gridColumn: true,
-	    fontWeight: true,
-	    lineClamp: true,
-	    lineHeight: true,
-	    opacity: true,
-	    order: true,
-	    orphans: true,
-	    tabSize: true,
-	    widows: true,
-	    zIndex: true,
-	    zoom: true,
-
-	    // SVG-related properties
-	    fillOpacity: true,
-	    floodOpacity: true,
-	    stopOpacity: true,
-	    strokeDasharray: true,
-	    strokeDashoffset: true,
-	    strokeMiterlimit: true,
-	    strokeOpacity: true,
-	    strokeWidth: true
-	};
-
-	/**
-	 * Taken from React's CSSProperty.js
-	 *
-	 * @param {string} prefix vendor-specific prefix, eg: Webkit
-	 * @param {string} key style name, eg: transitionDuration
-	 * @return {string} style name prefixed with `prefix`, properly camelCased, eg:
-	 * WebkitTransitionDuration
-	 */
-	function prefixKey(prefix, key) {
-	    return prefix + key.charAt(0).toUpperCase() + key.substring(1);
-	}
-
-	/**
-	 * Support style names that may come passed in prefixed by adding permutations
-	 * of vendor prefixes.
-	 * Taken from React's CSSProperty.js
-	 */
-	var prefixes = ['Webkit', 'ms', 'Moz', 'O'];
-
-	// Using Object.keys here, or else the vanilla for-in loop makes IE8 go into an
-	// infinite loop, because it iterates over the newly added props too.
-	// Taken from React's CSSProperty.js
-	Object.keys(isUnitlessNumber).forEach(function (prop) {
-	    prefixes.forEach(function (prefix) {
-	        isUnitlessNumber[prefixKey(prefix, prop)] = isUnitlessNumber[prop];
-	    });
-	});
-
-	var stringifyValue = function stringifyValue(key, prop) {
-	    if (typeof prop === "number") {
-	        if (isUnitlessNumber[key]) {
-	            return "" + prop;
-	        } else {
-	            return prop + "px";
-	        }
-	    } else {
-	        return prop;
-	    }
-	};
-
-	exports.stringifyValue = stringifyValue;
-	/**
-	 * JS Implementation of MurmurHash2
-	 *
-	 * @author <a href="mailto:gary.court@gmail.com">Gary Court</a>
-	 * @see http://github.com/garycourt/murmurhash-js
-	 * @author <a href="mailto:aappleby@gmail.com">Austin Appleby</a>
-	 * @see http://sites.google.com/site/murmurhash/
-	 *
-	 * @param {string} str ASCII only
-	 * @return {string} Base 36 encoded hash result
-	 */
-	function murmurhash2_32_gc(str) {
-	    var l = str.length;
-	    var h = l;
-	    var i = 0;
-	    var k = undefined;
-
-	    while (l >= 4) {
-	        k = str.charCodeAt(i) & 0xff | (str.charCodeAt(++i) & 0xff) << 8 | (str.charCodeAt(++i) & 0xff) << 16 | (str.charCodeAt(++i) & 0xff) << 24;
-
-	        k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-	        k ^= k >>> 24;
-	        k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-
-	        h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16) ^ k;
-
-	        l -= 4;
-	        ++i;
-	    }
-
-	    /* eslint-disable no-fallthrough */ // forgive existing code
-	    switch (l) {
-	        case 3:
-	            h ^= (str.charCodeAt(i + 2) & 0xff) << 16;
-	        case 2:
-	            h ^= (str.charCodeAt(i + 1) & 0xff) << 8;
-	        case 1:
-	            h ^= str.charCodeAt(i) & 0xff;
-	            h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-	    }
-	    /* eslint-enable no-fallthrough */
-
-	    h ^= h >>> 13;
-	    h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-	    h ^= h >>> 15;
-
-	    return (h >>> 0).toString(36);
-	}
-
-	// Hash a javascript object using JSON.stringify. This is very fast, about 3
-	// microseconds on my computer for a sample object:
-	// http://jsperf.com/test-hashfnv32a-hash/5
-	//
-	// Note that this uses JSON.stringify to stringify the objects so in order for
-	// this to produce consistent hashes browsers need to have a consistent
-	// ordering of objects. Ben Alpert says that Facebook depends on this, so we
-	// can probably depend on this too.
-	var hashObject = function hashObject(object) {
-	    return murmurhash2_32_gc(JSON.stringify(object));
-	};
-
-	exports.hashObject = hashObject;
-	var IMPORTANT_RE = /^([^:]+:.*?)( !important)?;$/;
-
-	// Given a single style rule string like "a: b;", adds !important to generate
-	// "a: b !important;".
-	var importantify = function importantify(string) {
-	    return string.replace(IMPORTANT_RE, function (_, base) {
-	        return base + " !important;";
-	    });
-	};
-	exports.importantify = importantify;
-
-/***/ },
-/* 28 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _util = __webpack_require__(27);
-
-	var _inject = __webpack_require__(29);
-
-	var StyleSheet = {
-	    create: function create(sheetDefinition) {
-	        return (0, _util.mapObj)(sheetDefinition, function (_ref) {
-	            var _ref2 = _slicedToArray(_ref, 2);
-
-	            var key = _ref2[0];
-	            var val = _ref2[1];
-
-	            return [key, {
-	                // TODO(emily): Make a 'production' mode which doesn't prepend
-	                // the class name here, to make the generated CSS smaller.
-	                _name: key + '_' + (0, _util.hashObject)(val),
-	                _definition: val
-	            }];
-	        });
-	    },
-
-	    rehydrate: function rehydrate() {
-	        var renderedClassNames = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-
-	        (0, _inject.addRenderedClassNames)(renderedClassNames);
-	    }
-	};
-
-	/**
-	 * Utilities for using Aphrodite server-side.
-	 */
-	var StyleSheetServer = {
-	    renderStatic: function renderStatic(renderFunc) {
-	        (0, _inject.reset)();
-	        (0, _inject.startBuffering)();
-	        var html = renderFunc();
-	        var cssContent = (0, _inject.flushToString)();
-
-	        return {
-	            html: html,
-	            css: {
-	                content: cssContent,
-	                renderedClassNames: (0, _inject.getRenderedClassNames)()
-	            }
-	        };
-	    }
-	};
-
-	/**
-	 * Utilities for using Aphrodite in tests.
-	 *
-	 * Not meant to be used in production.
-	 */
-	var StyleSheetTestUtils = {
-	    /**
-	     * Prevent styles from being injected into the DOM.
-	     *
-	     * This is useful in situations where you'd like to test rendering UI
-	     * components which use Aphrodite without any of the side-effects of
-	     * Aphrodite happening. Particularly useful for testing the output of
-	     * components when you have no DOM, e.g. testing in Node without a fake DOM.
-	     *
-	     * Should be paired with a subsequent call to
-	     * clearBufferAndResumeStyleInjection.
-	     */
-	    suppressStyleInjection: function suppressStyleInjection() {
-	        (0, _inject.reset)();
-	        (0, _inject.startBuffering)();
-	    },
-
-	    /**
-	     * Opposite method of preventStyleInject.
-	     */
-	    clearBufferAndResumeStyleInjection: function clearBufferAndResumeStyleInjection() {
-	        (0, _inject.reset)();
-	    }
-	};
-
-	/**
-	 * Generate the Aphrodite API exports, with given `selectorHandlers` and
-	 * `useImportant` state.
-	 */
-	var makeExports = function makeExports(useImportant, selectorHandlers) {
-	    return {
-	        StyleSheet: _extends({}, StyleSheet, {
-
-	            /**
-	             * Returns a version of the exports of Aphrodite (i.e. an object
-	             * with `css` and `StyleSheet` properties) which have some
-	             * extensions included.
-	             *
-	             * @param {Array.<Object>} extensions: An array of extensions to
-	             *     add to this instance of Aphrodite. Each object should have a
-	             *     single property on it, defining which kind of extension to
-	             *     add.
-	             * @param {SelectorHandler} [extensions[].selectorHandler]: A
-	             *     selector handler extension. See `defaultSelectorHandlers` in
-	             *     generate.js.
-	             *
-	             * @returns {Object} An object containing the exports of the new
-	             *     instance of Aphrodite.
-	             */
-	            extend: function extend(extensions) {
-	                var extensionSelectorHandlers = extensions
-	                // Pull out extensions with a selectorHandler property
-	                .map(function (extension) {
-	                    return extension.selectorHandler;
-	                })
-	                // Remove nulls (i.e. extensions without a selectorHandler
-	                // property).
-	                .filter(function (handler) {
-	                    return handler;
-	                });
-
-	                return makeExports(useImportant, selectorHandlers.concat(extensionSelectorHandlers));
-	            }
-	        }),
-
-	        StyleSheetServer: StyleSheetServer,
-	        StyleSheetTestUtils: StyleSheetTestUtils,
-
-	        css: function css() {
-	            for (var _len = arguments.length, styleDefinitions = Array(_len), _key = 0; _key < _len; _key++) {
-	                styleDefinitions[_key] = arguments[_key];
-	            }
-
-	            return (0, _inject.injectAndGetClassName)(useImportant, styleDefinitions, selectorHandlers);
-	        }
-	    };
-	};
-
-	module.exports = makeExports;
-
-/***/ },
-/* 29 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	    value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _asap = __webpack_require__(30);
-
-	var _asap2 = _interopRequireDefault(_asap);
-
-	var _generate = __webpack_require__(8);
-
-	var _util = __webpack_require__(27);
-
-	// The current <style> tag we are inserting into, or null if we haven't
-	// inserted anything yet. We could find this each time using
-	// `document.querySelector("style[data-aphrodite"])`, but holding onto it is
-	// faster.
-	var styleTag = null;
-
-	// Inject a string of styles into a <style> tag in the head of the document. This
-	// will automatically create a style tag and then continue to use it for
-	// multiple injections. It will also use a style tag with the `data-aphrodite`
-	// tag on it if that exists in the DOM. This could be used for e.g. reusing the
-	// same style tag that server-side rendering inserts.
-	var injectStyleTag = function injectStyleTag(cssContents) {
-	    if (styleTag == null) {
-	        // Try to find a style tag with the `data-aphrodite` attribute first.
-	        styleTag = document.querySelector("style[data-aphrodite]");
-
-	        // If that doesn't work, generate a new style tag.
-	        if (styleTag == null) {
-	            // Taken from
-	            // http://stackoverflow.com/questions/524696/how-to-create-a-style-tag-with-javascript
-	            var head = document.head || document.getElementsByTagName('head')[0];
-	            styleTag = document.createElement('style');
-
-	            styleTag.type = 'text/css';
-	            styleTag.setAttribute("data-aphrodite", "");
-	            head.appendChild(styleTag);
-	        }
-	    }
-
-	    if (styleTag.styleSheet) {
-	        styleTag.styleSheet.cssText += cssContents;
-	    } else {
-	        styleTag.appendChild(document.createTextNode(cssContents));
-	    }
-	};
-
-	// Custom handlers for stringifying CSS values that have side effects
-	// (such as fontFamily, which can cause @font-face rules to be injected)
-	var stringHandlers = {
-	    // With fontFamily we look for objects that are passed in and interpret
-	    // them as @font-face rules that we need to inject. The value of fontFamily
-	    // can either be a string (as normal), an object (a single font face), or
-	    // an array of objects and strings.
-	    fontFamily: function fontFamily(val) {
-	        if (Array.isArray(val)) {
-	            return val.map(fontFamily).join(",");
-	        } else if (typeof val === "object") {
-	            injectStyleOnce(val.src, "@font-face", [val], false);
-	            return '"' + val.fontFamily + '"';
-	        } else {
-	            return val;
-	        }
-	    },
-
-	    // With animationName we look for an object that contains keyframes and
-	    // inject them as an `@keyframes` block, returning a uniquely generated
-	    // name. The keyframes object should look like
-	    //  animationName: {
-	    //    from: {
-	    //      left: 0,
-	    //      top: 0,
-	    //    },
-	    //    '50%': {
-	    //      left: 15,
-	    //      top: 5,
-	    //    },
-	    //    to: {
-	    //      left: 20,
-	    //      top: 20,
-	    //    }
-	    //  }
-	    // TODO(emily): `stringHandlers` doesn't let us rename the key, so I have
-	    // to use `animationName` here. Improve that so we can call this
-	    // `animation` instead of `animationName`.
-	    animationName: function animationName(val, selectorHandlers) {
-	        if (Array.isArray(val)) {
-	            return val.map(function (v) {
-	                return animationName(v, selectorHandlers);
-	            }).join(",");
-	        } else if (typeof val === "object") {
-	            // Generate a unique name based on the hash of the object. We can't
-	            // just use the hash because the name can't start with a number.
-	            // TODO(emily): this probably makes debugging hard, allow a custom
-	            // name?
-	            var _name = 'keyframe_' + (0, _util.hashObject)(val);
-
-	            // Since keyframes need 3 layers of nesting, we use `generateCSS` to
-	            // build the inner layers and wrap it in `@keyframes` ourselves.
-	            var finalVal = '@keyframes ' + _name + '{';
-	            Object.keys(val).forEach(function (key) {
-	                finalVal += (0, _generate.generateCSS)(key, [val[key]], selectorHandlers, stringHandlers, false);
-	            });
-	            finalVal += '}';
-
-	            injectGeneratedCSSOnce(_name, finalVal);
-
-	            return _name;
-	        } else {
-	            return val;
-	        }
-	    }
-	};
-
-	// This is a map from Aphrodite's generated class names to `true` (acting as a
-	// set of class names)
-	var alreadyInjected = {};
-
-	// This is the buffer of styles which have not yet been flushed.
-	var injectionBuffer = "";
-
-	// A flag to tell if we are already buffering styles. This could happen either
-	// because we scheduled a flush call already, so newly added styles will
-	// already be flushed, or because we are statically buffering on the server.
-	var isBuffering = false;
-
-	var injectGeneratedCSSOnce = function injectGeneratedCSSOnce(key, generatedCSS) {
-	    if (!alreadyInjected[key]) {
-	        if (!isBuffering) {
-	            // We should never be automatically buffering on the server (or any
-	            // place without a document), so guard against that.
-	            if (typeof document === "undefined") {
-	                throw new Error("Cannot automatically buffer without a document");
-	            }
-
-	            // If we're not already buffering, schedule a call to flush the
-	            // current styles.
-	            isBuffering = true;
-	            (0, _asap2['default'])(flushToStyleTag);
-	        }
-
-	        injectionBuffer += generatedCSS;
-	        alreadyInjected[key] = true;
-	    }
-	};
-
-	var injectStyleOnce = function injectStyleOnce(key, selector, definitions, useImportant, selectorHandlers) {
-	    if (!alreadyInjected[key]) {
-	        var generated = (0, _generate.generateCSS)(selector, definitions, selectorHandlers, stringHandlers, useImportant);
-
-	        injectGeneratedCSSOnce(key, generated);
-	    }
-	};
-
-	exports.injectStyleOnce = injectStyleOnce;
-	var reset = function reset() {
-	    injectionBuffer = "";
-	    alreadyInjected = {};
-	    isBuffering = false;
-	    styleTag = null;
-	};
-
-	exports.reset = reset;
-	var startBuffering = function startBuffering() {
-	    if (isBuffering) {
-	        throw new Error("Cannot buffer while already buffering");
-	    }
-	    isBuffering = true;
-	};
-
-	exports.startBuffering = startBuffering;
-	var flushToString = function flushToString() {
-	    isBuffering = false;
-	    var ret = injectionBuffer;
-	    injectionBuffer = "";
-	    return ret;
-	};
-
-	exports.flushToString = flushToString;
-	var flushToStyleTag = function flushToStyleTag() {
-	    var cssContent = flushToString();
-	    if (cssContent.length > 0) {
-	        injectStyleTag(cssContent);
-	    }
-	};
-
-	exports.flushToStyleTag = flushToStyleTag;
-	var getRenderedClassNames = function getRenderedClassNames() {
-	    return Object.keys(alreadyInjected);
-	};
-
-	exports.getRenderedClassNames = getRenderedClassNames;
-	var addRenderedClassNames = function addRenderedClassNames(classNames) {
-	    classNames.forEach(function (className) {
-	        alreadyInjected[className] = true;
-	    });
-	};
-
-	exports.addRenderedClassNames = addRenderedClassNames;
-	/**
-	 * Inject styles associated with the passed style definition objects, and return
-	 * an associated CSS class name.
-	 *
-	 * @param {boolean} useImportant If true, will append !important to generated
-	 *     CSS output. e.g. {color: red} -> "color: red !important".
-	 * @param {(Object|Object[])[]} styleDefinitions style definition objects, or
-	 *     arbitrarily nested arrays of them, as returned as properties of the
-	 *     return value of StyleSheet.create().
-	 */
-	var injectAndGetClassName = function injectAndGetClassName(useImportant, styleDefinitions, selectorHandlers) {
-	    styleDefinitions = (0, _util.flattenDeep)(styleDefinitions);
-
-	    // Filter out falsy values from the input, to allow for
-	    // `css(a, test && c)`
-	    var validDefinitions = styleDefinitions.filter(function (def) {
-	        return def;
-	    });
-
-	    // Break if there aren't any valid styles.
-	    if (validDefinitions.length === 0) {
-	        return "";
-	    }
-
-	    var className = validDefinitions.map(function (s) {
-	        return s._name;
-	    }).join("-o_O-");
-	    injectStyleOnce(className, '.' + className, validDefinitions.map(function (d) {
-	        return d._definition;
-	    }), useImportant, selectorHandlers);
-
-	    return className;
-	};
-	exports.injectAndGetClassName = injectAndGetClassName;
-
-/***/ },
-/* 30 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	// rawAsap provides everything we need except exception management.
-	var rawAsap = __webpack_require__(31);
-	// RawTasks are recycled to reduce GC churn.
-	var freeTasks = [];
-	// We queue errors to ensure they are thrown in right order (FIFO).
-	// Array-as-queue is good enough here, since we are just dealing with exceptions.
-	var pendingErrors = [];
-	var requestErrorThrow = rawAsap.makeRequestCallFromTimer(throwFirstError);
-
-	function throwFirstError() {
-	    if (pendingErrors.length) {
-	        throw pendingErrors.shift();
-	    }
-	}
-
-	/**
-	 * Calls a task as soon as possible after returning, in its own event, with priority
-	 * over other events like animation, reflow, and repaint. An error thrown from an
-	 * event will not interrupt, nor even substantially slow down the processing of
-	 * other events, but will be rather postponed to a lower priority event.
-	 * @param {{call}} task A callable object, typically a function that takes no
-	 * arguments.
-	 */
-	module.exports = asap;
-	function asap(task) {
-	    var rawTask;
-	    if (freeTasks.length) {
-	        rawTask = freeTasks.pop();
-	    } else {
-	        rawTask = new RawTask();
-	    }
-	    rawTask.task = task;
-	    rawAsap(rawTask);
-	}
-
-	// We wrap tasks with recyclable task objects.  A task object implements
-	// `call`, just like a function.
-	function RawTask() {
-	    this.task = null;
-	}
-
-	// The sole purpose of wrapping the task is to catch the exception and recycle
-	// the task object after its single use.
-	RawTask.prototype.call = function () {
-	    try {
-	        this.task.call();
-	    } catch (error) {
-	        if (asap.onerror) {
-	            // This hook exists purely for testing purposes.
-	            // Its name will be periodically randomized to break any code that
-	            // depends on its existence.
-	            asap.onerror(error);
-	        } else {
-	            // In a web browser, exceptions are not fatal. However, to avoid
-	            // slowing down the queue of pending tasks, we rethrow the error in a
-	            // lower priority turn.
-	            pendingErrors.push(error);
-	            requestErrorThrow();
-	        }
-	    } finally {
-	        this.task = null;
-	        freeTasks[freeTasks.length] = this;
-	    }
-	};
-
-
-/***/ },
-/* 31 */
-/***/ function(module, exports) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
-
-	// Use the fastest means possible to execute a task in its own turn, with
-	// priority over other events including IO, animation, reflow, and redraw
-	// events in browsers.
-	//
-	// An exception thrown by a task will permanently interrupt the processing of
-	// subsequent tasks. The higher level `asap` function ensures that if an
-	// exception is thrown by a task, that the task queue will continue flushing as
-	// soon as possible, but if you use `rawAsap` directly, you are responsible to
-	// either ensure that no exceptions are thrown from your task, or to manually
-	// call `rawAsap.requestFlush` if an exception is thrown.
-	module.exports = rawAsap;
-	function rawAsap(task) {
-	    if (!queue.length) {
-	        requestFlush();
-	        flushing = true;
-	    }
-	    // Equivalent to push, but avoids a function call.
-	    queue[queue.length] = task;
-	}
-
-	var queue = [];
-	// Once a flush has been requested, no further calls to `requestFlush` are
-	// necessary until the next `flush` completes.
-	var flushing = false;
-	// `requestFlush` is an implementation-specific method that attempts to kick
-	// off a `flush` event as quickly as possible. `flush` will attempt to exhaust
-	// the event queue before yielding to the browser's own event loop.
-	var requestFlush;
-	// The position of the next task to execute in the task queue. This is
-	// preserved between calls to `flush` so that it can be resumed if
-	// a task throws an exception.
-	var index = 0;
-	// If a task schedules additional tasks recursively, the task queue can grow
-	// unbounded. To prevent memory exhaustion, the task queue will periodically
-	// truncate already-completed tasks.
-	var capacity = 1024;
-
-	// The flush function processes all tasks that have been scheduled with
-	// `rawAsap` unless and until one of those tasks throws an exception.
-	// If a task throws an exception, `flush` ensures that its state will remain
-	// consistent and will resume where it left off when called again.
-	// However, `flush` does not make any arrangements to be called again if an
-	// exception is thrown.
-	function flush() {
-	    while (index < queue.length) {
-	        var currentIndex = index;
-	        // Advance the index before calling the task. This ensures that we will
-	        // begin flushing on the next task the task throws an error.
-	        index = index + 1;
-	        queue[currentIndex].call();
-	        // Prevent leaking memory for long chains of recursive calls to `asap`.
-	        // If we call `asap` within tasks scheduled by `asap`, the queue will
-	        // grow, but to avoid an O(n) walk for every task we execute, we don't
-	        // shift tasks off the queue after they have been executed.
-	        // Instead, we periodically shift 1024 tasks off the queue.
-	        if (index > capacity) {
-	            // Manually shift all values starting at the index back to the
-	            // beginning of the queue.
-	            for (var scan = 0, newLength = queue.length - index; scan < newLength; scan++) {
-	                queue[scan] = queue[scan + index];
-	            }
-	            queue.length -= index;
-	            index = 0;
-	        }
-	    }
-	    queue.length = 0;
-	    index = 0;
-	    flushing = false;
-	}
-
-	// `requestFlush` is implemented using a strategy based on data collected from
-	// every available SauceLabs Selenium web driver worker at time of writing.
-	// https://docs.google.com/spreadsheets/d/1mG-5UYGup5qxGdEMWkhP6BWCz053NUb2E1QoUTU16uA/edit#gid=783724593
-
-	// Safari 6 and 6.1 for desktop, iPad, and iPhone are the only browsers that
-	// have WebKitMutationObserver but not un-prefixed MutationObserver.
-	// Must use `global` or `self` instead of `window` to work in both frames and web
-	// workers. `global` is a provision of Browserify, Mr, Mrs, or Mop.
-
-	/* globals self */
-	var scope = typeof global !== "undefined" ? global : self;
-	var BrowserMutationObserver = scope.MutationObserver || scope.WebKitMutationObserver;
-
-	// MutationObservers are desirable because they have high priority and work
-	// reliably everywhere they are implemented.
-	// They are implemented in all modern browsers.
-	//
-	// - Android 4-4.3
-	// - Chrome 26-34
-	// - Firefox 14-29
-	// - Internet Explorer 11
-	// - iPad Safari 6-7.1
-	// - iPhone Safari 7-7.1
-	// - Safari 6-7
-	if (typeof BrowserMutationObserver === "function") {
-	    requestFlush = makeRequestCallFromMutationObserver(flush);
-
-	// MessageChannels are desirable because they give direct access to the HTML
-	// task queue, are implemented in Internet Explorer 10, Safari 5.0-1, and Opera
-	// 11-12, and in web workers in many engines.
-	// Although message channels yield to any queued rendering and IO tasks, they
-	// would be better than imposing the 4ms delay of timers.
-	// However, they do not work reliably in Internet Explorer or Safari.
-
-	// Internet Explorer 10 is the only browser that has setImmediate but does
-	// not have MutationObservers.
-	// Although setImmediate yields to the browser's renderer, it would be
-	// preferrable to falling back to setTimeout since it does not have
-	// the minimum 4ms penalty.
-	// Unfortunately there appears to be a bug in Internet Explorer 10 Mobile (and
-	// Desktop to a lesser extent) that renders both setImmediate and
-	// MessageChannel useless for the purposes of ASAP.
-	// https://github.com/kriskowal/q/issues/396
-
-	// Timers are implemented universally.
-	// We fall back to timers in workers in most engines, and in foreground
-	// contexts in the following browsers.
-	// However, note that even this simple case requires nuances to operate in a
-	// broad spectrum of browsers.
-	//
-	// - Firefox 3-13
-	// - Internet Explorer 6-9
-	// - iPad Safari 4.3
-	// - Lynx 2.8.7
-	} else {
-	    requestFlush = makeRequestCallFromTimer(flush);
-	}
-
-	// `requestFlush` requests that the high priority event queue be flushed as
-	// soon as possible.
-	// This is useful to prevent an error thrown in a task from stalling the event
-	// queue if the exception handled by Node.js’s
-	// `process.on("uncaughtException")` or by a domain.
-	rawAsap.requestFlush = requestFlush;
-
-	// To request a high priority event, we induce a mutation observer by toggling
-	// the text of a text node between "1" and "-1".
-	function makeRequestCallFromMutationObserver(callback) {
-	    var toggle = 1;
-	    var observer = new BrowserMutationObserver(callback);
-	    var node = document.createTextNode("");
-	    observer.observe(node, {characterData: true});
-	    return function requestCall() {
-	        toggle = -toggle;
-	        node.data = toggle;
-	    };
-	}
-
-	// The message channel technique was discovered by Malte Ubl and was the
-	// original foundation for this library.
-	// http://www.nonblocking.io/2011/06/windownexttick.html
-
-	// Safari 6.0.5 (at least) intermittently fails to create message ports on a
-	// page's first load. Thankfully, this version of Safari supports
-	// MutationObservers, so we don't need to fall back in that case.
-
-	// function makeRequestCallFromMessageChannel(callback) {
-	//     var channel = new MessageChannel();
-	//     channel.port1.onmessage = callback;
-	//     return function requestCall() {
-	//         channel.port2.postMessage(0);
-	//     };
-	// }
-
-	// For reasons explained above, we are also unable to use `setImmediate`
-	// under any circumstances.
-	// Even if we were, there is another bug in Internet Explorer 10.
-	// It is not sufficient to assign `setImmediate` to `requestFlush` because
-	// `setImmediate` must be called *by name* and therefore must be wrapped in a
-	// closure.
-	// Never forget.
-
-	// function makeRequestCallFromSetImmediate(callback) {
-	//     return function requestCall() {
-	//         setImmediate(callback);
-	//     };
-	// }
-
-	// Safari 6.0 has a problem where timers will get lost while the user is
-	// scrolling. This problem does not impact ASAP because Safari 6.0 supports
-	// mutation observers, so that implementation is used instead.
-	// However, if we ever elect to use timers in Safari, the prevalent work-around
-	// is to add a scroll event listener that calls for a flush.
-
-	// `setTimeout` does not call the passed callback if the delay is less than
-	// approximately 7 in web workers in Firefox 8 through 18, and sometimes not
-	// even then.
-
-	function makeRequestCallFromTimer(callback) {
-	    return function requestCall() {
-	        // We dispatch a timeout with a specified delay of 0 for engines that
-	        // can reliably accommodate that request. This will usually be snapped
-	        // to a 4 milisecond delay, but once we're flushing, there's no delay
-	        // between events.
-	        var timeoutHandle = setTimeout(handleTimer, 0);
-	        // However, since this timer gets frequently dropped in Firefox
-	        // workers, we enlist an interval handle that will try to fire
-	        // an event 20 times per second until it succeeds.
-	        var intervalHandle = setInterval(handleTimer, 50);
-
-	        function handleTimer() {
-	            // Whichever timer succeeds will cancel both timers and
-	            // execute the callback.
-	            clearTimeout(timeoutHandle);
-	            clearInterval(intervalHandle);
-	            callback();
-	        }
-	    };
-	}
-
-	// This is for `asap.js` only.
-	// Its name will be periodically randomized to break any code that depends on
-	// its existence.
-	rawAsap.makeRequestCallFromTimer = makeRequestCallFromTimer;
-
-	// ASAP was originally a nextTick shim included in Q. This was factored out
-	// into this ASAP package. It was later adapted to RSVP which made further
-	// amendments. These decisions, particularly to marginalize MessageChannel and
-	// to capture the MutationObserver implementation in a closure, were integrated
-	// back into ASAP proper.
-	// https://github.com/tildeio/rsvp.js/blob/cddf7232546a9cf858524b75cde6f9edf72620a7/lib/rsvp/asap.js
-
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 32 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-	  selectorHandler: function selectorHandler(selector, baseSelector, generateSubtreeStyles) {
-	    if (selector[0] !== '>') {
-	      return null;
-	    }
-	    return generateSubtreeStyles(baseSelector + ' ' + selector + ' ');
-	  }
-	};
-
-/***/ },
-/* 33 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	var _domElements = __webpack_require__(34);
-
-	var _domElements2 = _interopRequireDefault(_domElements);
-
-	var _adonisComponent = __webpack_require__(35);
-
-	var _baseStyles = __webpack_require__(39);
-
-	var _baseStyles2 = _interopRequireDefault(_baseStyles);
-
-	var _utils = __webpack_require__(37);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = function () {
-	  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	  var _ref = arguments[1];
-	  var StyleSheetTestUtils = _ref.StyleSheetTestUtils,
-	      css = _ref.css,
-	      StyleSheet = _ref.StyleSheet;
-
-	  options = _utils2.default.defaults(options, {
-	    noInjection: false,
-	    noObjectStyles: false,
-	    preInjection: false
-	  });
-
-	  var adonis = function adonis(base) {
-	    if (base instanceof _baseStyles2.default) {
-	      var _ret = function () {
-	        var factory = {};
-	        _domElements2.default.forEach(function (tagName) {
-	          factory[tagName] = function (styles, variations, name) {
-	            if ((typeof variations === 'undefined' ? 'undefined' : _typeof(variations)) !== 'object') {
-	              name = variations;
-	              variations = undefined;
-	            }
-	            return (0, _adonisComponent.create)(adonis, tagName, styles, variations, base, name);
-	          };
-	        });
-	        return {
-	          v: factory
-	        };
-	      }();
-
-	      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
-	    }
-
-	    return function (styles, variations, name) {
-	      if ((typeof variations === 'undefined' ? 'undefined' : _typeof(variations)) !== 'object') {
-	        name = variations;
-	        variations = undefined;
-	      }
-	      return (0, _adonisComponent.create)(adonis, base, styles, variations, name);
-	    };
-	  };
-
-	  _domElements2.default.forEach(function (tagName) {
-	    adonis[tagName] = function (styles, variations, name) {
-	      if ((typeof variations === 'undefined' ? 'undefined' : _typeof(variations)) !== 'object') {
-	        name = variations;
-	        variations = undefined;
-	      }
-	      return (0, _adonisComponent.create)(adonis, tagName, styles, variations, name);
-	    };
-	  });
-
-	  adonis.css = function (styles, variations, name) {
-	    if ((typeof variations === 'undefined' ? 'undefined' : _typeof(variations)) !== 'object') {
-	      name = variations;
-	      variations = undefined;
-	    }
-	    return new _baseStyles2.default(styles, variations, name);
-	  };
-
-	  adonis.enablePreRenderInjection = function (theme) {
-	    adonis.preRenderInjection = true;
-	    adonis.preRenderTheme = theme;
-	  };
-
-	  adonis.disablePreRenderInjection = function () {
-	    adonis.preRenderInjection = true;
-	  };
-
-	  adonis.disableInjection = function () {
-	    StyleSheetTestUtils.suppressStyleInjection();
-	  };
-
-	  if (options.noInjection && !options.noObjectStyles) {
-	    adonis.disableInjection();
-	  }
-
-	  adonis.preRenderTheme = null;
-	  adonis.preRenderInjection = false;
-
-	  if (options.preInjection) {
-	    adonis.enablePreRenderInjection();
-	  }
-
-	  adonis.aphrodite = {
-	    StyleSheet: StyleSheet,
-	    css: css
-	  };
-	  adonis.Utils = _utils2.default;
-
-	  return adonis;
-	};
-
-/***/ },
-/* 34 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = ['a', 'abbr', 'address', 'area', 'article', 'aside', 'audio', 'b', 'base', 'bdi', 'bdo', 'big', 'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'keygen', 'label', 'legend', 'li', 'link', 'main', 'map', 'mark', 'menu', 'menuitem', 'meta', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'param', 'picture', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track', 'u', 'ul', 'var', 'video', 'wbr', 'circle', 'clipPath', 'defs', 'ellipse', 'g', 'image', 'line', 'linearGradient', 'mask', 'path', 'pattern', 'polygon', 'polyline', 'radialGradient', 'rect', 'stop', 'svg', 'text', 'tspan'];
-
-/***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	var _templateObject = _taggedTemplateLiteral([''], ['']),
-	    _templateObject2 = _taggedTemplateLiteral(['Warning: Trying to pre-render CSS for a React Component (', ')\n          styled via adonis(Component). Due to the way styles are inherited in aphrodite, it\'s\n          possible that the rendered CSS is incomplete. If you\'re making use of style inheritance,\n          please make sure you\'re attaching a `RootElement` to your React Component'], ['Warning: Trying to pre-render CSS for a React Component (', ')\n          styled via adonis(Component). Due to the way styles are inherited in aphrodite, it\'s\n          possible that the rendered CSS is incomplete. If you\'re making use of style inheritance,\n          please make sure you\'re attaching a \\`RootElement\\` to your React Component']);
-
-	exports.create = create;
-
-	var _react = __webpack_require__(3);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _styles = __webpack_require__(36);
-
-	var _styles2 = _interopRequireDefault(_styles);
-
-	var _stylesManager = __webpack_require__(38);
-
-	var _stylesManager2 = _interopRequireDefault(_stylesManager);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var BaseAdonisComponent = function (_Component) {
-	  _inherits(BaseAdonisComponent, _Component);
-
-	  function BaseAdonisComponent() {
-	    _classCallCheck(this, BaseAdonisComponent);
-
-	    return _possibleConstructorReturn(this, (BaseAdonisComponent.__proto__ || Object.getPrototypeOf(BaseAdonisComponent)).apply(this, arguments));
-	  }
-
-	  return BaseAdonisComponent;
-	}(_react.Component);
-
-	BaseAdonisComponent.contextTypes = {
-	  theme: _react.PropTypes.object
-	};
-
-	var getTargetStyles = function getTargetStyles(target) {
-	  var styles = [target._adonisStyles, target._adonisBaseStyles];
-
-	  // Adonis target styled adonis target
-	  if (target._adonisTarget && typeof target._adonisTarget !== 'string') {
-	    styles = styles.concat(getTargetStyles(target._adonisTarget));
-	  }
-
-	  // Adonis target styled a react component
-	  if (target.RootElement) {
-	    styles = styles.concat(getTargetStyles(target.RootElement));
-	  }
-
-	  // React component extends a react component with root element
-	  var proto = Object.getPrototypeOf(target);
-	  if (proto) {
-	    styles = styles.concat(getTargetStyles(proto));
-	  }
-	  return styles.filter(function (style) {
-	    return !!style;
-	  });
-	};
-
-	function create(adonis, target, stylesObject) {
-	  var variations = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-	  var baseStylesObject = arguments[4];
-	  var name = arguments[5];
-
-	  if ((typeof baseStylesObject === 'undefined' ? 'undefined' : _typeof(baseStylesObject)) !== 'object') {
-	    name = baseStylesObject;
-	    baseStylesObject = undefined;
-	  }
-
-	  var isTag = typeof target === 'string';
-	  var isAdonisComponent = target.prototype instanceof BaseAdonisComponent;
-	  var isComponent = !isAdonisComponent && target.prototype instanceof _react.Component;
-
-	  var styles = new _styles2.default(adonis, target, stylesObject, variations, name);
-	  var baseStyles = baseStylesObject && new _styles2.default(adonis, 'baseStyles', baseStylesObject.styles, baseStylesObject.variations, baseStylesObject.name || 'baseStyles');
-
-	  var targetStyles = [];
-	  if (adonis.preRenderInjection) {
-	    if (isComponent) {
-	      if (target.RootElement) {
-	        targetStyles = getTargetStyles(target);
-	      } else {
-	        console.log(''(_templateObject2, target.name)(_templateObject));
-	      }
-	    } else {
-	      targetStyles = getTargetStyles(target);
-	    }
-	  }
-
-	  var allStyles = [baseStyles].concat(targetStyles).concat([styles]).filter(function (s) {
-	    return !!s;
-	  });
-
-	  var stylesManager = new _stylesManager2.default(adonis, allStyles);
-	  if (adonis.preRenderInjection) {
-	    stylesManager.createStyleSheets(adonis.preRenderTheme);
-	  } else {
-	    stylesManager.createStyleSheetsIfPossible();
-	  }
-
-	  if (adonis.preRenderInjection) {
-	    stylesManager.prepareVariations(Object.keys(variations));
-	  }
-
-	  var AdonisComponent = function (_BaseAdonisComponent) {
-	    _inherits(AdonisComponent, _BaseAdonisComponent);
-
-	    function AdonisComponent() {
-	      _classCallCheck(this, AdonisComponent);
-
-	      return _possibleConstructorReturn(this, (AdonisComponent.__proto__ || Object.getPrototypeOf(AdonisComponent)).apply(this, arguments));
-	    }
-
-	    _createClass(AdonisComponent, [{
-	      key: '_cloneProps',
-
-	      /**
-	       * Returns a shallow clone of this component's props
-	       * @return {Object}
-	       * @private
-	       */
-	      value: function _cloneProps() {
-	        var _this3 = this;
-
-	        var elementProps = {};
-	        Object.keys(this.props).forEach(function (prop) {
-	          elementProps[prop] = _this3.props[prop];
-	        });
-	        return elementProps;
-	      }
-
-	      /**
-	       * Returns an array containing the active variations for this component
-	       * @return {String[]}
-	       * @private
-	       */
-
-	    }, {
-	      key: '_getActiveVariations',
-	      value: function _getActiveVariations() {
-	        var _this4 = this;
-
-	        return Object.keys(variations).filter(function (variation) {
-	          return !!_this4.props[variation];
-	        });
-	      }
-
-	      /**
-	       * Renders the component
-	       * @return {React.Element|React.Component}
-	       */
-
-	    }, {
-	      key: 'render',
-	      value: function render() {
-	        // Don't inject twice
-	        if (!adonis.preRenderInjection) {
-	          stylesManager.createStyleSheets(this.context.theme);
-	        }
-
-	        var activeVariations = this._getActiveVariations();
-	        var elementProps = this._cloneProps();
-
-	        // If an available variation is passed in as a property, we add the styles to the class and
-	        // remove the prop from the props we pass to our target element
-	        Object.keys(variations).forEach(function (variation) {
-	          delete elementProps[variation];
-	        });
-
-	        // Apply and pass styles
-
-	        var _stylesManager$getCla = stylesManager.getClassName(activeVariations, this.props.styles),
-	            aphroStyles = _stylesManager$getCla.styles,
-	            className = _stylesManager$getCla.className;
-
-	        elementProps.className = className;
-	        elementProps.styles = aphroStyles;
-
-	        // Pass ref
-	        var _props = this.props,
-	            children = _props.children,
-	            innerRef = _props.innerRef;
-
-	        if (innerRef) {
-	          if (isComponent || isTag) {
-	            elementProps.ref = innerRef;
-	          } else if (isAdonisComponent) {
-	            elementProps.innerRef = innerRef;
-	          }
-	        }
-
-	        // We don't want to pass invalid props to tags
-	        if (isTag) {
-	          delete elementProps.styles;
-	          delete elementProps.innerRef;
-	        }
-
-	        return _react2.default.createElement(target, elementProps, children);
-	      }
-	    }]);
-
-	    return AdonisComponent;
-	  }(BaseAdonisComponent);
-
-	  AdonisComponent.contextTypes = BaseAdonisComponent.contextTypes;
-	  AdonisComponent._adonisTarget = target;
-	  AdonisComponent._adonisStyles = styles;
-	  AdonisComponent._adonisBaseStyles = baseStyles;
-
-	  return AdonisComponent;
-	}
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _utils = __webpack_require__(37);
-
-	var _utils2 = _interopRequireDefault(_utils);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Styles = function () {
-	  function Styles(adonis, target, stylesObject) {
-	    var variationsObject = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-	    var name = arguments[4];
-
-	    _classCallCheck(this, Styles);
-
-	    this._adonis = adonis;
-	    this._target = target;
-	    this._stylesObject = stylesObject;
-	    this._variationsObject = variationsObject;
-	    this._defaultStyleName = name || _utils2.default.generateStyleNameForTarget(target);
-
-	    this._createCombinedStylesObject();
-	  }
-
-	  /**
-	   * Creates an object containing both the default style and the variations
-	   * @private
-	   */
-
-
-	  _createClass(Styles, [{
-	    key: '_createCombinedStylesObject',
-	    value: function _createCombinedStylesObject() {
-	      this._combinedStyles = _defineProperty({}, this._defaultStyleName, this._stylesObject);
-
-	      for (var prop in this._variationsObject) {
-	        this._combinedStyles[prop] = this._variationsObject[prop];
-	      }
-
-	      this._needsProcessing = _utils2.default.objectHasFunctions(this._combinedStyles);
-	    }
-
-	    /**
-	     * Walks through the combined object and calls every function it finds,
-	     * passing the theme
-	     * @param  {Object} theme
-	     * @private
-	     */
-
-	  }, {
-	    key: '_processStyles',
-	    value: function _processStyles(theme) {
-	      var processObject = function processObject(obj) {
-	        var skipFunctions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-	        var newObject = {};
-
-	        for (var prop in obj) {
-	          var value = obj[prop];
-	          var valueType = typeof value === 'undefined' ? 'undefined' : _typeof(value);
-	          if (valueType === 'object') {
-	            newObject[prop] = processObject(value, skipFunctions);
-	          } else if (valueType === 'function') {
-	            if (!skipFunctions) {
-	              newObject[prop] = value(theme);
-	            }
-	          } else {
-	            newObject[prop] = value;
-	          }
-	        }
-
-	        return newObject;
-	      };
-	      this._staticProcessedStyles = processObject(this._combinedStyles, true);
-	      this._processedStyles = processObject(this._combinedStyles);
-	    }
-
-	    /**
-	     * Takes the aphrodite stylesheet objects and fixes their names so that the hash calculation
-	     * does not incorporate any variable styles. This allows us to render multiple themes into
-	     * external CSS files without having to re-compile the JavaScript (since changed theme values
-	     * would also affect the class names)
-	     * @private
-	     */
-
-	  }, {
-	    key: '_fixStylesheetNames',
-	    value: function _fixStylesheetNames() {
-	      for (var key in this._styleSheet) {
-	        var style = this._styleSheet[key];
-
-	        var _style$_name$split = style._name.split('_'),
-	            _style$_name$split2 = _slicedToArray(_style$_name$split, 1),
-	            name = _style$_name$split2[0];
-
-	        // Important: use `_staticProcessedStyles` instead of `_processedStyles`, since they don't
-	        // include theme values
-
-
-	        var newHash = _utils2.default.hashObject(this._staticProcessedStyles[key]);
-	        style._name = name + '_' + newHash;
-	      }
-	    }
-
-	    /**
-	     * Injects the stylesheet after it has been processed
-	     * @param  {Object} theme
-	     * @private
-	     */
-
-	  }, {
-	    key: 'createStyleSheet',
-	    value: function createStyleSheet(theme) {
-	      if (!this._styleSheet) {
-	        if (this._needsProcessing && theme) {
-	          this._processStyles(theme);
-	        }
-
-	        this._styleSheet = this._adonis.aphrodite.StyleSheet.create(this._processedStyles || this._combinedStyles);
-	        if (this._needsProcessing) {
-	          this._fixStylesheetNames();
-	        }
-	      }
-	    }
-
-	    /**
-	     * Checks if the stylesheet can be injected before the first render has been called
-	     * @return {Boolean}
-	     */
-
-	  }, {
-	    key: 'canInjectBeforeRender',
-	    value: function canInjectBeforeRender() {
-	      return !this._needsProcessing;
-	    }
-
-	    /**
-	     * Returns the default style sheet
-	     * @return {Object}
-	     */
-
-	  }, {
-	    key: 'getDefaultStylesheet',
-	    value: function getDefaultStylesheet() {
-	      return this._styleSheet[this._defaultStyleName];
-	    }
-
-	    /**
-	     * Returns the stylesheet for the given variation
-	     * @param  {String} variation
-	     * @return {Object}
-	     */
-
-	  }, {
-	    key: 'getVariationStylesheet',
-	    value: function getVariationStylesheet(variation) {
-	      return this._styleSheet[variation];
-	    }
-	  }]);
-
-	  return Styles;
-	}();
-
-	exports.default = Styles;
-
-/***/ },
-/* 37 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-	var Utils = {
-	  /**
-	   * Generates a random string
-	   * @param  {Number} length = 10
-	   * @return {String}
-	   */
-	  generateClassName: function generateClassName() {
-	    var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 10;
-
-	    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-	    var className = '';
-	    for (var i = 0; i < length; i++) {
-	      className += chars[Math.floor(Math.random() * chars.length)];
-	    }
-	    return className;
-	  },
-
-
-	  /**
-	   * Generates a name for the given target (tag name, class name or random string)
-	   * @param  {Object} target
-	   * @return {String}
-	   */
-	  generateStyleNameForTarget: function generateStyleNameForTarget(target) {
-	    if (typeof target === 'string') {
-	      return target;
-	    } else {
-	      return target.name ? target.name : Utils.generateClassName();
-	    }
-	  },
-
-
-	  /**
-	   * Checks if the given object has any functions deep inside of it
-	   * @param  {Object} obj
-	   * @return {Boolean}
-	   */
-	  objectHasFunctions: function objectHasFunctions(obj) {
-	    for (var prop in obj) {
-	      var value = obj[prop];
-	      var valueType = typeof value === 'undefined' ? 'undefined' : _typeof(value);
-	      if (valueType === 'object') {
-	        if (Utils.objectHasFunctions(value)) {
-	          return true;
-	        }
-	      } else if (valueType === 'function') {
-	        return true;
-	      }
-	    }
-	    return false;
-	  },
-
-
-	  /**
-	   * Assigns own enumerable properties of source object(s) to the destination
-	   * object for all destination properties that resolve to undefined. Once a
-	   * property is set, additional values of the same property are ignored.
-	   * @param  {Object} object
-	   * @param  {Object} ...sources
-	   * @return {Object}
-	   */
-	  defaults: function defaults(object) {
-	    // Shallow clone
-	    var newObject = {};
-	    for (var key in object) {
-	      newObject[key] = object[key];
-	    }
-
-	    // Clone sources
-
-	    for (var _len = arguments.length, sources = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	      sources[_key - 1] = arguments[_key];
-	    }
-
-	    for (var i = 0; i < sources.length; i++) {
-	      var source = sources[i];
-	      for (var _key2 in source) {
-	        if (typeof newObject[_key2] === 'undefined') {
-	          newObject[_key2] = source[_key2];
-	        }
-	      }
-	    }
-
-	    return newObject;
-	  },
-
-
-	  /**
-	   * Assigns own enumerable properties of source object(s) to the destination
-	   * object for all destination properties and their properties that resolve to
-	   * undefined. Once a property is set, additional value sof the same property
-	   * are ignored.
-	   * @param  {Object} object
-	   * @param  {Object} ...sources
-	   * @return {Object}
-	   */
-	  deepDefaults: function deepDefaults(object) {
-	    // Shallow clone
-	    var newObject = {};
-	    for (var key in object) {
-	      newObject[key] = object[key];
-	    }
-
-	    // Clone sources
-
-	    for (var _len2 = arguments.length, sources = Array(_len2 > 1 ? _len2 - 1 : 0), _key3 = 1; _key3 < _len2; _key3++) {
-	      sources[_key3 - 1] = arguments[_key3];
-	    }
-
-	    for (var i = 0; i < sources.length; i++) {
-	      var source = sources[i];
-	      for (var _key4 in source) {
-	        if (Utils.isExtendable(newObject[_key4]) && Utils.isExtendable(source[_key4])) {
-	          newObject[_key4] = Utils.deepDefaults(newObject[_key4], source[_key4]);
-	        } else if (typeof newObject[_key4] === 'undefined') {
-	          newObject[_key4] = source[_key4];
-	        }
-	      }
-	    }
-
-	    return newObject;
-	  },
-
-
-	  /**
-	   * Assigns own enumerable properties of source object(s) to the destination
-	   * object. Subsequent sources overwrite property assignments of previous
-	   * sources.
-	   * @param {Object} object
-	   * @param {Object} ...sources
-	   * @return {Object}
-	   */
-	  extend: function extend(object) {
-	    // Shallow clone
-	    var newObject = {};
-	    for (var key in object) {
-	      newObject[key] = object[key];
-	    }
-
-	    // Extend sources
-
-	    for (var _len3 = arguments.length, sources = Array(_len3 > 1 ? _len3 - 1 : 0), _key5 = 1; _key5 < _len3; _key5++) {
-	      sources[_key5 - 1] = arguments[_key5];
-	    }
-
-	    for (var i = 0; i < sources.length; i++) {
-	      var source = sources[i];
-	      for (var _key6 in source) {
-	        newObject[_key6] = source[_key6];
-	      }
-	    }
-
-	    return newObject;
-	  },
-
-
-	  /**
-	   * Checks if this value is extendable / can have keys
-	   * @param  {*}  val
-	   * @return {Boolean}
-	   */
-	  isExtendable: function isExtendable(val) {
-	    return typeof val !== 'undefined' && val !== null && ((typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object' || typeof val === 'function');
-	  },
-
-
-	  /**
-	   * JS Implementation of MurmurHash2
-	   *
-	   * @author <a href="mailto:gary.court@gmail.com">Gary Court</a>
-	   * @see http://github.com/garycourt/murmurhash-js
-	   * @author <a href="mailto:aappleby@gmail.com">Austin Appleby</a>
-	   * @see http://sites.google.com/site/murmurhash/
-	   *
-	   * @param {Object}
-	   * @return {String} Base 36 encoded hash result
-	   */
-	  hashObject: function hashObject(object) {
-	    var str = JSON.stringify(object);
-	    var l = str.length;
-	    var h = l;
-	    var i = 0;
-	    var k = void 0;
-
-	    while (l >= 4) {
-	      k = str.charCodeAt(i) & 0xff | (str.charCodeAt(++i) & 0xff) << 8 | (str.charCodeAt(++i) & 0xff) << 16 | (str.charCodeAt(++i) & 0xff) << 24;
-
-	      k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-	      k ^= k >>> 24;
-	      k = (k & 0xffff) * 0x5bd1e995 + (((k >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-
-	      h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16) ^ k;
-
-	      l -= 4;
-	      ++i;
-	    }
-
-	    /* eslint-disable no-fallthrough */ // forgive existing code
-	    switch (l) {
-	      case 3:
-	        h ^= (str.charCodeAt(i + 2) & 0xff) << 16;
-	      case 2:
-	        h ^= (str.charCodeAt(i + 1) & 0xff) << 8;
-	      case 1:
-	        h ^= str.charCodeAt(i) & 0xff;
-	        h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-	    }
-	    /* eslint-enable no-fallthrough */
-
-	    h ^= h >>> 13;
-	    h = (h & 0xffff) * 0x5bd1e995 + (((h >>> 16) * 0x5bd1e995 & 0xffff) << 16);
-	    h ^= h >>> 15;
-
-	    return (h >>> 0).toString(36);
-	  }
-	};
-
-	exports.default = Utils;
-
-/***/ },
-/* 38 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var StylesManager = function () {
-	  function StylesManager(adonis, styles) {
-	    _classCallCheck(this, StylesManager);
-
-	    this._adonis = adonis;
-	    this._styles = styles.filter(function (style) {
-	      return !!style;
-	    });
-
-	    this._variationCombinations = {};
-	  }
-
-	  _createClass(StylesManager, [{
-	    key: 'createStyleSheets',
-	    value: function createStyleSheets(theme) {
-	      this._styles.forEach(function (style) {
-	        return style.createStyleSheet(theme);
-	      });
-	    }
-	  }, {
-	    key: 'createStyleSheetsIfPossible',
-	    value: function createStyleSheetsIfPossible() {
-	      this._styles.forEach(function (style) {
-	        return style.canInjectBeforeRender() && style.createStyleSheet();
-	      });
-	    }
-	  }, {
-	    key: '_getPossibleCombinations',
-	    value: function _getPossibleCombinations(set) {
-	      return function acc(xs, set) {
-	        var x = xs[0];
-
-	        if (typeof x === 'undefined') {
-	          return set;
-	        }
-
-	        for (var i = 0, l = set.length; i < l; ++i) {
-	          set.push(set[i].concat(x));
-	        }
-	        return acc(xs.slice(1), set);
-	      }(set, [[]]).slice(1);
-	    }
-	  }, {
-	    key: 'prepareVariations',
-	    value: function prepareVariations(variations) {
-	      var _this = this;
-
-	      var possibleCombinations = this._getPossibleCombinations(variations);
-
-	      // Default
-	      this.getClassName([]);
-
-	      possibleCombinations.forEach(function (variations) {
-	        variations = variations.sort();
-	        _this._variationCombinations[variations.join(',')] = _this.getClassName(variations);
-	      });
-	    }
-
-	    /**
-	     * Returns the class name for the given variations and additional styles
-	     * @param  {String[]} variations
-	     * @param  {Object[]} additionalStyles
-	     * @return {Object}
-	     */
-
-	  }, {
-	    key: 'getClassName',
-	    value: function getClassName(variations, additionalStyles) {
-	      var aphroStyles = [];
-
-	      this._styles.forEach(function (styles) {
-	        if (!styles) return;
-
-	        aphroStyles.push(styles.getDefaultStylesheet());
-	        variations.sort().forEach(function (variation) {
-	          aphroStyles.push(styles.getVariationStylesheet(variation));
-	        });
-	      });
-
-	      if (additionalStyles) {
-	        aphroStyles = aphroStyles.concat(additionalStyles);
-	      }
-
-	      aphroStyles = aphroStyles.filter(function (s) {
-	        return s;
-	      });
-
-	      return { styles: aphroStyles, className: this._adonis.aphrodite.css.apply(null, aphroStyles) };
-	    }
-	  }]);
-
-	  return StylesManager;
-	}();
-
-	exports.default = StylesManager;
-
-/***/ },
-/* 39 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var BaseStyles = function BaseStyles(styles) {
-	  var variations = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	  var name = arguments[2];
-
-	  _classCallCheck(this, BaseStyles);
-
-	  this.styles = styles;
-	  this.variations = variations;
-	  this.name = name;
-	};
-
-	exports.default = BaseStyles;
-
-/***/ }
+/***/ })
 /******/ ])
 });
 ;

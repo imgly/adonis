@@ -1,12 +1,91 @@
-import buildExports from './exports'
+import Adonis from './adonis'
+import DOMElements from './lib/dom-elements'
+import BaseStyles from './lib/styles/base-styles'
+import withTheme from './lib/with-theme'
+import ThemeProvider from './lib/components/theme-provider'
 
-const {
-  defaultExport, css, StyleSheet, StyleSheetTestUtils, StyleSheetServer, preRenderCSS, withTheme, ThemeProvider, hashObject
-} = buildExports({
-  noInjection: process.env.NO_INJECTION,
-  noObjectStyles: process.env.NO_OBJECT_STYLES,
-  preInjection: process.env.PRE_INJECTION
-})
+export default (options) => {
+  const adonis = new Adonis(options)
 
-export default defaultExport
-export { defaultExport, css, StyleSheet, StyleSheetTestUtils, StyleSheetServer, preRenderCSS, withTheme, ThemeProvider, hashObject }
+  // adonis()
+  const factory = (target) => {
+    if (target instanceof BaseStyles) {
+      // adonis(BaseStyles).div(styles, variations, name)
+      const baseStyles = target
+      const factory = {}
+      DOMElements.forEach((domElement) => {
+        factory[domElement] = (styles, variations, name) => {
+          if (typeof variations === 'string') {
+            name = variations
+            variations = undefined
+          }
+
+          return adonis.createComponent(domElement, {
+            styles, variations, name, baseStyles
+          })
+        }
+      })
+      return factory
+    } else {
+      // adonis(Component)(styles, variations, name)
+      // adonis(AdonisComponent)(styles, variations, name)
+      return (styles, variations, name) => {
+        if (typeof variations === 'string') {
+          name = variations
+          variations = undefined
+        }
+
+        return adonis.createComponent(target, {
+          styles, variations, name
+        })
+      }
+    }
+  }
+
+  // adonis.div(styles, variations, name)
+  DOMElements.forEach((domElement) => {
+    factory[domElement] = (styles, variations, name) => {
+      if (typeof variations === 'string') {
+        name = variations
+        variations = undefined
+      }
+
+      return adonis.createComponent(domElement, {
+        styles, variations, name
+      })
+    }
+  })
+
+  // adonis.global(css, force = false)
+  factory.global = (css, force = false) => {
+    const { injection, theme } = adonis.getOptions()
+    if (!injection && !force) return
+
+    if (typeof css === 'function') {
+      css = css(theme)
+    }
+
+    const stylesBuffer = adonis.getStylesBuffer()
+    stylesBuffer.bufferCSS(css)
+    stylesBuffer.flushToStyleTag(force)
+  }
+
+  // adonis.css(styles, variations, name)
+  factory.css = (styles, variations, name) => {
+    if (typeof variations === 'string') {
+      name = variations
+      variations = undefined
+    }
+
+    return new BaseStyles(adonis, { styles, variations, name: name || 'baseStyles' })
+  };
+
+  // Proxy some methods
+  ['renderToStatic'].forEach((prop) => {
+    factory[prop] = adonis[prop].bind(adonis)
+  })
+
+  return factory
+}
+
+export { withTheme, ThemeProvider }
