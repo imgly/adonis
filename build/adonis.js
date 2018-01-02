@@ -975,6 +975,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    rAF = root.setImmediate;
 	  }
 
+	  // we need to bind it to root, else we will get an illegal invocation errors
+	  if (rAF) {
+	    rAF = rAF.bind(root);
+	  }
+
 	  if (!rAF) {
 	    rAF = function rAF(callback) {
 	      var currTime = new Date().getTime();
