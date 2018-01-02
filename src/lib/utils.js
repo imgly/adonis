@@ -202,6 +202,11 @@ export const requestAnimationFrame = (() => {
     rAF = root.setImmediate
   }
 
+  // we need to bind it to root, else we will get an illegal invocation errors
+  if (rAF) {
+    rAF = rAF.bind(root)
+  }
+
   if (!rAF) {
     rAF = (callback) => {
       const currTime = new Date().getTime()
