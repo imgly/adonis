@@ -55,11 +55,11 @@
     "should": "^11.1.2",
     "should-sinon": "^0.0.5",
     "sinon": "^1.17.7",
-    "webpack": "^1.12.12"
+    "webpack": "^1.12.12",
+    "aphrodite": "^1.1.0",
+    "prop-types": "^15.0.0"
   },
   "dependencies": {
-    "aphrodite": "^1.1.0",
-    "prop-types": "^15.4.2",
     "react": "^15.0.0 || ^16.0.0",
     "react-dom": "^15.0.0 || ^16.0.0"
   }
