@@ -1,6 +1,6 @@
 {
   "name": "adonis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The best of aphrodite and styled-components combined",
   "main": "build/adonis.js",
   "scripts": {
@@ -59,8 +59,8 @@
   },
   "dependencies": {
     "aphrodite": "^1.1.0",
-    "react": "^15.4.2",
     "prop-types": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react": "^15.0.0 || ^16.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0"
   }
 }
